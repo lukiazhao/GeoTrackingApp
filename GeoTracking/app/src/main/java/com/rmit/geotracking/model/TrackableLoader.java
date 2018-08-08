@@ -39,12 +39,13 @@ public class TrackableLoader {
 //                String name = arrOfElement[1];
 //                String desc = arrOfElement[2];
 
-                // need to check if the length of the array is 5 or 6
+                /* need to check if the length of the array is 5 or 6 */
                 Trackable trackable = new SimpleTrackable(arrOfElement[0],
                                                     arrOfElement[1],
                                                     arrOfElement[2],
                                                     arrOfElement[3],
                                                     arrOfElement[4]);
+                // key = id (String)
                 trackablesMap.put(arrOfElement[0], trackable);
                 Log.i(LOG_TAG, trackable.getId());
 

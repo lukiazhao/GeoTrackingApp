@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TrackableActivity" />
-        <activity android:name=".fragment.TabActivity" />
+        <activity android:name=".TrackingActivity"></activity>
     </application>
 
 </manifest>

@@ -48,7 +48,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     //before view is created, android allows us to do sth
     public RecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View itemView = inflater.inflate(R.layout.list_item, viewGroup,false);
+        View itemView = inflater.inflate(R.layout.single_trackable_view, viewGroup,false);
 
         return new ViewHolder(itemView);
     }
