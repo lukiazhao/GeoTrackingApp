@@ -1,20 +1,15 @@
 package com.rmit.geotracking;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
 
 import com.rmit.geotracking.service.TestTrackingService;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,8 +27,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //create action bar
+        Toolbar actionbar = (Toolbar) findViewById(R.id.action_bar);
+        setSupportActionBar(actionbar);
 
-        TestTrackingService.test(this);
+        //Test tracking services
+        //TestTrackingService.test(this);
 
         /* spinner **/
 ////        String[] data = new String[]{"Category first", "selection 2", "selection 3", "selection 4", "Category last"};
@@ -65,5 +64,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
+    //Import methods related to menu options and selections
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 }
