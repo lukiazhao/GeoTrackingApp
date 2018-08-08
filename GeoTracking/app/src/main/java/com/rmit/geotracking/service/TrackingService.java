@@ -150,6 +150,7 @@ public class TrackingService
          {
          }
          Log.i(LOG_TAG, trackingInfo.toString());
+
       }
    }
 
@@ -165,4 +166,9 @@ public class TrackingService
             returnList.add(trackingInfo);
       return returnList;
    }
+
+   public List<TrackingInfo> getTrackingList() {
+      return this.trackingList;
+   }
+
 }
