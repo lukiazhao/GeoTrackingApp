@@ -13,7 +13,7 @@ import com.rmit.geotracking.service.TrackingService.TrackingInfo;
 import java.util.List;
 
 
-public class TrackingActivity extends TrackableActivity {
+public class TrackingActivity extends MainActivity {
     private static final String LOG_TAG = "TrackingActivity";
 
     @Override
