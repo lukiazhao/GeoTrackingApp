@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.rmit.geotracking.service.TestTrackingService;
 
@@ -23,13 +24,13 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTrackable(v);
+                goTrackable();
             }
         });
 
         //create action bar
-        Toolbar actionbar = (Toolbar) findViewById(R.id.action_bar);
-        setSupportActionBar(actionbar);
+//        Toolbar actionbar = (Toolbar) findViewById(R.id.action_bar);
+//        setSupportActionBar(actionbar);
 
         //Test tracking services
         //TestTrackingService.test(this);
@@ -58,12 +59,6 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView.setAdapter(adapter);
     }
 
-
-    public void goTrackable (View v){
-        Intent myIntent = new Intent(this, TrackableActivity.class);
-        startActivity(myIntent);
-    }
-
     //Import methods related to menu options and selections
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,6 +69,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.trackable_list:
+                goTrackable();
+                //Test
+                Toast.makeText(this, "trackable list", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tracking_list:
+                goTracking();
+                Toast.makeText(this, "tracking list", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.add_tracking:
+                Toast.makeText(this, "add tracking", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
+
+        }
         return super.onOptionsItemSelected(item);
     }
+
+
+    public void goTrackable (){
+        Intent myIntent = new Intent(this, TrackableActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void goTracking (){
+        Intent myIntent = new Intent(this, TrackingActivity.class);
+        startActivity(myIntent);
+    }
+
+
 }

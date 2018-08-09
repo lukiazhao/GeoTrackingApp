@@ -3,8 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.rmit.geotracking.fragment.tab_activity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/trackable_list"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/menu_trackable_list"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/tracking_list"
+        android:orderInCategory="100"
+        android:title="@string/menu_tracking_list"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/add_tracking"
+        android:orderInCategory="100"
+        android:title="@string/menu_add_tracking"
+        app:showAsAction="never" />
+
 </menu>
