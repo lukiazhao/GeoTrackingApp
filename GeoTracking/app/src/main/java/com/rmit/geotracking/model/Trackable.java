@@ -2,9 +2,9 @@ package com.rmit.geotracking.model;
 
 public interface Trackable {
 
-    String getId();
+    int getId();
 
-    void setId(String id);
+    void setId(int id);
 
     String getName();
 

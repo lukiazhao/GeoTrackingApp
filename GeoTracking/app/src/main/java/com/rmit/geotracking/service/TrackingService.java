@@ -14,13 +14,18 @@ import android.util.Log;
 
 import com.rmit.geotracking.R;
 
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TrackingService
@@ -170,5 +175,26 @@ public class TrackingService
    public List<TrackingInfo> getTrackingList() {
       return this.trackingList;
    }
+
+   public Map<String, TrackingInfo> getTrackingMap() {
+      Map<String, TrackingInfo> trackingInfoMap = new HashMap<>();
+      for(TrackingInfo trackingInfo:trackingList){
+
+         trackingInfoMap.put(generateRandomString(4), trackingInfo);
+
+      }
+      return trackingInfoMap;
+   }
+
+   public String generateRandomString(int length){
+       final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+       SecureRandom rnd = new SecureRandom();
+         StringBuilder sb = new StringBuilder(length);
+         for( int i = 0; i < length; i++ ) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+         }
+         return sb.toString();
+   }
+
 
 }

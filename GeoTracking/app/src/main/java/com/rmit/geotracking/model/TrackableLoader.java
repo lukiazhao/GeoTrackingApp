@@ -24,8 +24,8 @@ public class TrackableLoader {
     }
 
 
-    public Map<String, Trackable> readFile(){
-        Map<String,Trackable> trackablesMap = new HashMap<>();
+    public Map<Integer, Trackable> readFile(){
+        Map<Integer,Trackable> trackablesMap = new HashMap<>();
 
         InputStream inputStream = context.getResources().openRawResource(R.raw.food_truck_data);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -34,20 +34,23 @@ public class TrackableLoader {
         try {
 
             while ((line = bufferedReader.readLine()) != null) {
+                Trackable trackable;
                 String[] arrOfElement = line.split(",");
-//                String id = arrOfElement[0];
-//                String name = arrOfElement[1];
-//                String desc = arrOfElement[2];
+                int id = Integer.parseInt(arrOfElement[0]);
+                String name = arrOfElement[1];
+                String desc = arrOfElement[2];
+                String url = arrOfElement[3];
+                String category = arrOfElement[4];
 
-                /* need to check if the length of the array is 5 or 6 */
-                Trackable trackable = new SimpleTrackable(arrOfElement[0],
-                                                    arrOfElement[1],
-                                                    arrOfElement[2],
-                                                    arrOfElement[3],
-                                                    arrOfElement[4]);
-                // key = id (String)
-                trackablesMap.put(arrOfElement[0], trackable);
-                Log.i(LOG_TAG, trackable.getId());
+                if(arrOfElement.length == 5){
+                    trackable = new SimpleTrackable(id, name, desc, url, category);
+                } else {
+                    trackable = new SimpleTrackable(id, name, desc, url, category,arrOfElement[5]);
+                }
+
+                trackablesMap.put(id, trackable);
+
+                Log.i(LOG_TAG, trackable.getId() + "");
 
             }
             Log.i(LOG_TAG, " size : " +trackablesMap.keySet().size());

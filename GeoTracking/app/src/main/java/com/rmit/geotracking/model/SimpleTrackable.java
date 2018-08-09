@@ -3,14 +3,14 @@ package com.rmit.geotracking.model;
 
 public class SimpleTrackable implements Trackable {
 
-    private String id;
+    private int id;
     private String name;
     private String description;
     private String url;
     private String category;
     private String photo;
 
-    public SimpleTrackable(String id, String name, String description, String url,
+    public SimpleTrackable(int id, String name, String description, String url,
                            String category, String photo) {
         this.id = id;
         this.name = name;
@@ -21,18 +21,18 @@ public class SimpleTrackable implements Trackable {
     }
 
     // optional constructor
-    public SimpleTrackable(String id, String name, String description, String url,
+    public SimpleTrackable(int id, String name, String description, String url,
                            String category){
         this(id, name, description, url, category, null);
     }
 
     @Override
-    public String getId() {
+    public int getId() {
         return id;
     }
 
     @Override
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

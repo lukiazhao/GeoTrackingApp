@@ -34,7 +34,7 @@ public class TrackableActivity extends MainActivity {
 
         spinner.setAdapter(adapterSpin);
 
-
+        //set the default display item to last one
         spinner.setSelection(data.size() - 1);
 
 
