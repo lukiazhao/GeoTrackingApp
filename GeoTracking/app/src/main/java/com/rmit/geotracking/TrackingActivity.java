@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.service.TrackingService;
 import com.rmit.geotracking.service.TrackingService.TrackingInfo;
 
 
 import java.util.List;
+import java.util.Map;
 
 
 public class TrackingActivity extends AppCompatActivity {
@@ -26,12 +28,12 @@ public class TrackingActivity extends AppCompatActivity {
 
         TrackingService trackingService = TrackingService.getSingletonInstance(this);
 
-//        TrackingService.TrackingInfo;
 
-        List<TrackingInfo> track =  trackingService.getTrackingList();
+        Map<String, TrackingInfo> tr = trackingService.getTrackingMap();
 
-        for (TrackingInfo t:track) {
-            textView.append(t.toString());
+        for(String t:tr.keySet()){
+            textView.append(t);
+            textView.append(" \n");
         }
     }
 }

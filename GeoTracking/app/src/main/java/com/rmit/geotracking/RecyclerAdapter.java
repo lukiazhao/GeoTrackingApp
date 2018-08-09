@@ -23,7 +23,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     private String LOG_TAG = this.getClass().getName();
     private Context context;
-    private Map<String, Trackable> trackablesMap;
+    private Map<Integer, Trackable> trackablesMap;
 
     public RecyclerAdapter(Context context){
         this.context = context;

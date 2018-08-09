@@ -27,7 +27,7 @@ public class TrackableActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapterSpin);
 
-
+        //set the default display item to last one
         spinner.setSelection(data.size() - 1);
 
 

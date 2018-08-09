@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTrackable(v);
+                goTrackable();
             }
         });
 
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(actionbar);
 
         //Test tracking services
-        //TestTrackingService.test(this);
+        TestTrackingService.test(this);
 
         /* spinner **/
 ////        String[] data = new String[]{"Category first", "selection 2", "selection 3", "selection 4", "Category last"};
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void goTrackable (View v){
+    public void goTrackable (){
         Intent myIntent = new Intent(this, TrackableActivity.class);
         startActivity(myIntent);
     }
