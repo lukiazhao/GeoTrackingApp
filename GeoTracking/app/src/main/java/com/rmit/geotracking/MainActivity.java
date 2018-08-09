@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //create action bar
-        Toolbar actionbar = (Toolbar) findViewById(R.id.action_bar);
-        setSupportActionBar(actionbar);
+//        Toolbar actionbar = (Toolbar) findViewById(R.id.action_bar);
+//        setSupportActionBar(actionbar);
 
         //Test tracking services
         //TestTrackingService.test(this);
@@ -64,16 +64,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(myIntent);
     }
 
-    //Import methods related to menu options and selections
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
 }
