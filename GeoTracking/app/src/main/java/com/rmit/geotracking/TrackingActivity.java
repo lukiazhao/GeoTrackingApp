@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class TrackingActivity extends AppCompatActivity {
+public class TrackingActivity extends MainActivity {
     private static final String LOG_TAG = "TrackingActivity";
 
     @Override

@@ -3,7 +3,11 @@
 
     <string name="button">Button</string>
 
-    <string name="action_settings">Actions</string>
+    <!--string resources for menu-->
+    <string name="menu_add_tracking">Add New Tracking</string>
+    <string name="menu_trackable_list">Show Trackables</string>
+    <string name="menu_tracking_list">Show Current Trackings</string>
+
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="textview">TextView</string>
 
