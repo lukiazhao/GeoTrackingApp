@@ -1,4 +1,4 @@
-package com.rmit.geotracking;
+package com.rmit.geotracking.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,14 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rmit.geotracking.model.SimpleTrackable;
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.model.TrackableLoader;
 
-import java.util.ArrayList;
 import java.util.Map;
-
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
 
