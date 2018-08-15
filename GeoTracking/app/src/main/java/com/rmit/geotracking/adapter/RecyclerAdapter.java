@@ -32,7 +32,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView textView;
-        public TextView textView2;
+
         public ViewHolder(View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.trackable_item);
@@ -57,7 +57,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Log.i(LOG_TAG,"view int i: "+ i);
         Log.i(LOG_TAG,"id for map: " + (i + 1));
         // need to convert key type from int to string
-        final String textToBind = trackablesMap.get((i+1)+"").getId() + trackablesMap.get((i+1)+"").getName();
+        final String textToBind = trackablesMap.get((i+1)).getId() + trackablesMap.get((i+1)).getName();
         Log.i(LOG_TAG, textToBind);
 
 //        Boolean isUnderTracking = true;

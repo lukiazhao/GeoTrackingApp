@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 //        setSupportActionBar(actionbar);
 
         //Test tracking services
-        TestTrackingService.test(this);
+//        TestTrackingService.test(this);
 
         /* spinner **/
 ////        String[] data = new String[]{"Category first", "selection 2", "selection 3", "selection 4", "Category last"};

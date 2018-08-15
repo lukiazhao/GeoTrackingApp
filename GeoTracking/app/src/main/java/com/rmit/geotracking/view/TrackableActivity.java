@@ -23,7 +23,7 @@ public class TrackableActivity extends MainActivity {
         /* spinner **/
 
         ArrayList<String> data = new ArrayList<>();
-        data.add("selection 1"); data.add("selection 3"); data.add("category last");
+        data.add("category 1"); data.add("category 2"); data.add("category last");
         Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter adapterSpin = new ArrayAdapter(this, android.R.layout.simple_spinner_item, data);
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
