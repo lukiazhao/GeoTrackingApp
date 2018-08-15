@@ -1,17 +1,15 @@
-package com.rmit.geotracking;
+package com.rmit.geotracking.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
-import com.rmit.geotracking.model.Tracking;
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.service.TrackingService;
 import com.rmit.geotracking.service.TrackingService.TrackingInfo;
+import com.rmit.geotracking.view.MainActivity;
 
 
-import java.util.List;
 import java.util.Map;
 
 

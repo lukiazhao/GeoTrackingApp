@@ -1,4 +1,4 @@
-package com.rmit.geotracking;
+package com.rmit.geotracking.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rmit.geotracking.model.Tracking;
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.service.TrackingService;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class TrackingRecyclerAdapter extends RecyclerView.Adapter<TrackingRecyclerAdapter.ViewHolder> {
