@@ -2,7 +2,7 @@ package com.rmit.geotracking.model;
 
 public class SimpleTracking implements Tracking {
     private String trackingId;
-    private String trackableId;
+    private int trackableId;
     private String title;
     private String targetStartTime;
     private String targetEndTime;
@@ -10,7 +10,7 @@ public class SimpleTracking implements Tracking {
     private String currentLocation;
     private String meetLocation;
 
-    public SimpleTracking(String trackingId, String trackableId, String title,
+    public SimpleTracking(String trackingId, int trackableId, String title,
                           String targetStartTime, String targetEndTime, String meetTime,
                           String currentLocation, String meetLocation) {
         this.trackingId = trackingId;
@@ -27,7 +27,7 @@ public class SimpleTracking implements Tracking {
         return trackingId;
     }
 
-    public String getTrackableId() {
+    public int getTrackableId() {
         return trackableId;
     }
 
