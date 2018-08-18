@@ -9,21 +9,33 @@ import android.widget.Spinner;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.RecyclerAdapter;
 import com.rmit.geotracking.MainActivity;
+import com.rmit.geotracking.model.TrackManager;
+import com.rmit.geotracking.model.Trackable;
+import com.rmit.geotracking.model.TrackableLoader;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class TrackableActivity extends MainActivity {
 
+    TrackManager trackManager = TrackManager.getSingletonInstance(this);
+    public TrackableActivity(){
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackable);
 
 
-        /* spinner **/
+        loadSpinner();
+        loadRecycler();
 
+    }
+
+    public void loadSpinner(){
         ArrayList<String> data = new ArrayList<>();
-
+//
         data.add("category 1"); data.add("category 2"); data.add("category last");
         Spinner spinner = findViewById(R.id.spinner);
 
@@ -33,17 +45,15 @@ public class TrackableActivity extends MainActivity {
         spinner.setAdapter(adapterSpin);
         //set the default display item to last one
         spinner.setSelection(data.size() - 1);
+    }
 
+    public void loadRecycler(){
 
-        /* Recycler view of trackables **/
-
+        Map<Integer, Trackable> trackablesMap = trackManager.getTrackableMap();
         RecyclerView recyclerView = findViewById(R.id.recycler_view_trackables);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // create an adapter object
-        RecyclerAdapter adapter = new RecyclerAdapter(this);
-
-        // associate the recycler view with the adapter
+        RecyclerAdapter adapter = new RecyclerAdapter(this, trackablesMap);
         recyclerView.setAdapter(adapter);
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.service.TrackingService;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -19,7 +20,7 @@ public class TrackableLoader {
     private String LOG_TAG = this.getClass().getName();
 
     public TrackableLoader(Context context){
-        this.context = context;
+//        this.context = context;
         Log.i(LOG_TAG, "trackable loader constructor");
     }
 

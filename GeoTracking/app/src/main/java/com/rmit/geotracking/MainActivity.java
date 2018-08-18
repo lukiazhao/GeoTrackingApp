@@ -10,16 +10,22 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.service.TestTrackingService;
 import com.rmit.geotracking.view.TrackableActivity;
 import com.rmit.geotracking.view.TrackingActivity;
 
 public class MainActivity extends AppCompatActivity {
 
+    public MainActivity(){
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
         View trackableBut = findViewById(R.id.trackable_button);
         View trackingBut = findViewById(R.id.tracking_button);
@@ -35,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                goTrackable();
+                goTracking();
             }
         });
 

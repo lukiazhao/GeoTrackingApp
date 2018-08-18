@@ -22,10 +22,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private Context context;
     private Map<Integer, Trackable> trackablesMap;
 
-    public RecyclerAdapter(Context context){
+    public RecyclerAdapter(Context context, Map<Integer, Trackable> trackableMap){
         this.context = context;
-        this.trackablesMap = new TrackableLoader(context).readFile();
-        Log.i(LOG_TAG, "n: "+ trackablesMap.size());
+        this.trackablesMap = trackableMap;
+//        Log.i(LOG_TAG, "n: "+ trackablesMap.size());
 
     }
 
