@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //        setSupportActionBar(actionbar);
 
         //Test tracking services
-        TestTrackingService.test(this);
+//        TestTrackingService.test(this);
 
     }
 

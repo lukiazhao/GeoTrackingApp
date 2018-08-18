@@ -180,6 +180,7 @@ public class TrackingService
    }
 
    public List<TrackingInfo> getTrackingList() {
+      parseFile(context);
       return this.trackingList;
    }
 

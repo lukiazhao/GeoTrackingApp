@@ -56,7 +56,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Log.i(LOG_TAG,"view int i: "+ i);
         Log.i(LOG_TAG,"id for map: " + (i + 1));
 
-        final String textToBind = trackablesMap.get((i+1)).getId() + trackablesMap.get((i+1)).getName();
+        final String textToBind = trackablesMap.get(i+1).getId() + trackablesMap.get(i+1).getName();
         Log.i(LOG_TAG, textToBind);
 
         viewHolder.textView.setText(textToBind);

@@ -1,38 +1,50 @@
 package com.rmit.geotracking.view;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.service.TrackingService;
-import com.rmit.geotracking.service.TrackingService.TrackingInfo;
+import com.rmit.geotracking.adapter.TrackingRecyclerAdapter;
+import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
-
+import com.rmit.geotracking.model.Tracking;
 
 import java.util.Map;
 
 
 public class TrackingActivity extends MainActivity {
     private static final String LOG_TAG = "TrackingActivity";
-
+    TrackManager trackManager = TrackManager.getSingletonInstance(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.single_tracking_view);
+        setContentView(R.layout.activity_tracking);
         Log.i(LOG_TAG, "start");
 
-        TextView textView = findViewById(R.id.tracking_item);
+//        TextView textView = findViewById(R.id.tracking_item);
+//
+//        TrackingService trackingService = TrackingService.getSingletonInstance(this);
+//
+//
+//        Map<String, TrackingInfo> tr = trackingService.getTrackingMap();
+//
+//        for(String t:tr.keySet()){
+//            textView.append(t);
+//            textView.append(" \n");
+//        }
+        loadRecycler();
+    }
 
-        TrackingService trackingService = TrackingService.getSingletonInstance(this);
+    public void loadRecycler(){
 
+        Map<Integer, Tracking> trackingMap = trackManager.getTrackingMap();
+        RecyclerView recyclerView = findViewById(R.id.tracking_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Map<String, TrackingInfo> tr = trackingService.getTrackingMap();
-
-        for(String t:tr.keySet()){
-            textView.append(t);
-            textView.append(" \n");
-        }
+        TrackingRecyclerAdapter adapter = new TrackingRecyclerAdapter(this, trackingMap);
+        recyclerView.setAdapter(adapter);
     }
 
 
