@@ -8,7 +8,7 @@ import android.widget.Spinner;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.RecyclerAdapter;
-import com.rmit.geotracking.view.MainActivity;
+import com.rmit.geotracking.MainActivity;
 
 import java.util.ArrayList;
 
@@ -23,13 +23,14 @@ public class TrackableActivity extends MainActivity {
         /* spinner **/
 
         ArrayList<String> data = new ArrayList<>();
+
         data.add("category 1"); data.add("category 2"); data.add("category last");
         Spinner spinner = findViewById(R.id.spinner);
+
         ArrayAdapter adapterSpin = new ArrayAdapter(this, android.R.layout.simple_spinner_item, data);
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapterSpin);
-
         //set the default display item to last one
         spinner.setSelection(data.size() - 1);
 

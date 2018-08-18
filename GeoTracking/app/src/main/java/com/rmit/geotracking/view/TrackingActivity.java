@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.service.TrackingService;
 import com.rmit.geotracking.service.TrackingService.TrackingInfo;
-import com.rmit.geotracking.view.MainActivity;
+import com.rmit.geotracking.MainActivity;
 
 
 import java.util.Map;
