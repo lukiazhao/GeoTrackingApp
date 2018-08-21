@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/trackingcheck_title"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="center"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_trackingid"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_trackableid"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_trackable"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_start"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_end"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_meettime"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_currentlocation"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/trackingcheck_meetlocation"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/viewtracking_title"
+        android:textAlignment="viewStart"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/trackingcheck_button"
+        android:layout_width="match_parent"
+        android:layout_height="71dp"
+        android:text="OK" />
+</LinearLayout>
