@@ -23,17 +23,6 @@ public class TrackingActivity extends MainActivity {
         setContentView(R.layout.activity_tracking);
         Log.i(LOG_TAG, "start");
 
-//        TextView textView = findViewById(R.id.tracking_item);
-//
-//        TrackingService trackingService = TrackingService.getSingletonInstance(this);
-//
-//
-//        Map<String, TrackingInfo> tr = trackingService.getTrackingMap();
-//
-//        for(String t:tr.keySet()){
-//            textView.append(t);
-//            textView.append(" \n");
-//        }
         loadRecycler();
     }
 

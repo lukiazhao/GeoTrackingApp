@@ -4,4 +4,7 @@
     <item
         android:id="@+id/add_to_tracking"
         android:title="Add to Tracking" />
+    <item
+        android:id="@+id/route_info"
+        android:title="View Route Info" />
 </menu>
