@@ -32,7 +32,7 @@ public class TrackManager extends Observable {
         this.trackingMap = loadTracking();
     }
 
-//    // singleton support
+    // singleton support
     private static class LazyHolder
     {
         static final TrackManager INSTANCE = new TrackManager();
