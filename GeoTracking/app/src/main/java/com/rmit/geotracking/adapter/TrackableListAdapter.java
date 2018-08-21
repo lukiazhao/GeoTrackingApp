@@ -48,14 +48,10 @@ public class TrackableListAdapter extends BaseAdapter{
 
         textView.setText(trackableMap.get(position + 1).getId() + " ." + trackableMap.get(position + 1).getName());
 
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "id "+ position, Toast.LENGTH_SHORT).show();
-            }
-        });
         return view;
     }
+
+
 
 
 }
