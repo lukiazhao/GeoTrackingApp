@@ -81,9 +81,9 @@ public class TrackableActivity extends MainActivity {
         switch (item.getItemId()) {
             case R.id.add_to_tracking:
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                Toast.makeText(this, "id +" + info.id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "id +" +  info.id, Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(this, AddToTracking.class);
-                myIntent.putExtra("Trackable_Id", info.id + 1);
+                myIntent.putExtra("Trackable_id", String.valueOf(info.id + 1));
                 startActivity(myIntent);
 
         }

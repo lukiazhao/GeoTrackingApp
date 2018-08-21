@@ -20,6 +20,7 @@
     <string name="meet_location">Meet Location</string>
     <string name="finish">Finish</string>
     <string name="select_date">Select Date</string>
+    <string name="select_time">Select Time</string>
 
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>

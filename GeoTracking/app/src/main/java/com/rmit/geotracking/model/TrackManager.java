@@ -119,12 +119,11 @@ public class TrackManager extends Observable {
                 String title = trackableMap.get(tr.trackableId).getName();
                 Date targetStartTime = tr.date;
                 Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
-                Date meetTime = targetStartTime;        // check
+                String meetTime = targetStartTime.toString();        // check
                 String currLocation = null;
                 String meetLocation = tr.latitude + " , " + tr.longitude;
 
-                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime,
-                                                targetEndTime, meetTime, currLocation, meetLocation);
+                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
                 trackingMap.put(tracking.getTrackingId(), tracking);
                 Log.i(LOG_TAG,  " :???????? " + tracking.toString());
             }

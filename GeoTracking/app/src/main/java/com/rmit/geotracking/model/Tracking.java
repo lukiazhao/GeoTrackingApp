@@ -13,7 +13,7 @@ public interface Tracking {
 
     Date getTargetEndTime();
 
-    Date getMeetTime();
+    String getMeetTime();
 
     String getCurrentLocation();
 

@@ -10,12 +10,12 @@ public class SimpleTracking implements Tracking {
     private String title;
     private Date targetStartTime;
     private Date targetEndTime;
-    private Date meetTime;
+    private String meetTime;
     private String currentLocation;
     private String meetLocation;
 
     public SimpleTracking(String trackingId, int trackableId, String title,
-                          Date targetStartTime, Date targetEndTime, Date meetTime,
+                          Date targetStartTime, Date targetEndTime, String meetTime,
                           String currentLocation, String meetLocation) {
         this.trackingId = generateRandomString(LENGTH);
         this.trackableId = trackableId;
@@ -53,7 +53,7 @@ public class SimpleTracking implements Tracking {
     }
 
     @Override
-    public Date getMeetTime() {
+    public String getMeetTime() {
         return meetTime;
     }
 
@@ -79,7 +79,9 @@ public class SimpleTracking implements Tracking {
 
     @Override
     public String toString(){
-        return this.trackingId + " ; " + this.trackableId;
+        return " tracking id: " + this.trackingId + " ; trackable id: " + this.trackableId +
+                "; title: " + title + "; meet time: "
+                + this.meetTime + "; meet location: " + meetLocation;
     }
 
 }
