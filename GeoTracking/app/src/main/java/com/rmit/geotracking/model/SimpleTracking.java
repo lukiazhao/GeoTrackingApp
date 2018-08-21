@@ -1,19 +1,23 @@
 package com.rmit.geotracking.model;
 
+import java.security.SecureRandom;
+import java.util.Date;
+
 public class SimpleTracking implements Tracking {
+    private static final Integer LENGTH = 4 ;
     private String trackingId;
     private int trackableId;
     private String title;
-    private String targetStartTime;
-    private String targetEndTime;
-    private String meetTime;
+    private Date targetStartTime;
+    private Date targetEndTime;
+    private Date meetTime;
     private String currentLocation;
     private String meetLocation;
 
     public SimpleTracking(String trackingId, int trackableId, String title,
-                          String targetStartTime, String targetEndTime, String meetTime,
+                          Date targetStartTime, Date targetEndTime, Date meetTime,
                           String currentLocation, String meetLocation) {
-        this.trackingId = trackingId;
+        this.trackingId = generateRandomString(LENGTH);
         this.trackableId = trackableId;
         this.title = title;
         this.targetStartTime = targetStartTime;
@@ -23,37 +27,59 @@ public class SimpleTracking implements Tracking {
         this.meetLocation = meetLocation;
     }
 
+    @Override
     public String getTrackingId() {
         return trackingId;
     }
 
+    @Override
     public int getTrackableId() {
         return trackableId;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
-    public String getTargetStartTime() {
+    @Override
+    public Date getTargetStartTime() {
         return targetStartTime;
     }
 
-    public String getTargetEndTime() {
+    @Override
+    public Date getTargetEndTime() {
         return targetEndTime;
     }
 
-    public String getMeetTime() {
+    @Override
+    public Date getMeetTime() {
         return meetTime;
     }
 
+    @Override
     public String getCurrentLocation() {
         return currentLocation;
     }
 
+    @Override
     public String getMeetLocation() {
         return meetLocation;
     }
 
+    public String generateRandomString(int length){
+        final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        SecureRandom rnd = new SecureRandom();
+        StringBuilder sb = new StringBuilder(length);
+        for( int i = 0; i < length; i++ ) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString(){
+        return this.trackingId + " ; " + this.trackableId;
+    }
 
 }

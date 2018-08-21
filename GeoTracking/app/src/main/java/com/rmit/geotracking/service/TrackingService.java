@@ -49,6 +49,7 @@ public class TrackingService
       public int stopTime;
       public double latitude;
       public double longitude;
+//      public String location;
 
       @Override
       public String toString()
@@ -98,13 +99,19 @@ public class TrackingService
             trackingInfo.trackableId = Integer.parseInt(scanner.next());
             trackingInfo.stopTime = Integer.parseInt(scanner.next());
             trackingInfo.latitude = Double.parseDouble(scanner.next());
-            String next=scanner.next();
+            String next = scanner.next();
             int commentPos;
             // strip trailing comment
-            if((commentPos=next.indexOf("//")) >=0)
-               next=next.substring(0, commentPos);
+            if((commentPos=next.indexOf("//")) >=0) {
+               next = next.substring(0, commentPos);
+               Log.i(LOG_TAG, next);
+            }
             trackingInfo.longitude = Double.parseDouble(next);
             trackingList.add(trackingInfo);
+//            next = scanner.next();
+//            if(next != ""){
+//               Log.i(LOG_TAG, next);
+//            }
          }
       }
       catch (Resources.NotFoundException e)
@@ -173,6 +180,7 @@ public class TrackingService
    }
 
    public List<TrackingInfo> getTrackingList() {
+      parseFile(context);
       return this.trackingList;
    }
 

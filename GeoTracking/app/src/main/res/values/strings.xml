@@ -10,5 +10,6 @@
 
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="textview">TextView</string>
+    <string name="item1">item1</string>
 
 </resources>
