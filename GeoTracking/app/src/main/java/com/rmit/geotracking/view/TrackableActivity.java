@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
-import com.rmit.geotracking.adapter.TrackableRecyclerAdapter;
 import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;

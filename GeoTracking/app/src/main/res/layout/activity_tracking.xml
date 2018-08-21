@@ -7,8 +7,8 @@
     android:orientation="vertical"
     tools:context=".view.TrackingActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/tracking_recycler"
+    <ListView
+        android:id="@+id/tracking_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

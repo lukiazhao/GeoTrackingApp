@@ -21,4 +21,11 @@
     <string name="finish">Finish</string>
     <string name="select_date">Select Date</string>
 
+    <string name="viewtracking_confirmButton">OK</string>
+    <string name="viewtracking_title">Tracking Information</string>
+
+
+
+
+
 </resources>

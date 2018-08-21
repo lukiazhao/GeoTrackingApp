@@ -15,23 +15,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
-public class TrackManager {
+public class TrackManager extends Observable {
     // search and filter
     // load and save
 //    public static TrackManager INSTANCE = null;
     private String LOG_TAG = this.getClass().getName();
     private Map<Integer, Trackable> trackableMap;
-    private Map<Integer, Tracking> trackingMap;
+    private Map<String, Tracking> trackingMap;
     private static Context context;
 
     //if use singleton, change this to private !!!!
-    public TrackManager(){
+    private TrackManager(){
         this.trackableMap = loadTrackable();
         this.trackingMap = loadTracking();
     }
 
-//    // singleton support
+    // singleton support
     private static class LazyHolder
     {
         static final TrackManager INSTANCE = new TrackManager();
@@ -59,7 +60,7 @@ public class TrackManager {
     public Map<Integer, Trackable> getTrackableMap(){
         return this.trackableMap;
     }
-    public Map<Integer, Tracking> getTrackingMap() { return this.trackingMap; }
+    public Map<String, Tracking> getTrackingMap() { return this.trackingMap; }
 
     public Map<Integer, Trackable> loadTrackable(){
         Map<Integer,Trackable> trackablesMap = new HashMap<>();
@@ -102,13 +103,12 @@ public class TrackManager {
     }
 
 
-    public Map<Integer, Tracking> loadTracking(){
-        Map<Integer,Tracking> trackingMap = new HashMap<>();
+    public Map<String, Tracking> loadTracking(){
+        Map<String,Tracking> trackingMap = new HashMap<>();
         TrackingService trackingService = TrackingService.getSingletonInstance(context);
 
         // if stop time > 0 -> put a tracking into the map
         List<TrackingService.TrackingInfo> trackingInfos = trackingService.getTrackingList();
-        int i = 0;
         for (TrackingService.TrackingInfo tr:trackingInfos){
 
             if (tr.stopTime > 0){
@@ -125,12 +125,8 @@ public class TrackManager {
 
                 Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime,
                                                 targetEndTime, meetTime, currLocation, meetLocation);
-                trackingMap.put(i, tracking);
-                Log.i(LOG_TAG, i + " :???????? " + tracking.toString());
-
-                i++;
-
-
+                trackingMap.put(tracking.getTrackingId(), tracking);
+                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
             }
         }
 
