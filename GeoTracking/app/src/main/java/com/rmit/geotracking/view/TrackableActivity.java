@@ -1,5 +1,6 @@
 package com.rmit.geotracking.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,8 +74,6 @@ public class TrackableActivity extends MainActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
 
         getMenuInflater().inflate(R.menu.context_menu, menu);
-
-
     }
 
     @Override
@@ -82,9 +81,11 @@ public class TrackableActivity extends MainActivity {
 
         switch (item.getItemId()) {
             case R.id.add_to_tracking:
-                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
                 Toast.makeText(this, "id +" + info.id, Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(this, AddToTracking.class);
+                myIntent.putExtra("Trackable_Id", info.id + 1);
+                startActivity(myIntent);
 
         }
 
