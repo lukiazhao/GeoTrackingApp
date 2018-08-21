@@ -1,14 +1,11 @@
 package com.rmit.geotracking.view;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.TrackingListAdapter;
-import com.rmit.geotracking.adapter.TrackingRecyclerAdapter;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.Tracking;
@@ -29,14 +26,9 @@ public class TrackingActivity extends MainActivity {
     }
 
     public void loadListView(){
-
-        Map<Integer, Tracking> trackingMap = trackManager.getTrackingMap();
+        Map<String, Tracking> trackingMap = trackManager.getTrackingMap();
         ListView trackingView = findViewById(R.id.tracking_list);
-     //   trackingView.setLayoutManager(new LinearLayoutManager(this));
-
-        TrackingListAdapter adapter = new TrackingListAdapter(this, this);
+        TrackingListAdapter adapter = new TrackingListAdapter(this);
         trackingView.setAdapter(adapter);
     }
-
-
 }
