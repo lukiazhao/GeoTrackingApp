@@ -4,8 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ListView;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.adapter.TrackingListAdapter;
 import com.rmit.geotracking.adapter.TrackingRecyclerAdapter;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
@@ -23,17 +25,17 @@ public class TrackingActivity extends MainActivity {
         setContentView(R.layout.activity_tracking);
         Log.i(LOG_TAG, "start");
 
-        loadRecycler();
+        loadListView();
     }
 
-    public void loadRecycler(){
+    public void loadListView(){
 
         Map<Integer, Tracking> trackingMap = trackManager.getTrackingMap();
-        RecyclerView recyclerView = findViewById(R.id.tracking_recycler);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ListView trackingView = findViewById(R.id.tracking_list);
+     //   trackingView.setLayoutManager(new LinearLayoutManager(this));
 
-        TrackingRecyclerAdapter adapter = new TrackingRecyclerAdapter(this, trackingMap);
-        recyclerView.setAdapter(adapter);
+        TrackingListAdapter adapter = new TrackingListAdapter(this, this);
+        trackingView.setAdapter(adapter);
     }
 
 
