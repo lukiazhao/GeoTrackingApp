@@ -18,7 +18,7 @@ public class CheckTrackingListener implements View.OnClickListener {
 
     private Context context;
     private int position;
-    private Map<Integer, Tracking> trackingMap;
+    private Map<String, Tracking> trackingMap;
     private TrackingListAdapter adapter;
     private Tracking tracking;
 
@@ -53,7 +53,7 @@ public class CheckTrackingListener implements View.OnClickListener {
         trackableID.setText(tracking.getTitle());
         start.setText(tracking.getTargetStartTime().toString());
         end.setText(tracking.getTargetEndTime().toString());
-        meettime.setText(tracking.getMeetTime().toString());
+//        meettime.setText(tracking.getMeetTime().toString());
         meetlocation.setText(tracking.getMeetLocation());
         currentlocation.setText( tracking.getCurrentLocation());
         //   trackingMap.get(position);
