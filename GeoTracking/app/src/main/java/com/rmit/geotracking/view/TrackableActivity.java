@@ -78,13 +78,18 @@ public class TrackableActivity extends MainActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case R.id.add_to_tracking:
-//                Toast.makeText(this, "id +" + adapter.getItemId(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                Toast.makeText(this, "id +" + info.id, Toast.LENGTH_SHORT).show();
 
         }
-        return super.onOptionsItemSelected(item);
+
+        return super.onContextItemSelected(item);
     }
+
+
 }
