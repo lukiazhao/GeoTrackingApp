@@ -12,12 +12,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.adapter.FilterSpinnerAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
 import com.rmit.geotracking.MainActivity;
+import com.rmit.geotracking.controller.SortCategoryListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class TrackableActivity extends MainActivity {
@@ -28,17 +31,17 @@ public class TrackableActivity extends MainActivity {
 
     TrackableListAdapter adapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackable_list);
 
 
-        ListView listView = (ListView) findViewById(R.id.trackable_list);
+        listView = (ListView) findViewById(R.id.trackable_list);
 
-         loadSpinner();
+        // add spinner
+        loadSpinner();
+
         // call adapter
         adapter = new TrackableListAdapter(this, trackableMap);
 
@@ -50,40 +53,32 @@ public class TrackableActivity extends MainActivity {
     }
 
     public void loadSpinner(){
-        ArrayList<String> data = new ArrayList<>();
 
-        data.add("All"); data.add("category");
-        Spinner spinner = findViewById(R.id.spinner);
+//        ArrayList<String> category = new ArrayList<>();
+//
+//        category.add("Select Category"); category.add("Asian"); category.add("Argentinian"); category.add("African");
+//        category.add("Dessert"); category.add("Italian"); category.add("Vietnamese");category.add("Thai"); category.add("Western");
+        List<String> category = trackManager.getCategory();
 
-        ArrayAdapter adapterSpin = new ArrayAdapter(this, android.R.layout.simple_spinner_item, data);
+        // get reference of widgets from xml layout.
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+
+        final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, category);
+
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapterSpin);
-        //set the default display item to first one
-//        spinner.setSelection(data.size() - 1);
+
+        spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
+
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        getMenuInflater().inflate(R.menu.context_menu, menu);
+    public ListView returnList(){
+        return this.listView;
     }
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
 
-        switch (item.getItemId()) {
-            case R.id.add_to_tracking:
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                Toast.makeText(this, "id +" +  info.id, Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(this, AddToTracking.class);
-                myIntent.putExtra("Trackable_id", String.valueOf(info.id + 1));
-                startActivity(myIntent);
-        }
-
-        return super.onContextItemSelected(item);
-    }
 
 
 }

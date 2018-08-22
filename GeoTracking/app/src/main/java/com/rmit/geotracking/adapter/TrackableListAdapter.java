@@ -45,7 +45,7 @@ public class TrackableListAdapter extends BaseAdapter{
         TextView textView = view.findViewById(R.id.trackable_item);
 
         //set data into textView
-
+            System.out.println(trackableMap.get(position + 1) == null);
         textView.setText(trackableMap.get(position + 1).getId() + " ." + trackableMap.get(position + 1).getName());
 
         return view;
