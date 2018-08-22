@@ -31,6 +31,7 @@ public class AddTrackingListener implements View.OnClickListener {
 
      public AddTrackingListener(Activity context, String trackableId)
      {
+         // context.getView()
         this.context = context;
         this.trackableId = trackableId;
         this.title = (EditText) context.findViewById(R.id.edit_title);

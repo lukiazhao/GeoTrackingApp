@@ -51,7 +51,4 @@ public class TrackableListAdapter extends BaseAdapter{
         return view;
     }
 
-
-
-
 }

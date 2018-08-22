@@ -2,11 +2,7 @@ package com.rmit.geotracking.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +18,6 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 public class TrackableActivity extends MainActivity {
@@ -32,17 +27,18 @@ public class TrackableActivity extends MainActivity {
     Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
 
     TrackableListAdapter adapter;
-    public TrackableActivity(){
 
-    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackable_list);
 
-        loadSpinner();
+
         ListView listView = (ListView) findViewById(R.id.trackable_list);
 
+         loadSpinner();
         // call adapter
         adapter = new TrackableListAdapter(this, trackableMap);
 
@@ -50,7 +46,6 @@ public class TrackableActivity extends MainActivity {
         listView.setAdapter(adapter);
 
         //register list view with context menu
-
         registerForContextMenu(listView);
     }
 
@@ -85,7 +80,6 @@ public class TrackableActivity extends MainActivity {
                 Intent myIntent = new Intent(this, AddToTracking.class);
                 myIntent.putExtra("Trackable_id", String.valueOf(info.id + 1));
                 startActivity(myIntent);
-
         }
 
         return super.onContextItemSelected(item);
