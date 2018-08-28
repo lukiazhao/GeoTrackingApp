@@ -36,21 +36,24 @@
             android:hint="@string/title"
             android:inputType="none|text" />
 
-        <TextView
-            android:id="@+id/select_date"
+        <Spinner
+            android:id="@+id/select_start_spinner"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:hint="@string/select_date"
-            android:textSize="19sp" />
+            android:dropDownWidth="match_parent" />
 
         <TextView
-            android:id="@+id/select_time"
+            android:id="@+id/target_end_time"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:hint="@string/select_time"
-            android:textSize="19sp" />
+            android:textAlignment="viewStart"
+            android:text="@string/target_end_time" />
+
+        <Spinner
+            android:id="@+id/select_meet_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:dropDownWidth="match_parent" />
 
         <EditText
             android:id="@+id/edit_meet_location"

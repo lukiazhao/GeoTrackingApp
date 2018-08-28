@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
@@ -85,17 +86,18 @@ public class TrackManager extends Observable {
 
             while ((line = bufferedReader.readLine()) != null) {
                 Trackable trackable;
-                String[] arrOfElement = line.split(",");
+                String[] arrOfElement = line.split(",\"");
+
                 int id = Integer.parseInt(arrOfElement[0]);
-                String name = arrOfElement[1];
-                String desc = arrOfElement[2];
-                String url = arrOfElement[3];
-                String category = arrOfElement[4];
+                String name = arrOfElement[1].replaceAll("\"","");
+                String desc = arrOfElement[2].replaceAll("\"","");
+                String url = arrOfElement[3].replaceAll("\"","");
+                String category = arrOfElement[4].replaceAll("\"","");
 
                 if (arrOfElement.length == 5) {
                     trackable = new SimpleTrackable(id, name, desc, url, category);
                 } else {
-                    trackable = new SimpleTrackable(id, name, desc, url, category, arrOfElement[5]);
+                    trackable = new SimpleTrackable(id, name, desc, url, category, arrOfElement[5].replaceAll("\"",""));
                 }
 
                 trackablesMap.put(id, trackable);
@@ -138,9 +140,9 @@ public class TrackManager extends Observable {
                 Log.i(LOG_TAG,  " :???????? " + tracking.toString());
             }
         }
-
         return trackingMap;
     }
+
 
     public String [] generateTrackingAdapterArray(){
         ArrayList<Tracking> sortedtrackings = sortTrackingMap(trackingMap);
@@ -174,5 +176,17 @@ public class TrackManager extends Observable {
         }
 
         return trackings;
+    }
+
+    public List<String> getCategory(){
+        List<String> category = new ArrayList<>();
+        category.add("Select Category");
+        for (Trackable trackable: trackableMap.values()){
+            if(!category.contains(trackable.getCategory())){
+                category.add(trackable.getCategory());
+            }
+        }
+        System.out.println("category size: " + category.size());
+        return category;
     }
 }

@@ -35,6 +35,8 @@ public class CheckTrackingListener implements View.OnClickListener {
         trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+
+        trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         View mview = inflater.inflate(R.layout.view_tracking_dialog, null);
 
         //get textviews for all tracking attributes
