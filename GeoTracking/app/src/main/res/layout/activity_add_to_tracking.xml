@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.AddToTracking">
+    tools:context=".view.AddToTrackingActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -22,11 +22,11 @@
 
         <TextView
             android:id="@+id/item_name"
-            android:layout_width="247dp"
+            android:layout_width="match_parent"
             android:layout_height="31dp"
-            android:text="@string/TrackableName"
             android:labelFor="@+id/item_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:text="@string/TrackableName"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <EditText
             android:id="@+id/edit_title"
@@ -35,6 +35,12 @@
             android:ems="10"
             android:hint="@string/title"
             android:inputType="none|text" />
+
+        <TextView
+            android:id="@+id/start_time_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/target_start_time" />
 
         <Spinner
             android:id="@+id/select_start_spinner"
@@ -45,9 +51,21 @@
         <TextView
             android:id="@+id/target_end_time"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:textAlignment="viewStart"
+            android:layout_height="wrap_content"
+            android:text="@string/target_end_time"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/end_time_text"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
             android:text="@string/target_end_time" />
+
+        <TextView
+            android:id="@+id/meet_time_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_meet_time" />
 
         <Spinner
             android:id="@+id/select_meet_spinner"

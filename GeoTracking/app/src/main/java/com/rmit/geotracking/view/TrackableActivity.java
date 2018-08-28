@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -50,8 +51,6 @@ public class TrackableActivity extends MainActivity {
         // set adapter into list view
         listView.setAdapter(adapter);
 
-        //register list view with context menu
-        registerForContextMenu(listView);
     }
 
     public void loadSpinner(){
