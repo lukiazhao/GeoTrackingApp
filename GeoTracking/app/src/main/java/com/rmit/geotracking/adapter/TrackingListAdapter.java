@@ -27,6 +27,7 @@ public class TrackingListAdapter extends BaseAdapter {
     private String [] keyArray;
     private TrackManager manager;
 
+
     public TrackingListAdapter(Context context, TrackManager manager){
     //    System.out.println("Create TrackingList adapter");
         this.context = context;

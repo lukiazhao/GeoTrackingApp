@@ -2,11 +2,7 @@ package com.rmit.geotracking.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,8 +12,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.adapter.FilterSpinnerAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
 import com.rmit.geotracking.MainActivity;
+import com.rmit.geotracking.controller.SortCategoryListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 
@@ -31,17 +29,20 @@ public class TrackableActivity extends MainActivity {
     TrackManager trackManager = TrackManager.getSingletonInstance(this);
     Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
 
-    TrackableListAdapter adapter;
-    public TrackableActivity(){
 
-    }
+    TrackableListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackable_list);
 
+        System.out.println("Instance 2 hash:" + trackManager.hashCode());
+
+        listView = (ListView) findViewById(R.id.trackable_list);
+
+        // add spinner
         loadSpinner();
-        ListView listView = (ListView) findViewById(R.id.trackable_list);
 
         // call adapter
         adapter = new TrackableListAdapter(this, trackableMap);
@@ -50,46 +51,25 @@ public class TrackableActivity extends MainActivity {
         listView.setAdapter(adapter);
 
         //register list view with context menu
-
         registerForContextMenu(listView);
     }
 
     public void loadSpinner(){
-        ArrayList<String> data = new ArrayList<>();
 
-        data.add("All"); data.add("category");
-        Spinner spinner = findViewById(R.id.spinner);
 
-        ArrayAdapter adapterSpin = new ArrayAdapter(this, android.R.layout.simple_spinner_item, data);
+        List<String> category = trackManager.getCategory();
+
+        // get reference of widgets from xml layout.
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+        final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, category);
+
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapterSpin);
-        //set the default display item to first one
-//        spinner.setSelection(data.size() - 1);
+
+        spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
+
     }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        getMenuInflater().inflate(R.menu.context_menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.add_to_tracking:
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-                Toast.makeText(this, "id +" +  info.id, Toast.LENGTH_SHORT).show();
-                Intent myIntent = new Intent(this, AddToTracking.class);
-                myIntent.putExtra("Trackable_id", String.valueOf(info.id + 1));
-                startActivity(myIntent);
-
-        }
-
-        return super.onContextItemSelected(item);
-    }
-
 
 }

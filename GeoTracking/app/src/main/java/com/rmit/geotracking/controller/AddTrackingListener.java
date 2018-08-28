@@ -31,11 +31,11 @@ public class AddTrackingListener implements View.OnClickListener {
 
      public AddTrackingListener(Activity context, String trackableId)
      {
+         // context.getView()
         this.context = context;
         this.trackableId = trackableId;
         this.title = (EditText) context.findViewById(R.id.edit_title);
-        this.meetDate = (TextView) context.findViewById(R.id.select_date);
-        this.meetTime = (TextView) context.findViewById(R.id.select_time);
+
         this.meetLocation = (EditText) context.findViewById(R.id.edit_meet_location);
      }
 
