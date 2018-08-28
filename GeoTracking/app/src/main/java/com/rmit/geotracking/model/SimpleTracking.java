@@ -1,21 +1,23 @@
 package com.rmit.geotracking.model;
 
+import android.support.annotation.NonNull;
+
 import java.security.SecureRandom;
 import java.util.Date;
 
-public class SimpleTracking implements Tracking {
+public class SimpleTracking implements Tracking, Comparable<Tracking> {
     private static final Integer LENGTH = 4 ;
     private String trackingId;
     private int trackableId;
     private String title;
     private Date targetStartTime;
     private Date targetEndTime;
-    private String meetTime;
+    private Date meetTime;
     private String currentLocation;
     private String meetLocation;
 
     public SimpleTracking(String trackingId, int trackableId, String title,
-                          Date targetStartTime, Date targetEndTime, String meetTime,
+                          Date targetStartTime, Date targetEndTime, Date meetTime,
                           String currentLocation, String meetLocation) {
         this.trackingId = generateRandomString(LENGTH);
         this.trackableId = trackableId;
@@ -53,7 +55,7 @@ public class SimpleTracking implements Tracking {
     }
 
     @Override
-    public String getMeetTime() {
+    public Date getMeetTime() {
         return meetTime;
     }
 
@@ -84,4 +86,11 @@ public class SimpleTracking implements Tracking {
                 + this.meetTime + "; meet location: " + meetLocation;
     }
 
+    public int compareTo(Tracking tracking1) {
+        if(this.meetTime.compareTo(tracking1.getMeetTime()) >= 0) {
+            return 1;
+        } else {
+        return -1;
+        }
+    }
 }

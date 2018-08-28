@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.TrackingListAdapter;
+import com.rmit.geotracking.model.SimpleTracking;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 public class CheckTrackingListener implements View.OnClickListener {
 
     private Context context;
-    private int position;
+ //   private int position;
     private Map<String, Tracking> trackingMap;
     private TrackingListAdapter adapter;
     private Tracking tracking;
@@ -31,6 +32,8 @@ public class CheckTrackingListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 
         trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
@@ -66,6 +69,17 @@ public class CheckTrackingListener implements View.OnClickListener {
         confirmbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //Test add tracking code
+
+//                Tracking testtracking = new SimpleTracking("AAAA", 9,
+//                                                           "Test",null, null, null,null,null);
+          //      trackingMap.put(testtracking.getTrackingId(), testtracking);
+            //    System.out.println(trackingMap.size());
+//                trackingMap.put("asdasd", testtracking);
+//                adapter.updateKeyArray(TrackManager.getSingletonInstance(context).generateTrackingKeyArray());
+//                adapter.notifyDataSetChanged();
+
                 dialog.dismiss();
             }
         });
