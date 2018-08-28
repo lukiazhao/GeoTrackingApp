@@ -21,7 +21,7 @@ public class TrackingListAdapter extends BaseAdapter {
     private Map<String, Tracking> trackingMap;
     LayoutInflater inflater;
     Context context;
-    private String [] keyArray;
+    private String[] keyArray;
 
     public TrackingListAdapter(Context context){
         System.out.println("Create TrackingList adapter");

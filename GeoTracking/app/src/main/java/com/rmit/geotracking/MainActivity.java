@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
+
+        System.out.println("Instance 1 hash:" + trackManager.hashCode());
+
+
         View trackableBut = findViewById(R.id.trackable_button);
         View trackingBut = findViewById(R.id.tracking_button);
 
@@ -41,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
                 goTracking();
             }
         });
-
-        //create action bar
-//        Toolbar actionbar = (Toolbar) findViewById(R.id.action_bar);
-//        setSupportActionBar(actionbar);
 
         //Test tracking services
 //        TestTrackingService.test(this);

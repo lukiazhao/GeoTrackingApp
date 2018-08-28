@@ -38,10 +38,8 @@ public class SortCategoryListener implements AdapterView.OnItemSelectedListener 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String selectedItemText = (String) parent.getItemAtPosition(position);
 
-    //    if(position > 0) {
             System.out.println("spinner: selected item is " + selectedItemText + " at: "+ position);
             getSelectedTrackable(position, selectedItemText);
-     //   }
     }
 
     @Override
@@ -55,7 +53,6 @@ public class SortCategoryListener implements AdapterView.OnItemSelectedListener 
 
        Map<Integer, Trackable> selected = new HashMap<>();
        if (position == 0){
-           System.out.println("Position: " + position);
            adapter = new TrackableListAdapter(context, trackableMap);
            Toast.makeText(context, "You have selected " + category, Toast.LENGTH_SHORT).show();
        } else {

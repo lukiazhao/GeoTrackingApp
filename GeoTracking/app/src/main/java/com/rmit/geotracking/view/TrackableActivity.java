@@ -29,6 +29,7 @@ public class TrackableActivity extends MainActivity {
     TrackManager trackManager = TrackManager.getSingletonInstance(this);
     Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
 
+
     TrackableListAdapter adapter;
 
     @Override
@@ -36,6 +37,7 @@ public class TrackableActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trackable_list);
 
+        System.out.println("Instance 2 hash:" + trackManager.hashCode());
 
         listView = (ListView) findViewById(R.id.trackable_list);
 
@@ -54,15 +56,11 @@ public class TrackableActivity extends MainActivity {
 
     public void loadSpinner(){
 
-//        ArrayList<String> category = new ArrayList<>();
-//
-//        category.add("Select Category"); category.add("Asian"); category.add("Argentinian"); category.add("African");
-//        category.add("Dessert"); category.add("Italian"); category.add("Vietnamese");category.add("Thai"); category.add("Western");
+
         List<String> category = trackManager.getCategory();
 
         // get reference of widgets from xml layout.
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-
 
         final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, category);
 
@@ -73,12 +71,5 @@ public class TrackableActivity extends MainActivity {
         spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
 
     }
-
-    public ListView returnList(){
-        return this.listView;
-    }
-
-
-
 
 }

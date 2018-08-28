@@ -25,6 +25,10 @@
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>
     <string name="target_end_time">Target End Time</string>
+    <string name="item_description">item_description</string>
+    <string name="item_url">item_url</string>
+    <string name="view">View</string>
+    <string name="add">Add</string>
 
 
 </resources>

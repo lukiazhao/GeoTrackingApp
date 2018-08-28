@@ -19,15 +19,6 @@ public class FilterSpinnerAdapter  extends ArrayAdapter {
 
     }
 
-//    @Override
-//    public boolean isEnabled(int position) {
-//        if (position == 0) {
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
-
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -36,8 +27,9 @@ public class FilterSpinnerAdapter  extends ArrayAdapter {
         System.out.println("Spinner" + position);
 
         TextView tv = (TextView) view;
-        if(position > 0){
-            tv.setTextColor(Color.RED);
+
+        if(position == 0){
+            tv.setTextColor(Color.GRAY);
         } else {
             tv.setTextColor(Color.BLACK);
         }
