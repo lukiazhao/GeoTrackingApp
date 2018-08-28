@@ -13,9 +13,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Set;
 
 public class TrackManager extends Observable {
     // search and filter
@@ -79,17 +81,18 @@ public class TrackManager extends Observable {
 
             while ((line = bufferedReader.readLine()) != null) {
                 Trackable trackable;
-                String[] arrOfElement = line.split(",");
+                String[] arrOfElement = line.split(",\"");
+
                 int id = Integer.parseInt(arrOfElement[0]);
-                String name = arrOfElement[1];
-                String desc = arrOfElement[2];
-                String url = arrOfElement[3];
-                String category = arrOfElement[4];
+                String name = arrOfElement[1].replaceAll("\"","");
+                String desc = arrOfElement[2].replaceAll("\"","");
+                String url = arrOfElement[3].replaceAll("\"","");
+                String category = arrOfElement[4].replaceAll("\"","");
 
                 if (arrOfElement.length == 5) {
                     trackable = new SimpleTrackable(id, name, desc, url, category);
                 } else {
-                    trackable = new SimpleTrackable(id, name, desc, url, category, arrOfElement[5]);
+                    trackable = new SimpleTrackable(id, name, desc, url, category, arrOfElement[5].replaceAll("\"",""));
                 }
 
                 trackablesMap.put(id, trackable);
@@ -109,26 +112,40 @@ public class TrackManager extends Observable {
 
         // if stop time > 0 -> put a tracking into the map
         List<TrackingService.TrackingInfo> trackingInfos = trackingService.getTrackingList();
-        for (TrackingService.TrackingInfo tr:trackingInfos){
-
-            if (tr.stopTime > 0){
-//                Log.i(LOG_TAG,tr.toString()+ "??????????" + " i = " + i);
-                //create new Tracking object
-                String trackingId = null;
-                int trackableId = tr.trackableId;
-                String title = trackableMap.get(tr.trackableId).getName();
-                Date targetStartTime = tr.date;
-                Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
-                String meetTime = targetStartTime.toString();        // check
-                String currLocation = null;
-                String meetLocation = tr.latitude + " , " + tr.longitude;
-
-                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
-                trackingMap.put(tracking.getTrackingId(), tracking);
-                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
-            }
-        }
+//        for (TrackingService.TrackingInfo tr:trackingInfos){
+//
+//            if (tr.stopTime > 0){
+////                Log.i(LOG_TAG,tr.toString()+ "??????????" + " i = " + i);
+//                //create new Tracking object
+//                String trackingId = null;
+//                int trackableId = tr.trackableId;
+//                String title = trackableMap.get(tr.trackableId).getName();
+//                Date targetStartTime = tr.date;
+//                Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
+//                String meetTime = targetStartTime.toString();        // check
+//                String currLocation = null;
+//                String meetLocation = tr.latitude + " , " + tr.longitude;
+//
+//                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
+//                trackingMap.put(tracking.getTrackingId(), tracking);
+//                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
+//            }
+//        }
 
         return trackingMap;
     }
+
+    public List<String> getCategory(){
+        List<String> category = new ArrayList<>();
+        category.add("Select Category");
+        for (Trackable trackable: trackableMap.values()){
+            if(!category.contains(trackable.getCategory())){
+                category.add(trackable.getCategory());
+            }
+        }
+        System.out.println("category size: " + category.size());
+        return category;
+    }
+
+
 }
