@@ -15,20 +15,26 @@ import java.util.Map;
 
 public class TrackingActivity extends MainActivity {
     private static final String LOG_TAG = "TrackingActivity";
-    TrackManager trackManager = TrackManager.getSingletonInstance(this);
+    TrackManager trackManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_tracking);
         Log.i(LOG_TAG, "start");
-
         loadListView();
     }
 
     public void loadListView(){
         Map<String, Tracking> trackingMap = trackManager.getTrackingMap();
         ListView trackingView = findViewById(R.id.tracking_list);
-        TrackingListAdapter adapter = new TrackingListAdapter(this);
+        TrackingListAdapter adapter = new TrackingListAdapter(this, trackManager);
         trackingView.setAdapter(adapter);
+    }
+
+    public String generateDetailView(Tracking tracking){
+        String output = String.format("TrackableID:   %d\nTrackingID:   %s\nTitle:   %s\nMeet time:   %s", tracking.getTrackableId(), tracking.getTrackingId(), tracking.getTitle(), tracking.getMeetTime());
+        //output.
+        return output;
     }
 }

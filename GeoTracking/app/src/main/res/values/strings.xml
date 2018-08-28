@@ -24,6 +24,17 @@
 
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>
+
+    <string name="viewtracking_trackableID">Trackable ID</string>
+    <string name="viewtracking_trackingID">Tracking ID</string>
+    <string name="viewtracking_meettime">Meet Time</string>
+    <string name="viewtracking_starttime">Start Time</string>
+    <string name="viewtracking_endtime">End Time</string>
+    <string name="viewtracking_currentlocation">Current Location</string>
+    <string name="viewtracking_meetlocation">Meet Location</string>
+
+
+
     <string name="item_description">item_description</string>
     <string name="item_url">item_url</string>
     <string name="view">View</string>
@@ -31,6 +42,5 @@
     <string name="target_start_time">Target Start Time</string>
     <string name="choose_meet_time">Choose Meet Time</string>
     <string name="target_end_time">Target End Time</string>
-
 
 </resources>
