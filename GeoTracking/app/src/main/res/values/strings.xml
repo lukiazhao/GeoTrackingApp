@@ -24,6 +24,18 @@
 
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>
+    <string name="viewtracking_trackableID">Trackable ID</string>
+    <string name="viewtracking_trackingID">Tracking ID</string>
+    <string name="viewtracking_meettime">Meet Time</string>
+    <string name="viewtracking_starttime">Start Time</string>
+    <string name="viewtracking_endtime">End Time</string>
+    <string name="viewtracking_currentlocation">Current Location</string>
+    <string name="viewtracking_meetlocation">Meet Location</string>
+
+
+
+
+
 
 
 
