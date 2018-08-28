@@ -55,7 +55,6 @@ public class TrackableActivity extends MainActivity {
 
     public void loadSpinner(){
 
-
         List<String> category = trackManager.getCategory();
 
         // get reference of widgets from xml layout.

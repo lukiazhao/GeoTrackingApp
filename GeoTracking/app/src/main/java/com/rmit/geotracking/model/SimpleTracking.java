@@ -16,7 +16,7 @@ public class SimpleTracking implements Tracking, Comparable<Tracking> {
     private String currentLocation;
     private String meetLocation;
 
-    public SimpleTracking(String trackingId, int trackableId, String title,
+    public SimpleTracking(int trackableId, String title,
                           Date targetStartTime, Date targetEndTime, Date meetTime,
                           String currentLocation, String meetLocation) {
         this.trackingId = generateRandomString(LENGTH);
@@ -28,6 +28,7 @@ public class SimpleTracking implements Tracking, Comparable<Tracking> {
         this.currentLocation = currentLocation;
         this.meetLocation = meetLocation;
     }
+
 
     @Override
     public String getTrackingId() {
