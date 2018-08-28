@@ -247,4 +247,5 @@ public class TrackManager extends Observable {
             return secondAttribute;
         }
     }
+
 }

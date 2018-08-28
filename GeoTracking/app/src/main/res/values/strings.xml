@@ -34,6 +34,10 @@
     <string name="viewtracking_meetlocation">Meet Location</string>
 
 
+<<<<<<< HEAD
+=======
+    <string name="target_end_time">Target End Time</string>
+>>>>>>> ba5e2ad2ad380dad4f3a7da484605ba18fc68e36
 
     <string name="item_description">item_description</string>
     <string name="item_url">item_url</string>
