@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.CheckTrackingListener;
 import com.rmit.geotracking.controller.EditTrackingListener;
+import com.rmit.geotracking.model.SimpleTracking;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,33 +32,21 @@ public class TrackingListAdapter extends BaseAdapter {
         this.context = context;
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         this.manager = manager;
-        this.keyArray = manager.generateTrackingKeyArray();
+        this.keyArray = manager.generateTrackingAdapterArray();
     //    this.keyArray = generateKeyArray(trackingMap.keySet());
+
         System.out.println("generateKeyArray: keyset:  " + trackingMap.keySet());
   //      System.out.println(trackingMap.get(0).getTitle());
     }
 
-    //gerenate an array of keys to help get value in getItem() method
-//    public String [] generateKeyArray(Set<String> keyset){
-//        String [] outputarray = new String [keyset.size()];
-//        int position = 0;
-//
-//        for (String key : keyset) {
-//            outputarray[position] = key;
-//            position++;
-//            System.out.println("Checkarray!" + key);
-//        }
-//
-//        return outputarray;
-//    }
-
     @Override
     public int getCount() {
-        return manager.generateTrackingKeyArray().length;
+        return manager.generateTrackingAdapterArray().length;
     }
 
     @Override
     public Object getItem(int i) {
+
         return trackingMap.get(keyArray[i]);
     }
 
@@ -72,12 +62,12 @@ public class TrackingListAdapter extends BaseAdapter {
         System.out.println(getCount());
 
         TextView trackingTitleView = (TextView) v.findViewById(R.id.trackingTitleTextView);
-//        TextView trackingMeetView = (TextView) v.findViewById(R.id.trackingMeetTextView);
-//        TextView trackingLocationView = (TextView) v.findViewById(R.id.trackingLocationTextView);
+        TextView trackingMeetView = (TextView) v.findViewById(R.id.trackingMeetTextView);
+        TextView trackingLocationView = (TextView) v.findViewById(R.id.trackingLocationTextView);
 
         trackingTitleView.setText(trackingMap.get(keyArray[position]).getTitle());
-//        trackingMeetView.setText(trackingMap.get(keyArray[position]).getMeetTime().toString());
-//        trackingLocationView.setText(trackingMap.get(keyArray[position]).getMeetLocation());
+        trackingMeetView.setText(trackingMap.get(keyArray[position]).getMeetTime().toString());
+        trackingLocationView.setText(trackingMap.get(keyArray[position]).getMeetLocation());
 
         Button trackingViewButton = (Button) v.findViewById(R.id.trackingViewButton);
         Button trackingEditButton = (Button) v.findViewById(R.id.trackingEditButton);
@@ -89,6 +79,5 @@ public class TrackingListAdapter extends BaseAdapter {
 
     public void updateKeyArray(String [] keyArray){
         this.keyArray = keyArray;
-
     }
 }

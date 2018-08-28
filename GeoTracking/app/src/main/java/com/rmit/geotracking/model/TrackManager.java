@@ -11,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +33,10 @@ public class TrackManager extends Observable {
     private TrackManager(){
         this.trackableMap = loadTrackable();
         this.trackingMap = new HashMap<String, Tracking>();
-     //   this.trackingMap = loadTracking();
+
+        //Test
+     //   this.trackingMap = new HashMap<String, Tracking>();
+        this.trackingMap = loadTracking();
     }
 
     // singleton support
@@ -103,53 +108,71 @@ public class TrackManager extends Observable {
 
     }
 
-    public String [] generateTrackingKeyArray(){
-        Set<String> keyset = trackingMap.keySet();
-        String [] outputarray = new String [keyset.size()];
-        int position = 0;
-
-        for (String key : keyset) {
-            outputarray[position] = key;
-            position++;
-            System.out.println("Checkarray!" + key);
-        }
-
-        return outputarray;
-    }
-
     public boolean addNewTracking(Tracking tracking){
         trackingMap.put(tracking.getTrackingId(), tracking);
         return true;
     }
 
+    public Map<String, Tracking> loadTracking(){
+        Map<String,Tracking> trackingMap = new HashMap<>();
+        TrackingService trackingService = TrackingService.getSingletonInstance(context);
 
+        // if stop time > 0 -> put a tracking into the map
+        List<TrackingService.TrackingInfo> trackingInfos = trackingService.getTrackingList();
+        for (TrackingService.TrackingInfo tr:trackingInfos){
 
-    //    public Map<String, Tracking> loadTracking(){
-//        Map<String,Tracking> trackingMap = new HashMap<>();
-//        TrackingService trackingService = TrackingService.getSingletonInstance(context);
-//
-//        // if stop time > 0 -> put a tracking into the map
-//        List<TrackingService.TrackingInfo> trackingInfos = trackingService.getTrackingList();
-//        for (TrackingService.TrackingInfo tr:trackingInfos){
-//
-//            if (tr.stopTime > 0){
-////                Log.i(LOG_TAG,tr.toString()+ "??????????" + " i = " + i);
-//                //create new Tracking object
-//                String trackingId = null;
-//                int trackableId = tr.trackableId;
-//                String title = trackableMap.get(tr.trackableId).getName();
-//                Date targetStartTime = tr.date;
-//                Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
-//                String meetTime = targetStartTime.toString();        // check
-//                String currLocation = null;
-//                String meetLocation = tr.latitude + " , " + tr.longitude;
-//
-//                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
-//                trackingMap.put(tracking.getTrackingId(), tracking);
-//                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
-//            }
-//        }
-//
-//        return trackingMap;
-//    }
+            if (tr.stopTime > 0){
+//                Log.i(LOG_TAG,tr.toString()+ "??????????" + " i = " + i);
+                //create new Tracking object
+                String trackingId = null;
+                int trackableId = tr.trackableId;
+                String title = trackableMap.get(tr.trackableId).getName();
+                Date targetStartTime = tr.date;
+                Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
+                Date meetTime = targetStartTime;        // check
+                String currLocation = null;
+                String meetLocation = tr.latitude + " , " + tr.longitude;
+
+                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
+                trackingMap.put(tracking.getTrackingId(), tracking);
+                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
+            }
+        }
+
+        return trackingMap;
+    }
+
+    public String [] generateTrackingAdapterArray(){
+        ArrayList<Tracking> sortedtrackings = sortTrackingMap(trackingMap);
+     //   Set<String> keyset = sortedtrackings.keySet();
+        String [] outputarray = new String [sortedtrackings.size()];
+        int position = 0;
+
+        for (Tracking tracking : sortedtrackings) {
+      //      outputarray[position] = key;
+            outputarray[position] = tracking.getTrackingId();
+            position++;
+     //       System.out.println("Checkarray!" + tracking.getTrackingId());
+        }
+
+        return outputarray;
+    }
+
+    public ArrayList<Tracking> sortTrackingMap(Map<String, Tracking> trackingmap) {
+        Collection<Tracking> trackingCollection =  trackingmap.values();
+        ArrayList<Tracking> trackings = new ArrayList<>();
+
+        for(Tracking tracking : trackingCollection) {
+            trackings.add(tracking);
+        }
+
+        Collections.sort(trackings);
+
+        //test
+        for(Tracking tracking : trackings) {
+            System.out.println("Test timesort: " + tracking.getTargetStartTime());
+        }
+
+        return trackings;
+    }
 }

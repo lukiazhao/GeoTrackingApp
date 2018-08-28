@@ -2,7 +2,7 @@ package com.rmit.geotracking.model;
 
 import java.util.Date;
 
-public interface Tracking {
+public interface Tracking extends Comparable<Tracking> {
     String getTrackingId();
 
     int getTrackableId();
@@ -13,7 +13,7 @@ public interface Tracking {
 
     Date getTargetEndTime();
 
-    String getMeetTime();
+    Date getMeetTime();
 
     String getCurrentLocation();
 
