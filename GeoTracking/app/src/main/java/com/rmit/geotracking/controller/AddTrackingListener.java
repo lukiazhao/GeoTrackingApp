@@ -19,19 +19,21 @@ public class AddTrackingListener implements View.OnClickListener {
 
      private AddToTrackingActivity context;
      private Integer trackableId;
+     private String trackingId;
 
 
-     public AddTrackingListener(AddToTrackingActivity context, Integer trackableId)
+     public AddTrackingListener(AddToTrackingActivity context, Integer trackableId, String trackingId)
      {
         this.context = context;
         this.trackableId = trackableId;
+        this.trackingId = trackingId;
 
      }
 
     @Override
     public void onClick(View view) {
 
-            createTracking();
+         createTracking();
 
          context.finish();
     }
@@ -58,4 +60,6 @@ public class AddTrackingListener implements View.OnClickListener {
         }
 
     }
+
+
 }

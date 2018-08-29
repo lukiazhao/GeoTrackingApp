@@ -49,7 +49,7 @@ public class AddToTrackingActivity extends AppCompatActivity {
         // set listener to "finish" button
         Button finishButton = (Button) findViewById(R.id.finish_button);
 
-        finishButton.setOnClickListener(new AddTrackingListener(this, this.selectedTrackableId));
+        finishButton.setOnClickListener(new AddTrackingListener(this, this.selectedTrackableId, this.selectedTrakcingId));
     }
 
     public void loadDateTimeSpinners() {
