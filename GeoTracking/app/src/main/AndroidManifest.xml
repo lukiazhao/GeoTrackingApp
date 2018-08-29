@@ -18,7 +18,7 @@
         </activity>
         <activity android:name=".view.TrackableActivity" />
         <activity android:name=".view.TrackingActivity" />
-        <activity android:name=".view.AddToTracking"></activity>
+        <activity android:name=".view.AddToTrackingActivity"></activity>
     </application>
 
 </manifest>

@@ -1,17 +1,13 @@
 package com.rmit.geotracking.controller;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.Log;
-import android.view.ContextMenu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.rmit.geotracking.R;
 import com.rmit.geotracking.model.SimpleTracking;
+import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
-import com.rmit.geotracking.view.AddToTracking;
+import com.rmit.geotracking.view.AddToTrackingActivity;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,45 +17,45 @@ import static java.lang.Integer.parseInt;
 
 public class AddTrackingListener implements View.OnClickListener {
 
-     private Activity context;
+     private AddToTrackingActivity context;
+     private Integer trackableId;
 
-     private String trackableId;
-     private EditText title;
-     private TextView meetDate;
-     private TextView meetTime;
-     private EditText meetLocation;
 
-     public AddTrackingListener(Activity context, String trackableId)
+     public AddTrackingListener(AddToTrackingActivity context, Integer trackableId)
      {
-         // context.getView()
         this.context = context;
         this.trackableId = trackableId;
-        this.title = (EditText) context.findViewById(R.id.edit_title);
 
-        this.meetLocation = (EditText) context.findViewById(R.id.edit_meet_location);
      }
 
     @Override
-    public void onClick(View view)
-    {
+    public void onClick(View view) {
 
-         createTracking();
+            createTracking();
+
          context.finish();
-
     }
 
-    public void createTracking()
-//    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).parse(scanner.next());
-    {
-        String date = meetDate.getText().toString();
-        String time = meetTime.getText().toString();
+    public void createTracking() {
 
-        String dateTime = date +" "+ time;
+        try {
+            String title = context.getTrackingTitle().getText().toString();
+            String meetLocation = context.getMeetLocation().getText().toString();
+            Date startTime = (Date) context.getStartTimeSpinner().getSelectedItem();
+            Date meetTime = (Date) context.getMeetTimeSpinner().getSelectedItem();
+            Date endTime = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM)
+                            .parse(context.getEndTimeTextView().getText().toString());
+            String currLocation = null;
 
-        Tracking tracking = new SimpleTracking(null, parseInt(trackableId), title.getText().toString(),
-                null, null, dateTime, null, meetLocation.getText().toString());
+            Tracking tracking = new SimpleTracking(trackableId, title, startTime, endTime, meetTime,
+                                            currLocation, meetLocation);
 
-        System.out.println("print"+ tracking.toString());
+            TrackManager.getSingletonInstance(context).getTrackingMap().put(tracking.getTrackingId(), tracking);
+
+            System.out.println("Tracking size after adding: " + TrackManager.getSingletonInstance(context).getTrackingMap().size());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 }

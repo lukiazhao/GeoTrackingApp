@@ -2,7 +2,6 @@ package com.rmit.geotracking.model;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.service.TrackingService;
@@ -11,15 +10,14 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
-import java.util.Set;
 
 public class TrackManager extends Observable {
     // search and filter
@@ -29,6 +27,7 @@ public class TrackManager extends Observable {
     private Map<Integer, Trackable> trackableMap;
     private Map<String, Tracking> trackingMap;
     private static Context context;
+    TrackingService trackingService = TrackingService.getSingletonInstance(context);
 
     //if use singleton, change this to private !!!!
     private TrackManager(){
@@ -36,8 +35,8 @@ public class TrackManager extends Observable {
         this.trackingMap = new HashMap<String, Tracking>();
 
         //Test
-     //   this.trackingMap = new HashMap<String, Tracking>();
-        this.trackingMap = loadTracking();
+//        this.trackingMap = new HashMap<String, Tracking>();
+//        this.trackingMap = loadTracking();
     }
 
     // singleton support
@@ -115,33 +114,32 @@ public class TrackManager extends Observable {
         return true;
     }
 
-    public Map<String, Tracking> loadTracking(){
-        Map<String,Tracking> trackingMap = new HashMap<>();
-        TrackingService trackingService = TrackingService.getSingletonInstance(context);
-
-        // if stop time > 0 -> put a tracking into the map
-        List<TrackingService.TrackingInfo> trackingInfos = trackingService.getTrackingList();
-        for (TrackingService.TrackingInfo tr:trackingInfos){
-
-            if (tr.stopTime > 0){
-//                Log.i(LOG_TAG,tr.toString()+ "??????????" + " i = " + i);
-                //create new Tracking object
-                String trackingId = null;
-                int trackableId = tr.trackableId;
-                String title = trackableMap.get(tr.trackableId).getName();
-                Date targetStartTime = tr.date;
-                Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
-                Date meetTime = targetStartTime;        // check
-                String currLocation = null;
-                String meetLocation = tr.latitude + " , " + tr.longitude;
-
-                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
-                trackingMap.put(tracking.getTrackingId(), tracking);
-                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
-            }
-        }
-        return trackingMap;
-    }
+//    public Map<String, Tracking> loadTracking(){
+//        Map<String,Tracking> trackingMap = new HashMap<>();
+//        TrackingService trackingService = TrackingService.getSingletonInstance(context);
+//
+//        // if stop time > 0 -> put a tracking into the map
+//        List<TrackingService.TrackingInfo> trackingInfos = trackingService.getTrackingInfoList();
+//        for (TrackingService.TrackingInfo tr:trackingInfos){
+//
+//            if (tr.stopTime > 0){
+//                //create new Tracking object
+//                String trackingId = null;
+//                int trackableId = tr.trackableId;
+//                String title = trackableMap.get(tr.trackableId).getName();
+//                Date targetStartTime = tr.date;
+//                Date targetEndTime = new Date(tr.date.getTime() + (tr.stopTime * 60000));   // check
+//                Date meetTime = targetStartTime;        // check
+//                String currLocation = null;
+//                String meetLocation = tr.latitude + " , " + tr.longitude;
+//
+//                Tracking tracking = new SimpleTracking(trackingId,trackableId,title,targetStartTime, targetEndTime, meetTime, currLocation, meetLocation);
+//                trackingMap.put(tracking.getTrackingId(), tracking);
+//                Log.i(LOG_TAG,  " :???????? " + tracking.toString());
+//            }
+//        }
+//        return trackingMap;
+//    }
 
 
     public String [] generateTrackingAdapterArray(){
@@ -189,4 +187,65 @@ public class TrackManager extends Observable {
         System.out.println("category size: " + category.size());
         return category;
     }
+
+    public List<Pair> getStartEndPairs(int selectedTrackableId) {
+        List<Pair> startEndPairs = new ArrayList<>();
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+
+        for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
+            if (info.trackableId == selectedTrackableId && info.stopTime > 0) {
+                endCal.setTime(info.date);
+                endCal.set(Calendar.MINUTE, endCal.get(Calendar.MINUTE) + info.stopTime);
+                startEndPairs.add(new Pair(info.date, endCal.getTime()));
+
+            }
+        }
+        return startEndPairs;
+    }
+
+    public List<Date> getStartTimes(int selectedTrackableId) {
+        List<Date> startTimes = new ArrayList<>();
+        for(Pair<Date> pair: getStartEndPairs(selectedTrackableId)){
+            startTimes.add(pair.getFirstAttribute());
+        }
+
+        return startTimes;
+    }
+
+
+
+    public List<Date> getMeetTimeList(Date startTime, Date endTime) {
+
+        List<Date> meetTimes = new ArrayList<>();
+        Calendar targetStartCal = Calendar.getInstance();
+        Calendar targetEndCal = Calendar.getInstance();
+
+        targetStartCal.setTime(startTime);
+        targetEndCal.setTime(endTime);
+        while (targetStartCal.before(targetEndCal)) {
+            meetTimes.add(targetStartCal.getTime());
+            targetStartCal.set(Calendar.MINUTE, targetStartCal.get(Calendar.MINUTE) + 1);
+        }
+        return meetTimes;
+    }
+
+
+    public static class Pair<T> {
+        T firstAttribute;
+        T secondAttribute;
+        Pair(T firstAttribute, T secondAttribute) {
+            this.firstAttribute = firstAttribute;
+            this.secondAttribute = secondAttribute;
+        }
+
+        public T getFirstAttribute() {
+            return firstAttribute;
+        }
+
+        public T getSecondAttribute() {
+            return secondAttribute;
+        }
+    }
+
 }

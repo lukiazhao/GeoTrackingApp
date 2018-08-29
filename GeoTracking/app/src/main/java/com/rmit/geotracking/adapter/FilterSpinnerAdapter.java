@@ -27,7 +27,6 @@ public class FilterSpinnerAdapter  extends ArrayAdapter {
         System.out.println("Spinner" + position);
 
         TextView tv = (TextView) view;
-
         if(position == 0){
             tv.setTextColor(Color.GRAY);
         } else {
