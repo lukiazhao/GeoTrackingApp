@@ -26,6 +26,7 @@
     <string name="routedialog_title1">Route Map</string>
     <string name="routedialog_title2">Trackable Name</string>
     <string name="routedialog_button">OK</string>
+    <string name="routedialog_norouteToast">No Route Information Avaliable</string>
 
     <string name="singletrackingview_editbutton">EDIT</string>
 

@@ -27,17 +27,14 @@ import java.util.Map;
 public class TrackableActivity extends MainActivity {
 
     private ListView listView;
-    TrackManager trackManager = TrackManager.getSingletonInstance(this);
-    Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
-
-
-    TrackableListAdapter adapter;
+    private TrackManager trackManager = TrackManager.getSingletonInstance(this);
+    private Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
+    private TrackableListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackablelist));
-
         setContentView(R.layout.activity_trackable_list);
 
         System.out.println("Instance 2 hash:" + trackManager.hashCode());
@@ -52,7 +49,6 @@ public class TrackableActivity extends MainActivity {
 
         // set adapter into list view
         listView.setAdapter(adapter);
-
     }
 
     public void loadSpinner(){
@@ -69,7 +65,10 @@ public class TrackableActivity extends MainActivity {
         spinner.setAdapter(adapterSpin);
 
         spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
+    }
 
+    public void showNoRouteToast(){
+        Toast.makeText(this, getResources().getString(R.string.routedialog_norouteToast), Toast.LENGTH_SHORT).show();
     }
 
 }
