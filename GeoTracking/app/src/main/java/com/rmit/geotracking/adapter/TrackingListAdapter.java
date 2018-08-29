@@ -28,7 +28,7 @@ public class TrackingListAdapter extends BaseAdapter {
         this.context = context;
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         this.manager = manager;
-        this.keyArray = manager.generateTrackingAdapterArray();
+        this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
     }
 
     @Override
@@ -66,6 +66,6 @@ public class TrackingListAdapter extends BaseAdapter {
     }
 
     public void updateKey(){
-        this.keyArray = manager.generateTrackingAdapterArray();
+        this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
     }
 }

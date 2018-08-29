@@ -47,12 +47,9 @@ public class AddToTrackingActivity extends AppCompatActivity {
         // set listener to "finish" button
         Button finishButton = (Button) findViewById(R.id.finish_button);
         finishButton.setOnClickListener(new AddTrackingListener(this, this.selectedTrackableId));
-
-
     }
 
     public void loadDateTimeSpinners() {
-
 
         List<Date> startTimes = manager.getStartTimes(selectedTrackableId);
         startTimeSpinner = (Spinner) findViewById(R.id.select_start_spinner);
@@ -100,7 +97,6 @@ public class AddToTrackingActivity extends AppCompatActivity {
         TextView location = findViewById(R.id.edit_meet_location);
         return location;
     }
-
 
     public Spinner getStartTimeSpinner() {
         return startTimeSpinner;

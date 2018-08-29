@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.AddButtonListener;
+import com.rmit.geotracking.controller.ViewRouteListener;
 import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.view.AddToTrackingActivity;
 
@@ -66,6 +67,8 @@ public class TrackableListAdapter extends BaseAdapter{
         // set listner to "Add" button
         Button boundTrackingBut = (Button) result.findViewById(R.id.item_add_button);
         boundTrackingBut.setOnClickListener(new AddButtonListener(context, trackable.getId(), trackable.getName()));
+        Button viewButton = (Button) result.findViewById(R.id.item_view_button);
+        viewButton.setOnClickListener(new ViewRouteListener(context, trackable));
 
         return result;
     }
