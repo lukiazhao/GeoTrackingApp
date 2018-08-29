@@ -165,7 +165,7 @@ public class TrackManager extends Observable {
         for(Tracking tracking : trackingCollection) {
             trackings.add(tracking);
         }
-
+//        trackings.addAll(trackingCollection);
         Collections.sort(trackings);
 
         //test

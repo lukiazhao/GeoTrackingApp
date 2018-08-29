@@ -30,6 +30,7 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         // update the meet time spinner list
         List<Date> meetTimes = TrackManager.getSingletonInstance(context).getMeetTimeList(selectedTime, endTime);
         ((AddToTrackingActivity) context).updateMeetTimeSpinner(meetTimes);
+
     }
 
     public Date extractEndTime(Date startTime) {
@@ -44,11 +45,7 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         return endTime;
     }
 
-
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 
 }

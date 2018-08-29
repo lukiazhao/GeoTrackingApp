@@ -49,7 +49,7 @@ public class AddTrackingListener implements View.OnClickListener {
 
             Tracking tracking = new SimpleTracking(trackableId, title, startTime, endTime, meetTime,
                                             currLocation, meetLocation);
-
+            // add tracking
             TrackManager.getSingletonInstance(context).getTrackingMap().put(tracking.getTrackingId(), tracking);
 
             System.out.println("Tracking size after adding: " + TrackManager.getSingletonInstance(context).getTrackingMap().size());

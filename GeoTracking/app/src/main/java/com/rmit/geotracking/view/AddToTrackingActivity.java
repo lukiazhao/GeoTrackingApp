@@ -27,6 +27,8 @@ public class AddToTrackingActivity extends AppCompatActivity {
     private Spinner startTimeSpinner;
     private Spinner meetTimeSpinner;
     private TextView endTimeTextView;
+    private ArrayAdapter meetTimeAdapter;
+    private String selectedTrakcingId;
     TrackManager manager = TrackManager.getSingletonInstance(this);
 
     @Override
@@ -46,13 +48,11 @@ public class AddToTrackingActivity extends AppCompatActivity {
 
         // set listener to "finish" button
         Button finishButton = (Button) findViewById(R.id.finish_button);
+
         finishButton.setOnClickListener(new AddTrackingListener(this, this.selectedTrackableId));
-
-
     }
 
     public void loadDateTimeSpinners() {
-
 
         List<Date> startTimes = manager.getStartTimes(selectedTrackableId);
         startTimeSpinner = (Spinner) findViewById(R.id.select_start_spinner);
@@ -61,18 +61,18 @@ public class AddToTrackingActivity extends AppCompatActivity {
 
         // set adatper to spinner
         startTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.startTimeSpinner.setAdapter(startTimeAdapter);
+        startTimeSpinner.setAdapter(startTimeAdapter);
 
         // set listener to spinner
-        this.startTimeSpinner.setOnItemSelectedListener(new TimeSelectionListener(this, selectedTrackableId));
+        startTimeSpinner.setOnItemSelectedListener(new TimeSelectionListener(this, selectedTrackableId));
 
     }
 
     public void updateMeetTimeSpinner(List<Date> meetTimes) {
         meetTimeSpinner = (Spinner) findViewById(R.id.select_meet_spinner);
-        ArrayAdapter meetTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
+        meetTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
         meetTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.meetTimeSpinner.setAdapter(meetTimeAdapter);
+        meetTimeSpinner.setAdapter(meetTimeAdapter);
     }
 
     public void updateEndTimeTextView(Date date){
@@ -88,6 +88,7 @@ public class AddToTrackingActivity extends AppCompatActivity {
         if(extras != null) {
             this.selectedTrackableId = extras.getInt("Trackable_Id");
             this.selectedTrackableName = extras.getString("Trackable_Name");
+            this.selectedTrakcingId = extras.getString("Tracking_Id");
         }
     }
 
@@ -113,4 +114,5 @@ public class AddToTrackingActivity extends AppCompatActivity {
     public TextView getEndTimeTextView() {
         return endTimeTextView;
     }
+
 }
