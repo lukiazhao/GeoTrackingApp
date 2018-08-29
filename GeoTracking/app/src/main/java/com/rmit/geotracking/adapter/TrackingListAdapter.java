@@ -1,8 +1,6 @@
 package com.rmit.geotracking.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.controller.CheckTrackingListener;
+import com.rmit.geotracking.controller.ViewTrackingListener;
 import com.rmit.geotracking.controller.EditTrackingListener;
-import com.rmit.geotracking.model.SimpleTracking;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class TrackingListAdapter extends BaseAdapter {
     private Map<String, Tracking> trackingMap;
@@ -34,20 +29,20 @@ public class TrackingListAdapter extends BaseAdapter {
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         this.manager = manager;
         this.keyArray = manager.generateTrackingAdapterArray();
-    //    this.keyArray = generateKeyArray(trackingMap.keySet());
-
-        System.out.println("generateKeyArray: keyset:  " + trackingMap.keySet());
-  //      System.out.println(trackingMap.get(0).getTitle());
     }
+
+//    @Override
+//    public int getCount() {
+//        return manager.generateTrackingAdapterArray().length;
+//    }
 
     @Override
     public int getCount() {
-        return manager.generateTrackingAdapterArray().length;
+        return keyArray.length;
     }
 
     @Override
     public Object getItem(int i) {
-
         return trackingMap.get(keyArray[i]);
     }
 
@@ -58,27 +53,24 @@ public class TrackingListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
+        View v = LayoutInflater.from(context).inflate(R.layout.single_trackable_view, viewGroup, false);
+        TextView trackingTitleView = (TextView) v.findViewById(R.id.trackable_item);
+        TextView trackingMeetView = (TextView) v.findViewById(R.id.item_description);
+        TextView trackingLocationView = (TextView) v.findViewById(R.id.item_url);
+        Button trackingViewButton = (Button) v.findViewById(R.id.item_view_button);
+        Button trackingEditButton = (Button) v.findViewById(R.id.item_add_button);
 
-        View v = LayoutInflater.from(context).inflate(R.layout.single_tracking_view, viewGroup, false);
-        System.out.println(getCount());
-
-        TextView trackingTitleView = (TextView) v.findViewById(R.id.trackingTitleTextView);
-        TextView trackingMeetView = (TextView) v.findViewById(R.id.trackingMeetTextView);
-        TextView trackingLocationView = (TextView) v.findViewById(R.id.trackingLocationTextView);
-
+        trackingEditButton.setText(context.getResources().getString(R.string.singletrackingview_editbutton));
         trackingTitleView.setText(trackingMap.get(keyArray[position]).getTitle());
         trackingMeetView.setText(trackingMap.get(keyArray[position]).getMeetTime().toString());
         trackingLocationView.setText(trackingMap.get(keyArray[position]).getMeetLocation());
 
-        Button trackingViewButton = (Button) v.findViewById(R.id.trackingViewButton);
-        Button trackingEditButton = (Button) v.findViewById(R.id.trackingEditButton);
-
-        trackingViewButton.setOnClickListener(new CheckTrackingListener(context, trackingMap.get(keyArray[position]), this));
+        trackingViewButton.setOnClickListener(new ViewTrackingListener(context, trackingMap.get(keyArray[position])));
         trackingEditButton.setOnClickListener(new EditTrackingListener(context, trackingMap.get(keyArray[position]), this));
         return v;
     }
 
-    public void updateKeyArray(String [] keyArray){
-        this.keyArray = keyArray;
+    public void updateKey(){
+        this.keyArray = manager.generateTrackingAdapterArray();
     }
 }
