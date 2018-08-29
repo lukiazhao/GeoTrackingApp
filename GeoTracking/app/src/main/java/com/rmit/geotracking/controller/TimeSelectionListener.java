@@ -14,6 +14,7 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
 
     private Context context;
     private int trackableId;
+
     public TimeSelectionListener(Context context, int trackableId) {
         this.context = context;
         this.trackableId = trackableId;
@@ -31,6 +32,9 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         List<Date> meetTimes = TrackManager.getSingletonInstance(context).getMeetTimeList(selectedTime, endTime);
         ((AddToTrackingActivity) context).updateMeetTimeSpinner(meetTimes);
 
+        // update meet location
+        TrackManager.Pair location = TrackManager.getSingletonInstance(context).getMeetLocation(trackableId, selectedTime);
+        ((AddToTrackingActivity) context).updateMeetLocation(location.toString());
     }
 
     public Date extractEndTime(Date startTime) {

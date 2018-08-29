@@ -197,7 +197,6 @@ public class TrackManager extends Observable {
 
     public List<Pair> getStartEndPairs(int selectedTrackableId) {
         List<Pair> startEndPairs = new ArrayList<>();
-        Calendar startCal = Calendar.getInstance();
         Calendar endCal = Calendar.getInstance();
 
         for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
@@ -237,6 +236,16 @@ public class TrackManager extends Observable {
         return meetTimes;
     }
 
+    public Pair<Double> getMeetLocation(int selectedTrackableId, Date startTime){
+
+        Pair meetLocation = null;
+        for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
+            if (info.trackableId == selectedTrackableId && info.date.equals(startTime)) {
+                meetLocation = new Pair<Double>(info.latitude, info.longitude);
+            }
+        }
+        return meetLocation;
+    }
 
     public static class Pair<T> {
         T firstAttribute;
@@ -252,6 +261,10 @@ public class TrackManager extends Observable {
 
         public T getSecondAttribute() {
             return secondAttribute;
+        }
+        @Override
+        public String toString() {
+            return firstAttribute.toString() + " , " + secondAttribute.toString();
         }
     }
 

@@ -4,8 +4,9 @@ import android.support.annotation.NonNull;
 
 import java.security.SecureRandom;
 import java.util.Date;
+import java.util.Observable;
 
-public class SimpleTracking implements Tracking, Comparable<Tracking> {
+public class SimpleTracking extends Observable implements Tracking, Comparable<Tracking> {
     private static final Integer LENGTH = 4 ;
     private String trackingId;
     private int trackableId;
@@ -85,6 +86,16 @@ public class SimpleTracking implements Tracking, Comparable<Tracking> {
         return " tracking id: " + this.trackingId + " ; trackable id: " + this.trackableId +
                 "; title: " + title + "; meet time: "
                 + this.meetTime + "; meet location: " + meetLocation;
+    }
+
+    @Override
+    public void editTracking(String title, Date startTime, Date endTime, Date meetTime ) {
+        this.title = title;
+        this.targetStartTime = startTime;
+        this.targetEndTime = endTime;
+        this.meetTime = meetTime;
+        setChanged();
+        notifyObservers();
     }
 
     public int compareTo(Tracking tracking1) {

@@ -15,6 +15,8 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 public class TrackingListAdapter extends BaseAdapter {
     private Map<String, Tracking> trackingMap;
