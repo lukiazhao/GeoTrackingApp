@@ -24,20 +24,15 @@ public class TrackManager extends Observable {
     private Map<Integer, Trackable> trackableMap;
     private Map<String, Tracking> trackingMap;
     private static Context context;
-    TrackingService trackingService = TrackingService.getSingletonInstance(context);
-
-    //test
     private TrackingManager trackingManager;
-
+    private TrackingInfoProcessor processor;
     //if use singleton, change this to private !!!!
     private TrackManager(){
         this.trackableMap = loadTrackable();
         this.trackingMap = new HashMap<String, Tracking>();
         this.trackingManager = new TrackingManager(trackingMap);
+        this.processor = new TrackingInfoProcessor(context);
 
-        //Test
-//        this.trackingMap = new HashMap<String, Tracking>();
-//        this.trackingMap = loadTracking();
     }
 
     // singleton support
@@ -46,22 +41,13 @@ public class TrackManager extends Observable {
         static final TrackManager INSTANCE = new TrackManager();
     }
 
-//    // PUBLIC METHODS
-//
 //    // singleton
-//    // thread safe lazy initialisation: see https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom
     public static TrackManager getSingletonInstance(Context context)
     {
         TrackManager.context = context;
         return LazyHolder.INSTANCE;
     }
 
-//    public static TrackManager getINSTANCE(Context context){
-//        if (INSTANCE == null){
-//            INSTANCE = new TrackManager(context);
-//        }
-//        return INSTANCE;
-//    }
 
 
     public Map<Integer, Trackable> getTrackableMap(){
@@ -74,12 +60,6 @@ public class TrackManager extends Observable {
 
         InputStream inputStream = this.context.getResources().openRawResource(R.raw.food_truck_data);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        /***** JAVA BASED DEPENDENCIES*****/
-//        String file = "res/raw/food_truck_data.txt"; // res/raw/test.txt also work.
-//        InputStream inputStream = INSTANCE.getClass().getClassLoader().getResourceAsStream(file);
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
 
         String line;
         try {
@@ -111,8 +91,12 @@ public class TrackManager extends Observable {
     }
 
 
+
     public TrackingManager getTrackingManager() {
         return trackingManager;
+    }
+    public TrackingInfoProcessor getTrackingInfoProcessor() {
+        return processor;
     }
 
     public List<String> getCategory(){
@@ -127,64 +111,6 @@ public class TrackManager extends Observable {
         return category;
     }
 
-    public List<Pair> getStartEndPairs(int selectedTrackableId) {
-        List<Pair> startEndPairs = new ArrayList<>();
-        Calendar startCal = Calendar.getInstance();
-        Calendar endCal = Calendar.getInstance();
 
-        for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
-            if (info.trackableId == selectedTrackableId && info.stopTime > 0) {
-                endCal.setTime(info.date);
-                endCal.set(Calendar.MINUTE, endCal.get(Calendar.MINUTE) + info.stopTime);
-                startEndPairs.add(new Pair(info.date, endCal.getTime()));
-
-            }
-        }
-        return startEndPairs;
-    }
-
-    public List<Date> getStartTimes(int selectedTrackableId) {
-        List<Date> startTimes = new ArrayList<>();
-        for(Pair<Date> pair: getStartEndPairs(selectedTrackableId)){
-            startTimes.add(pair.getFirstAttribute());
-        }
-
-        return startTimes;
-    }
-
-
-
-    public List<Date> getMeetTimeList(Date startTime, Date endTime) {
-
-        List<Date> meetTimes = new ArrayList<>();
-        Calendar targetStartCal = Calendar.getInstance();
-        Calendar targetEndCal = Calendar.getInstance();
-
-        targetStartCal.setTime(startTime);
-        targetEndCal.setTime(endTime);
-        while (targetStartCal.before(targetEndCal)) {
-            meetTimes.add(targetStartCal.getTime());
-            targetStartCal.set(Calendar.MINUTE, targetStartCal.get(Calendar.MINUTE) + 1);
-        }
-        return meetTimes;
-    }
-
-
-    public static class Pair<T> {
-        T firstAttribute;
-        T secondAttribute;
-        Pair(T firstAttribute, T secondAttribute) {
-            this.firstAttribute = firstAttribute;
-            this.secondAttribute = secondAttribute;
-        }
-
-        public T getFirstAttribute() {
-            return firstAttribute;
-        }
-
-        public T getSecondAttribute() {
-            return secondAttribute;
-        }
-    }
 
 }

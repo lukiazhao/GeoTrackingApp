@@ -31,7 +31,6 @@ public class RemoveTrackingListener implements DialogInterface.OnClickListener {
         trackManager.getTrackingManager().removeTracking(tracking);
         Toast toast = Toast.makeText(context, "Tracking deleted.", LENGTH_SHORT);
         toast.show();
-        ((TrackingListAdapter) adapter).updateKey();
-        adapter.notifyDataSetChanged();
+
     }
 }

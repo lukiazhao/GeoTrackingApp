@@ -18,4 +18,6 @@ public interface Tracking extends Comparable<Tracking> {
     String getCurrentLocation();
 
     String getMeetLocation();
+
+    void editTrackingInfo(String title, Date startTime, Date endTime, Date meetTime, String meetLocation);
 }

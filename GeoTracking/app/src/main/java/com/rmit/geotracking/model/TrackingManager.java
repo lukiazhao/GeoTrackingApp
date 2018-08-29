@@ -3,9 +3,11 @@ package com.rmit.geotracking.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
+import java.util.Observable;
 
-public class TrackingManager {
+public class TrackingManager extends Observable{
 
     private Map<String, Tracking> trackingMap;
 
@@ -42,5 +44,13 @@ public class TrackingManager {
 
     public void removeTracking(Tracking tracking) {
         trackingMap.remove(tracking.getTrackingId());
+        setChanged();
+        notifyObservers();
+    }
+
+    public void editTracking(Tracking tracking, String title, Date startTime, Date endTime, Date meetTime, String meetLocation) {
+        tracking.editTrackingInfo(title, startTime, endTime, meetTime, meetLocation);
+        setChanged();
+        notifyObservers();
     }
 }
