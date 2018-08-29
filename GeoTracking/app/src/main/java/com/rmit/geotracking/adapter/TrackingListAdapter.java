@@ -31,11 +31,6 @@ public class TrackingListAdapter extends BaseAdapter {
         this.keyArray = manager.generateTrackingAdapterArray();
     }
 
-//    @Override
-//    public int getCount() {
-//        return manager.generateTrackingAdapterArray().length;
-//    }
-
     @Override
     public int getCount() {
         return keyArray.length;
