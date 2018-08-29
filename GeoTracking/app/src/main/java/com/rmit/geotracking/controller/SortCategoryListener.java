@@ -49,24 +49,24 @@ public class SortCategoryListener implements AdapterView.OnItemSelectedListener 
 
 
 
-   public void getSelectedTrackable(int position, String category){
+   public void getSelectedTrackable(int position, String category) {
 
        Map<Integer, Trackable> selected = new HashMap<>();
-       if (position == 0){
+       if (position == 0) {
            adapter = new TrackableListAdapter(context, trackableMap);
-           Toast.makeText(context, "You have selected " + category, Toast.LENGTH_SHORT).show();
+
        } else {
-            int i = 1;
             for(Trackable trackable: trackableMap.values()){
                 if(trackable.getCategory().equals(category)){
-                    selected.put(i,trackable);
-                    i++;
+                    selected.put(trackable.getId(),trackable);
+                    System.out.println("Sort : "+ trackable.getId() + trackable.getName());
                 }
             }
 
             adapter = new TrackableListAdapter(context, selected);
        }
 
+       Toast.makeText(context, "You have selected " + category, Toast.LENGTH_SHORT).show();
        // update list view
        ListView listView = ((Activity) context).findViewById(R.id.trackable_list);
        listView.setAdapter(adapter);

@@ -179,20 +179,20 @@ public class TrackingService
       return returnList;
    }
 
-   public List<TrackingInfo> getTrackingList() {
+   public List<TrackingInfo> getTrackingInfoList() {
       parseFile(context);
       return this.trackingList;
    }
 
-   public Map<String, TrackingInfo> getTrackingMap() {
-      Map<String, TrackingInfo> trackingInfoMap = new HashMap<>();
-      for(TrackingInfo trackingInfo:trackingList){
-
-         trackingInfoMap.put(generateRandomString(4), trackingInfo);
-
-      }
-      return trackingInfoMap;
-   }
+//   public Map<String, TrackingInfo> getTrackingMap() {
+//      Map<String, TrackingInfo> trackingInfoMap = new HashMap<>();
+//      for(TrackingInfo trackingInfo:trackingList){
+//
+//         trackingInfoMap.put(generateRandomString(4), trackingInfo);
+//
+//      }
+//      return trackingInfoMap;
+//   }
 
    public String generateRandomString(int length){
        final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
