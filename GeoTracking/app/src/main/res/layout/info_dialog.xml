@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/trackingdetail_Button"
+        android:id="@+id/info_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -14,17 +14,17 @@
         android:text="@string/viewtracking_confirmButton" />
 
     <TextView
-        android:id="@+id/trackingdetail_TextView"
+        android:id="@+id/info_TextView"
         android:layout_width="match_parent"
         android:layout_height="380dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/trackingdetail_title_TextView"
+        android:layout_below="@+id/info_title_TextView"
         android:text="@string/viewtracking_title"
         android:textAlignment="viewStart"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/trackingdetail_title_TextView"
+        android:id="@+id/info_title_TextView"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:text="@string/viewtracking_title"

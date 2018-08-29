@@ -66,7 +66,6 @@ public class AddToTrackingActivity extends AppCompatActivity {
     }
 
 
-
     public void loadDateTimeSpinners() {
 
         List<Date> startTimes = manager.getStartTimes(selectedTrackableId);
@@ -122,7 +121,6 @@ public class AddToTrackingActivity extends AppCompatActivity {
         TextView location = findViewById(R.id.meet_location_text);
         return location;
     }
-
 
     public Spinner getStartTimeSpinner() {
         return startTimeSpinner;
