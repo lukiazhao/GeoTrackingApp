@@ -19,12 +19,12 @@
 
     <string name="meet_location">Meet Location</string>
     <string name="finish">Finish</string>
-    <string name="singletrackingview_viewbutton">VIEW</string>
+
+    <string name="singletrackingview_viewbutton">EDIT</string>
     <string name="singletrackingview_editbutton">EDIT</string>
 
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>
-
     <string name="viewtracking_trackableID">Trackable ID</string>
     <string name="viewtracking_trackingID">Tracking ID</string>
     <string name="viewtracking_meettime">Meet Time</string>
