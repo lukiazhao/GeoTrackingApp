@@ -45,8 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/trackingTitleTextView"
-        android:text="Edit"
-        android:textSize="10sp" />
+        android:text="@string/singletrackingview_editbutton"
+        android:textSize="10sp"
+        android:focusable="false"/>
 
     <Button
         android:id="@+id/trackingViewButton"
@@ -54,7 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@+id/trackingTitleTextView"
-        android:text="View"
-        android:textSize="10sp" />
+        android:text="@string/singletrackingview_viewbutton"
+        android:textSize="10sp"
+        android:focusable="false"/>
 
 </RelativeLayout>

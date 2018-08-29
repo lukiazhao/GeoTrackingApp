@@ -110,12 +110,17 @@ public class TrackManager extends Observable {
 
     }
 
-    public boolean addNewTracking(Tracking tracking){
+    public boolean addNewTracking(Tracking tracking) {
         trackingMap.put(tracking.getTrackingId(), tracking);
         return true;
     }
 
-    public Map<String, Tracking> loadTracking(){
+    public void removeTracking(Tracking tracking) {
+     //   System.out.println("[remove]: beforetrackingsize   " + trackableMap.size());
+        trackingMap.remove(tracking.getTrackingId());
+    }
+
+    public Map<String, Tracking> loadTracking() {
         Map<String,Tracking> trackingMap = new HashMap<>();
         TrackingService trackingService = TrackingService.getSingletonInstance(context);
 
@@ -145,6 +150,8 @@ public class TrackManager extends Observable {
 
 
     public String [] generateTrackingAdapterArray(){
+    //    System.out.println("[remove]: aftertrackingsize   " + trackableMap.size());
+
         ArrayList<Tracking> sortedtrackings = sortTrackingMap(trackingMap);
      //   Set<String> keyset = sortedtrackings.keySet();
         String [] outputarray = new String [sortedtrackings.size()];
@@ -155,6 +162,11 @@ public class TrackManager extends Observable {
             outputarray[position] = tracking.getTrackingId();
             position++;
      //       System.out.println("Checkarray!" + tracking.getTrackingId());
+        }
+
+        //test
+        for(Tracking tracking : trackingMap.values()) {
+            System.out.println("Test size: " + tracking.getTitle() + trackingMap.size());
         }
 
         return outputarray;
@@ -169,11 +181,6 @@ public class TrackManager extends Observable {
         }
 
         Collections.sort(trackings);
-
-        //test
-        for(Tracking tracking : trackings) {
-            System.out.println("Test timesort: " + tracking.getTargetStartTime());
-        }
 
         return trackings;
     }
