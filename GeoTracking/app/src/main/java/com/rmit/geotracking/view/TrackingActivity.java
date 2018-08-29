@@ -22,10 +22,12 @@ public class TrackingActivity extends MainActivity {
     private static final String LOG_TAG = "TrackingActivity";
     private TrackManager trackManager;
     private ListView trackingView;
+    private BaseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackinglist));
         trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_tracking);
         Log.i(LOG_TAG, "start");
@@ -34,16 +36,16 @@ public class TrackingActivity extends MainActivity {
 
     public void loadListView(){
         Map<String, Tracking> trackingMap = trackManager.getTrackingMap();
+        adapter = new TrackingListAdapter(this, trackManager);
         trackingView = findViewById(R.id.tracking_list);
-        BaseAdapter adapter = new TrackingListAdapter(this, trackManager);
         trackingView.setAdapter(adapter);
         trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this, adapter));
     }
 
     public String generateDetailView(Tracking tracking){
         String[] sections = generateTracingDetailSections();
-        @SuppressLint("DefaultLocale") String output = String.format("%s:   %d\n\n%s:   %s\n\n%s:   %s\n\n" +
-                "%s:   %s\n\n%s:   %s\n\n%s:   %s\n\n%s:   %s\n\n%s:   %s",
+        @SuppressLint("DefaultLocale") String output = String.format("%s:   %d\n\n%s:   %s\n\n" +
+                        "%s:   %s\n\n" + "%s:   %s\n\n%s:   %s\n\n%s:   %s\n\n%s:   %s\n\n%s:   %s",
                 sections[0], tracking.getTrackableId(),
                 sections[1], tracking.getTrackingId(),
                 sections[2], tracking.getTitle(),
