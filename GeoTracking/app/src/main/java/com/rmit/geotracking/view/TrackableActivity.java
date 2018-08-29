@@ -36,6 +36,8 @@ public class TrackableActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackablelist));
+
         setContentView(R.layout.activity_trackable_list);
 
         System.out.println("Instance 2 hash:" + trackManager.hashCode());
