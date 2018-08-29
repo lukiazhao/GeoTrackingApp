@@ -90,7 +90,7 @@ public class SimpleTracking implements Tracking, Comparable<Tracking> {
         if(this.meetTime.compareTo(tracking1.getMeetTime()) >= 0) {
             return 1;
         } else {
-        return -1;
+            return -1;
         }
     }
 }
