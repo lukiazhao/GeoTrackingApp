@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-public class TrackingListAdapter extends BaseAdapter {
+public class TrackingListAdapter extends BaseAdapter implements Observer {
     private Map<String, Tracking> trackingMap;
     private Context context;
     private String [] keyArray;
@@ -30,7 +30,8 @@ public class TrackingListAdapter extends BaseAdapter {
         this.context = context;
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         this.manager = manager;
-        this.keyArray = manager.generateTrackingAdapterArray();
+        this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
+        manager.getTrackingManager().addObserver(this);
     }
 
     @Override
@@ -67,7 +68,11 @@ public class TrackingListAdapter extends BaseAdapter {
         return v;
     }
 
-    public void updateKey(){
-        this.keyArray = manager.generateTrackingAdapterArray();
+
+
+    @Override
+    public void update(Observable observable, Object o) {
+        this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
+        notifyDataSetChanged();
     }
 }

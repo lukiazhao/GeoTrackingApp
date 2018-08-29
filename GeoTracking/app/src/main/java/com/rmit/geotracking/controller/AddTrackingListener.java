@@ -80,7 +80,8 @@ public class AddTrackingListener implements View.OnClickListener {
 
     public void updateTracking() {
        Tracking tracking =  TrackManager.getSingletonInstance(context).getTrackingMap().get(trackingId);
-       tracking.editTracking(title, startTime, endTime, meetTime);
+       TrackManager.getSingletonInstance(context).getTrackingManager().editTracking(tracking,title, startTime, endTime, meetTime );
+
     }
 
 

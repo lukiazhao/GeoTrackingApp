@@ -89,13 +89,12 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
     }
 
     @Override
-    public void editTracking(String title, Date startTime, Date endTime, Date meetTime ) {
+    public void editTrackingInfo(String title, Date startTime, Date endTime, Date meetTime ) {
         this.title = title;
         this.targetStartTime = startTime;
         this.targetEndTime = endTime;
         this.meetTime = meetTime;
-        setChanged();
-        notifyObservers();
+
     }
 
     public int compareTo(Tracking tracking1) {
