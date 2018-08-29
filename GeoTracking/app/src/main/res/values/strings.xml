@@ -15,16 +15,16 @@
     <string name="textview">TextView</string>
     <string name="TrackableName">Trackable Name</string>
 
-
     <string name="title">Title</string>
 
     <string name="meet_location">Meet Location</string>
     <string name="finish">Finish</string>
 
+    <string name="singletrackingview_viewbutton">EDIT</string>
+    <string name="singletrackingview_editbutton">EDIT</string>
 
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>
-
     <string name="viewtracking_trackableID">Trackable ID</string>
     <string name="viewtracking_trackingID">Tracking ID</string>
     <string name="viewtracking_meettime">Meet Time</string>
@@ -33,6 +33,7 @@
     <string name="viewtracking_currentlocation">Current Location</string>
     <string name="viewtracking_meetlocation">Meet Location</string>
 
+    <string name="removetracking_message">Delete this Tracking?</string>
 
 
     <string name="item_description">item_description</string>

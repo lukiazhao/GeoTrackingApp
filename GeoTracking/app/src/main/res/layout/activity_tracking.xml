@@ -10,5 +10,7 @@
     <ListView
         android:id="@+id/tracking_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:longClickable="true"
+        />
 </LinearLayout>
