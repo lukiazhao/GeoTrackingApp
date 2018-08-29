@@ -66,14 +66,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.trackable_list:
                 goTrackable();
                 //Test
-                Toast.makeText(this, "@String/menu_trackable_list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.menu_trackable_list), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tracking_list:
                 goTracking();
-                Toast.makeText(this, "@String/menu_tracking_list", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.menu_tracking_list), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.add_tracking:
-                Toast.makeText(this, "@String/menu_add_tracking", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.menu_add_tracking), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
