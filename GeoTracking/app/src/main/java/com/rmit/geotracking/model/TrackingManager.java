@@ -44,10 +44,12 @@ public class TrackingManager extends Observable{
 
     public void removeTracking(Tracking tracking) {
         trackingMap.remove(tracking.getTrackingId());
+        setChanged();
+        notifyObservers();
     }
 
-    public void editTracking(Tracking tracking, String title, Date startTime, Date endTime, Date meetTime ) {
-        tracking.editTrackingInfo(title, startTime, endTime, meetTime);
+    public void editTracking(Tracking tracking, String title, Date startTime, Date endTime, Date meetTime, String meetLocation) {
+        tracking.editTrackingInfo(title, startTime, endTime, meetTime, meetLocation);
         setChanged();
         notifyObservers();
     }

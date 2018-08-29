@@ -22,6 +22,5 @@ public class AddButtonListener implements View.OnClickListener {
         toAddActivityIntent.putExtra("Trackable_Id", trackableId);
         toAddActivityIntent.putExtra("Trackable_Name", trackableName);
         context.startActivity(toAddActivityIntent);
-
     }
 }

@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.rmit.geotracking.model.TrackManager;
+import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.view.AddToTrackingActivity;
 
 import java.util.Date;
@@ -29,18 +30,24 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         ((AddToTrackingActivity) context).updateEndTimeTextView(endTime);
 
         // update the meet time spinner list
-        List<Date> meetTimes = TrackManager.getSingletonInstance(context).getMeetTimeList(selectedTime, endTime);
+        List<Date> meetTimes = TrackManager.getSingletonInstance(context)
+                                            .getTrackingInfoProcessor()
+                                            .getMeetTimeList(selectedTime, endTime);
         ((AddToTrackingActivity) context).updateMeetTimeSpinner(meetTimes);
 
         // update meet location
-        TrackManager.Pair location = TrackManager.getSingletonInstance(context).getMeetLocation(trackableId, selectedTime);
+        TrackingInfoProcessor.Pair location = TrackManager.getSingletonInstance(context)
+                                                  .getTrackingInfoProcessor()
+                                                  .getMeetLocation(trackableId, selectedTime);
         ((AddToTrackingActivity) context).updateMeetLocation(location.toString());
     }
 
     public Date extractEndTime(Date startTime) {
         Date endTime = null;
-        List<TrackManager.Pair> pairs = TrackManager.getSingletonInstance(context).getStartEndPairs(trackableId);
-        for (TrackManager.Pair pair:pairs) {
+        List<TrackingInfoProcessor.Pair> pairs = TrackManager.getSingletonInstance(context)
+                                                             .getTrackingInfoProcessor()
+                                                             .getStartEndPairs(trackableId);
+        for (TrackingInfoProcessor.Pair pair:pairs) {
             if((pair.getFirstAttribute()).equals(startTime)) {
                 endTime = (Date) pair.getSecondAttribute();
             }

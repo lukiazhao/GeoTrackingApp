@@ -82,7 +82,6 @@
         android:layout_height="38dp"
         android:layout_below="@id/end_time_text"
         android:layout_alignParentStart="true"
-        android:gravity="left"
         android:text="@string/choose_meet_time"
         android:textSize="20sp" />
 
@@ -97,16 +96,6 @@
         android:gravity="center"
         android:textSize="18sp" />
 
-
-    <Button
-        android:id="@+id/finish_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="43dp"
-        android:text="@string/finish" />
-
     <TextView
         android:id="@+id/meet_location_label"
         android:layout_width="208dp"
@@ -114,16 +103,27 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/select_meet_spinner"
         android:layout_marginStart="0dp"
-        android:text="@string/meet_location" />
+        android:text="@string/meet_location"
+        android:textAlignment="gravity"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/meet_location_text"
-        android:layout_width="246dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/finish_button"
+        android:layout_width="313dp"
+        android:layout_height="43dp"
+        android:layout_below="@+id/meet_location_label"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-1dp"
-        android:text="@string/meet_location" />
+        android:text="@string/meet_location"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
+    <Button
+        android:id="@+id/finish_button"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/meet_location_text"
+        android:text="@string/finish" />
 
 
 </RelativeLayout>

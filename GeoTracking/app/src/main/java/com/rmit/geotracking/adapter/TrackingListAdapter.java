@@ -31,10 +31,7 @@ public class TrackingListAdapter extends BaseAdapter implements Observer {
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         this.manager = manager;
         this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
-<<<<<<< HEAD
         manager.getTrackingManager().addObserver(this);
-=======
->>>>>>> 7a20f84e6e961d88790686fdbbb5ad0bbe48837e
     }
 
     @Override
@@ -71,16 +68,10 @@ public class TrackingListAdapter extends BaseAdapter implements Observer {
         return v;
     }
 
-<<<<<<< HEAD
-
 
     @Override
     public void update(Observable observable, Object o) {
         this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
         notifyDataSetChanged();
-=======
-    public void updateKey(){
-        this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
->>>>>>> 7a20f84e6e961d88790686fdbbb5ad0bbe48837e
     }
 }

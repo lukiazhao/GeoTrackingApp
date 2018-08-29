@@ -47,7 +47,7 @@ public class AddToTrackingActivity extends AppCompatActivity {
             setTitle();
         }
 
-//        // set intent data to text (trackable name is shown as title for customer to refer to)
+        // set intent data to text (trackable name is shown as title for customer to refer to)
         TextView trackableName = findViewById(R.id.item_name);
         trackableName.setText(manager.getTrackableMap().get(selectedTrackableId).getName());
 
@@ -61,14 +61,16 @@ public class AddToTrackingActivity extends AppCompatActivity {
     }
 
     public void setTitle() {
+
         EditText title = (EditText) findViewById(R.id.edit_title);
         title.setText(manager.getTrackingMap().get(selectedTrakcingId).getTitle());
     }
 
 
+
     public void loadDateTimeSpinners() {
 
-        List<Date> startTimes = manager.getStartTimes(selectedTrackableId);
+        List<Date> startTimes = manager.getTrackingInfoProcessor().getStartTimes(selectedTrackableId);
         startTimeSpinner = (Spinner) findViewById(R.id.select_start_spinner);
         // initialise adapter
         ArrayAdapter startTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, startTimes);
@@ -79,7 +81,6 @@ public class AddToTrackingActivity extends AppCompatActivity {
 
         // set listener to spinner
         startTimeSpinner.setOnItemSelectedListener(new TimeSelectionListener(this, selectedTrackableId));
-
     }
 
     public void updateMeetTimeSpinner(List<Date> meetTimes) {
@@ -133,7 +134,5 @@ public class AddToTrackingActivity extends AppCompatActivity {
     public TextView getEndTimeTextView() {
         return endTimeTextView;
     }
-
-
 
 }
