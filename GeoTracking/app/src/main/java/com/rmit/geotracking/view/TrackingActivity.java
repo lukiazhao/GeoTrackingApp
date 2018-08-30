@@ -97,4 +97,9 @@ public class TrackingActivity extends MainActivity {
         sections[7] = resources.getString(R.string.viewtracking_currentlocation);
         return sections;
     }
+
+    public void onRestart(){
+        super.onRestart();
+        this.finish();
+    }
 }

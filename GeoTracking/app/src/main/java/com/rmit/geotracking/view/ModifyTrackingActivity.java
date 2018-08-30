@@ -1,6 +1,7 @@
 package com.rmit.geotracking.view;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -155,5 +156,4 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     public TextView getEndTimeTextView() {
         return endTimeTextView;
     }
-
 }

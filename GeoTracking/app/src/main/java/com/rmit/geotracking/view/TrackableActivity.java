@@ -101,4 +101,8 @@ public class TrackableActivity extends MainActivity {
                     .setCancelable(false).show();
     }
 
+    public void onRestart(){
+        super.onRestart();
+        this.finish();
+    }
 }

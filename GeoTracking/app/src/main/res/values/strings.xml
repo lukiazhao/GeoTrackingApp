@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">GeoTracking</string>
 
+
+    <string name="button">Button</string>
+
+
     <!--string resources for mainActivity-->
     <string name="mainactivity_welcom_text">Welcome to GeoTracking!</string>
     <string name="mainactivity_trackableButton">Trackable List</string>
