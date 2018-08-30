@@ -1,5 +1,7 @@
 package com.rmit.geotracking;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.Toast;
 
 import com.rmit.geotracking.controller.ActivityEntryListener;
 import com.rmit.geotracking.model.TrackManager;
+import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.view.TrackableActivity;
 import com.rmit.geotracking.view.TrackingActivity;
 
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getResources().getString(R.string.menu_tracking_list), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
 
         }
         return super.onOptionsItemSelected(item);

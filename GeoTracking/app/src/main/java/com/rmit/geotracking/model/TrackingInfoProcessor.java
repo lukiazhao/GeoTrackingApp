@@ -1,6 +1,7 @@
 package com.rmit.geotracking.model;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.rmit.geotracking.service.TrackingService;
 
@@ -26,12 +27,27 @@ public class TrackingInfoProcessor {
         this.trackingService = TrackingService.getSingletonInstance(context);
     }
 
+    /*
+     * Support Function: reduce workload
+     * group the tracking info for a particular trackable ID
+     */
+    public List<TrackingService.TrackingInfo> getTrackingInfoWithId(int selectedTrackableId) {
+        List<TrackingService.TrackingInfo> infos = new ArrayList<>();
+        for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
+            if(info.trackableId == selectedTrackableId) {
+                infos.add(info);
+            }
+
+        }
+        return infos;
+    }
+
     public List<Pair> getStartEndPairs(int selectedTrackableId) {
         List<Pair> startEndPairs = new ArrayList<>();
         Calendar endCal = Calendar.getInstance();
 
-        for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
-            if (info.trackableId == selectedTrackableId && info.stopTime > 0) {
+        for (TrackingService.TrackingInfo info:getTrackingInfoWithId(selectedTrackableId)) {
+            if (info.stopTime > 0) {
                 endCal.setTime(info.date);
                 endCal.set(Calendar.MINUTE, endCal.get(Calendar.MINUTE) + info.stopTime);
                 startEndPairs.add(new Pair<>(info.date, endCal.getTime()));
@@ -68,8 +84,8 @@ public class TrackingInfoProcessor {
     public Pair<Double> getMeetLocation(int selectedTrackableId, Date startTime){
 
         Pair<Double> meetLocation = null;
-        for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
-            if (info.trackableId == selectedTrackableId && info.date.equals(startTime)) {
+        for (TrackingService.TrackingInfo info:getTrackingInfoWithId(selectedTrackableId)) {
+            if (info.date.equals(startTime)) {
                 meetLocation = new Pair<>(info.latitude, info.longitude);
             }
         }
@@ -82,14 +98,11 @@ public class TrackingInfoProcessor {
         // current system time:
         Date currentTime = Calendar.getInstance().getTime();
         String currentLocation = null;
+
         // extract current location from tracking service according to the current time
-        List<TrackingService.TrackingInfo> info = trackingService.getTrackingInfoList();
+        List<TrackingService.TrackingInfo> info = getTrackingInfoWithId(trackableId);
         for (int i = 0; i < info.size() - 1; i++) {
-
-            if(trackableId == info.get(i).trackableId
-                    && currentTime.after(info.get(i).date)
-                    && currentTime.before(info.get(i + 1).date)) {
-
+            if(currentTime.after(info.get(i).date) && currentTime.before(info.get(i + 1).date)) {
                 currentLocation = info.get(i).latitude + " , " + info.get(i).longitude;
             }
         }
@@ -101,14 +114,12 @@ public class TrackingInfoProcessor {
     public List<String[]> createRouteList(int trackableID) {
         List<String[]> routelist = new ArrayList<>();
 
-        for(TrackingService.TrackingInfo trackingInfo : trackingService.getTrackingInfoList()) {
-            if(trackingInfo.trackableId == trackableID) {
-                String[] routeDetailInfo = new String [3];
-                routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
-                routeDetailInfo[1] = getFormatedDate(trackingInfo.date);
-                routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
-                routelist.add(routeDetailInfo);
-            }
+        for(TrackingService.TrackingInfo trackingInfo : getTrackingInfoWithId(trackableID)) {
+            String[] routeDetailInfo = new String [3];
+            routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
+            routeDetailInfo[1] = getFormatedDate(trackingInfo.date);
+            routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
+            routelist.add(routeDetailInfo);
         }
         return routelist;
     }
