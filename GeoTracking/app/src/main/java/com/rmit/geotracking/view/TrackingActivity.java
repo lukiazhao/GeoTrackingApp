@@ -22,7 +22,6 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.Tracking;
 
-import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -42,7 +41,7 @@ public class TrackingActivity extends MainActivity {
     }
 
     public void loadListView(){
-        BaseAdapter adapter = new TrackingListAdapter(this, trackManager);
+        BaseAdapter adapter = new TrackingListAdapter(this);
         ListView trackingView = findViewById(R.id.tracking_list);
         trackingView.setAdapter(adapter);
         trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this, adapter));
