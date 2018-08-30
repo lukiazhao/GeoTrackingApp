@@ -9,14 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.rmit.geotracking.R;
+import com.rmit.geotracking.controller.ActivityEntryListener;
 import com.rmit.geotracking.model.TrackManager;
-import com.rmit.geotracking.service.TestTrackingService;
 import com.rmit.geotracking.view.TrackableActivity;
 import com.rmit.geotracking.view.TrackingActivity;
 
 public class MainActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,31 +22,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
-
-        System.out.println("Instance 1 hash:" + trackManager.hashCode());
-
-
         View trackableBut = findViewById(R.id.trackable_button);
         View trackingBut = findViewById(R.id.tracking_button);
 
-        trackableBut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goTrackable();
-            }
-        });
-
-        trackingBut.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                goTracking();
-            }
-        });
-
-        //Test tracking services
-//        TestTrackingService.test(this);
-
+        trackableBut.setOnClickListener(new ActivityEntryListener(this));
+        trackingBut.setOnClickListener(new ActivityEntryListener(this));
     }
 
     //Import methods related to menu options and selections
@@ -57,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
@@ -89,6 +66,4 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(this, TrackingActivity.class);
         startActivity(myIntent);
     }
-
-
 }

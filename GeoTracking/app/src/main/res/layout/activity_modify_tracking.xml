@@ -30,7 +30,7 @@
         android:hint="@string/title"
         android:textSize="30sp"
         android:gravity="center"
-        android:inputType="none|text" />
+        android:inputType="text" />
 
 
     <TextView
