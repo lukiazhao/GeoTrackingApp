@@ -98,13 +98,12 @@ public class TrackManager extends Observable {
     // read all category types from original file
     public List<String> readAllCategories(){
         List<String> category = new ArrayList<>();
-        category.add("Select Category");
+        category.add(context.getResources().getString(R.string.trackmanager_default_category));
         for (Trackable trackable: trackableMap.values()){
             if(!category.contains(trackable.getCategory())){
                 category.add(trackable.getCategory());
             }
         }
-        System.out.println("category size: " + category.size());
         return category;
     }
 
@@ -121,7 +120,6 @@ public class TrackManager extends Observable {
             }
         }
         this.filteredTrackableIds = selected;
-
         setChanged();
         notifyObservers();
     }

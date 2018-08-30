@@ -27,7 +27,6 @@ import java.util.Objects;
 
 public class TrackingActivity extends MainActivity {
 
-    private static final String LOG_TAG = "TrackingActivity";
     private TrackManager trackManager;
 
     @Override
@@ -36,7 +35,6 @@ public class TrackingActivity extends MainActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.actionbar_trackinglist));
         trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_tracking);
-        Log.i(LOG_TAG, "start");
         loadListView();
     }
 
@@ -96,5 +94,10 @@ public class TrackingActivity extends MainActivity {
         sections[6] = resources.getString(R.string.viewtracking_meetlocation);
         sections[7] = resources.getString(R.string.viewtracking_currentlocation);
         return sections;
+    }
+
+    public void onRestart(){
+        super.onRestart();
+        this.finish();
     }
 }

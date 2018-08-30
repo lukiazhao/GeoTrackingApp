@@ -25,14 +25,14 @@ public class ActivityEntryListener implements View.OnClickListener {
         switch (view.getId()){
             case R.id.trackable_button:
                 ((MainActivity) context).goTrackable();
-                Toast.makeText(context, context.getResources().getString(R.string.menu_trackable_list), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, context.getResources()
+                        .getString(R.string.menu_trackable_list), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tracking_button:
                 ((MainActivity) context).goTracking();
                 Toast.makeText(context, context.getResources().getString(R.string.menu_tracking_list), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(context, "default", Toast.LENGTH_SHORT).show();
         }
     }
 }
