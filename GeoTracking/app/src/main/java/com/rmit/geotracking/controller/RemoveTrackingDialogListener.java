@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
 public class RemoveTrackingDialogListener implements AdapterView.OnItemLongClickListener {

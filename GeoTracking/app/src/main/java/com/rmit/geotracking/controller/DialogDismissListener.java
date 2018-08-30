@@ -1,7 +1,6 @@
 package com.rmit.geotracking.controller;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.view.View;
 
 public class DialogDismissListener implements View.OnClickListener {

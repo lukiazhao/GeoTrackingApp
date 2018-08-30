@@ -45,7 +45,6 @@ public class TrackingActivity extends MainActivity {
     }
 
     public void loadListView(){
-        Map<String, Tracking> trackingMap = trackManager.getTrackingMap();
         adapter = new TrackingListAdapter(this, trackManager);
         trackingView = findViewById(R.id.tracking_list);
         trackingView.setAdapter(adapter);
@@ -59,8 +58,8 @@ public class TrackingActivity extends MainActivity {
         View trackingview = inflater.inflate(R.layout.info_dialog, null);
 
         TextView trackingdetails = trackingview.findViewById(R.id.info_TextView);
-        TextView title = (TextView) trackingview.findViewById(R.id.info_title_TextView);
-        Button confirmbutton = (Button) trackingview.findViewById(R.id.info_button);
+        TextView title = trackingview.findViewById(R.id.info_title_TextView);
+        Button confirmbutton = trackingview.findViewById(R.id.info_button);
 
         title.setText(tracking.getTitle());
         trackingdetails.setText(this.generateDetailView(tracking));

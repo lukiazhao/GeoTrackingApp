@@ -1,5 +1,6 @@
 package com.rmit.geotracking.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,14 +39,14 @@ public class RouteListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = LayoutInflater.from(context).inflate(R.layout.single_route_view, viewGroup, false);
+        @SuppressLint("ViewHolder") View v = LayoutInflater.from(context).inflate(R.layout.single_route_view, viewGroup, false);
         TextView location = v.findViewById(R.id.location_TextView);
         TextView date = v.findViewById(R.id.location_time_TextView);
         TextView stoptime = v.findViewById(R.id.location_stoptime_TextView);
 
-        location.setText(getItem(i)[0].toString());
-        date.setText(getItem(i)[1].toString());
-        stoptime.setText(getItem(i)[2].toString());
+        location.setText(getItem(i)[0]);
+        date.setText(getItem(i)[1]);
+        stoptime.setText(getItem(i)[2]);
         return v;
     }
 }
