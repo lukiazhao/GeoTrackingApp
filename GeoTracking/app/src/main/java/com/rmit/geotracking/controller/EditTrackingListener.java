@@ -15,14 +15,12 @@ public class EditTrackingListener implements View.OnClickListener {
 
     private Context context;
     private Map<String, Tracking> trackingMap;
-    private TrackingListAdapter adapter;
     private Tracking tracking;
 
 
-    public EditTrackingListener(Context context, Tracking tracking, TrackingListAdapter adapter){
+    public EditTrackingListener(Context context, Tracking tracking){
         this.context = context;
         this.tracking = tracking;
-        this.adapter = adapter;
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
     }
 

@@ -13,20 +13,20 @@ import com.rmit.geotracking.controller.ViewTrackingListener;
 import com.rmit.geotracking.controller.EditTrackingListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
+import com.rmit.geotracking.view.TrackingActivity;
 
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
 public class TrackingListAdapter extends BaseAdapter implements Observer {
+
     private Map<String, Tracking> trackingMap;
     private Context context;
     private String [] keyArray;
     private TrackManager manager;
 
-
     public TrackingListAdapter(Context context, TrackManager manager){
-    //    System.out.println("Create TrackingList adapter");
         this.context = context;
         this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
         this.manager = manager;
@@ -64,10 +64,9 @@ public class TrackingListAdapter extends BaseAdapter implements Observer {
         trackingLocationView.setText(trackingMap.get(keyArray[position]).getMeetLocation());
 
         trackingViewButton.setOnClickListener(new ViewTrackingListener(context, trackingMap.get(keyArray[position])));
-        trackingEditButton.setOnClickListener(new EditTrackingListener(context, trackingMap.get(keyArray[position]), this));
+        trackingEditButton.setOnClickListener(new EditTrackingListener(context, trackingMap.get(keyArray[position])));
         return v;
     }
-
 
     @Override
     public void update(Observable observable, Object o) {

@@ -43,7 +43,6 @@ public class TrackingInfoProcessor {
         return startTimes;
     }
 
-
     public List<Date> getMeetTimeList(Date startTime, Date endTime) {
 
         List<Date> meetTimes = new ArrayList<>();
@@ -109,5 +108,20 @@ public class TrackingInfoProcessor {
         public String toString() {
             return firstAttribute.toString() + " , " + secondAttribute.toString();
         }
+    }
+
+    public List<String[]> createRouteList(int trackableID) {
+        List<String[]> routelist = new ArrayList<String[]>();
+
+        for(TrackingService.TrackingInfo trackingInfo : trackingService.getTrackingInfoList()) {
+            if(trackingInfo.trackableId == trackableID) {
+                String[] routeDetailInfo = new String [3];
+                routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
+                routeDetailInfo[1] = trackingInfo.date.toString();
+                routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
+                routelist.add(routeDetailInfo);
+            }
+        }
+        return routelist;
     }
 }
