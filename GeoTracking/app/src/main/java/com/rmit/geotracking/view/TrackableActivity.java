@@ -1,6 +1,7 @@
 package com.rmit.geotracking.view;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -77,7 +78,7 @@ public class TrackableActivity extends MainActivity {
     }
 
 
-    public void showRouteDialog(int trackableID){
+    public void showRouteDialog(int trackableID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.route_dialog, null);
@@ -89,7 +90,7 @@ public class TrackableActivity extends MainActivity {
         title2.setText(TrackManager.getSingletonInstance(this).getTrackableMap().get(trackableID).getName());
         List<String[]> routeList = trackManager.getTrackingInfoProcessor().createRouteList(trackableID);
 
-        if(routeList.size() != 0) {
+        if (routeList.size() != 0) {
             routelv.setAdapter(new RouteListAdapter(this, routeList));
         } else {
             this.showNoRouteToast();
@@ -100,14 +101,13 @@ public class TrackableActivity extends MainActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
+    }
 
-    public void showNoTrackingInfoAlertDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("No Tracking Information available for this item. Please check later.")
-                .setNeutralButton("OK", null)
-                .setCancelable(false).show();
-
-
+    public void showNoTrackingInfoAlertDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("No Tracking Information available for this item. Please check later.")
+                    .setNeutralButton("OK", null)
+                    .setCancelable(false).show();
     }
 
 }

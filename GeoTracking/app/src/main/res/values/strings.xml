@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">GeoTracking</string>
 
-    <string name="button">Button</string>
-
     <!--string resources for menu-->
     <string name="menu_trackable_list">Show Trackables</string>
     <string name="menu_tracking_list">Show Current Trackings</string>
@@ -11,10 +9,6 @@
     <string name="actionbar_trackinglist">Trackings</string>
 
 
-    <string name="section_format">Hello World from section: %1$d</string>
-
-    <string name="item1">item1</string>
-    <string name="trackable_name">Trackable Name:</string>
     <string name="textview">TextView</string>
     <string name="TrackableName">Trackable Name</string>
 
@@ -24,7 +18,6 @@
     <string name="finish">Finish</string>
 
     <string name="routedialog_title1">Route Map</string>
-    <string name="routedialog_title2">Trackable Name</string>
     <string name="routedialog_button">OK</string>
     <string name="routedialog_norouteToast">No Route Information Avaliable</string>
     <string name="routedialog_locationlabel">Location:  </string>
