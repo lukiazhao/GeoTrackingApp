@@ -1,7 +1,6 @@
 package com.rmit.geotracking.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.AddButtonListener;
 import com.rmit.geotracking.controller.ViewRouteListener;
 import com.rmit.geotracking.model.Trackable;
-import com.rmit.geotracking.view.AddToTrackingActivity;
 
 import java.util.ArrayList;
 import java.util.Map;

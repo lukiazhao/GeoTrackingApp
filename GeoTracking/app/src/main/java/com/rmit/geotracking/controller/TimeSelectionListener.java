@@ -6,7 +6,7 @@ import android.widget.AdapterView;
 
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
-import com.rmit.geotracking.view.AddToTrackingActivity;
+import com.rmit.geotracking.view.ModifyTrackingActivity;
 
 import java.util.Date;
 import java.util.List;
@@ -27,19 +27,20 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         // update target end time
         Date endTime = extractEndTime(selectedTime);
 
-        ((AddToTrackingActivity) context).updateEndTimeTextView(endTime);
+        ((ModifyTrackingActivity) context).updateEndTimeTextView(endTime);
 
         // update the meet time spinner list
         List<Date> meetTimes = TrackManager.getSingletonInstance(context)
                                             .getTrackingInfoProcessor()
                                             .getMeetTimeList(selectedTime, endTime);
-        ((AddToTrackingActivity) context).updateMeetTimeSpinner(meetTimes);
+
+        ((ModifyTrackingActivity) context).updateMeetTimeSpinner(meetTimes);
 
         // update meet location
         TrackingInfoProcessor.Pair location = TrackManager.getSingletonInstance(context)
                                                   .getTrackingInfoProcessor()
                                                   .getMeetLocation(trackableId, selectedTime);
-        ((AddToTrackingActivity) context).updateMeetLocation(location.toString());
+        ((ModifyTrackingActivity) context).updateMeetLocation(location.toString());
     }
 
     public Date extractEndTime(Date startTime) {

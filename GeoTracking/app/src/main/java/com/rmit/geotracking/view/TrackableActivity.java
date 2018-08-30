@@ -73,6 +73,8 @@ public class TrackableActivity extends MainActivity {
         spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
     }
 
+
+
     public void showRouteDialog(int trackableID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -98,13 +100,11 @@ public class TrackableActivity extends MainActivity {
         confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
     }
 
-    public void showNoTrackingInfoAlertDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("No Tracking Information available for this item. Please check later.")
-                .setNeutralButton("OK", null)
-                .setCancelable(false).show();
-
-
+    public void showNoTrackingInfoAlertDialog() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("No Tracking Information available for this item. Please check later.")
+                    .setNeutralButton("OK", null)
+                    .setCancelable(false).show();
     }
 
 }

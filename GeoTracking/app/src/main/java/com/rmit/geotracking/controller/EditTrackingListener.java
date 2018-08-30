@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.rmit.geotracking.adapter.TrackingListAdapter;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
-import com.rmit.geotracking.view.AddToTrackingActivity;
+import com.rmit.geotracking.view.ModifyTrackingActivity;
 
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class EditTrackingListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        Intent toEditActivityIntent = new Intent(context, AddToTrackingActivity.class);
+        Intent toEditActivityIntent = new Intent(context, ModifyTrackingActivity.class);
         toEditActivityIntent.putExtra("Tracking_Id", tracking.getTrackingId());
         context.startActivity(toEditActivityIntent);
     }
