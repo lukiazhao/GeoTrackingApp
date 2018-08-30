@@ -13,7 +13,6 @@ import java.util.List;
 
 public class FilterSpinnerAdapter  extends ArrayAdapter {
 
-
     public FilterSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
     }
@@ -21,9 +20,6 @@ public class FilterSpinnerAdapter  extends ArrayAdapter {
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = super.getDropDownView(position, convertView, parent);
-
-        System.out.println("Spinner" + position);
-
         TextView tv = (TextView) view;
         if(position == 0){
             tv.setTextColor(Color.GRAY);

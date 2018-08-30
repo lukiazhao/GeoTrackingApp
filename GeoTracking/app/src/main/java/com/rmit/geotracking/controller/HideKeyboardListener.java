@@ -9,10 +9,12 @@ import android.view.inputmethod.InputMethodManager;
  * Hide software keyboard whenever the user clicks somewhere else on the screen.
  */
 public class HideKeyboardListener implements View.OnFocusChangeListener {
+
     private Context context;
     public HideKeyboardListener(Context context){
         this.context = context;
     }
+
     @Override
     public void onFocusChange(View view, boolean b) {
         if (!b) {

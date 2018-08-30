@@ -127,8 +127,6 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         if(extras != null) {
             this.selectedTrackableId = extras.getInt("Trackable_Id");
             this.selectedTrakcingId = extras.getString("Tracking_Id");
-            System.out.println("selected tracking id: " + selectedTrakcingId);
-            System.out.println("selected tracking id: " + manager.getTrackingMap().get(selectedTrakcingId));
         }
     }
 

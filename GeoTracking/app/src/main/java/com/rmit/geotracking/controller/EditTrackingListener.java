@@ -17,7 +17,6 @@ public class EditTrackingListener implements View.OnClickListener {
     private Context context;
     private Tracking tracking;
 
-
     public EditTrackingListener(Context context, Tracking tracking){
         this.context = context;
         this.tracking = tracking;

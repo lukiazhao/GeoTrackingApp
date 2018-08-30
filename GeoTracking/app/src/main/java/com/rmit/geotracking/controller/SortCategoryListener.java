@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import android.widget.Toast;
+
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.model.TrackManager;
 
 import java.util.Observable;
@@ -25,9 +27,9 @@ public class SortCategoryListener extends Observable implements AdapterView.OnIt
             TrackManager.getSingletonInstance(context).setfilteredTrackable(null);
         } else {
             TrackManager.getSingletonInstance(context).setfilteredTrackable(selectedItemText);
+            Toast.makeText(context,  context.getResources().getString(R.string.sortcategory_message)
+                    + " " + selectedItemText, Toast.LENGTH_SHORT).show();
         }
-
-        Toast.makeText(context, "You have selected " + selectedItemText, Toast.LENGTH_SHORT).show();
     }
 
     @Override

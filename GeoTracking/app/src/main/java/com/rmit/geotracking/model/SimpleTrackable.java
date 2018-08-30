@@ -92,7 +92,8 @@ public class SimpleTrackable implements Trackable {
     @Override
     public String toString() {
 
-        return String.format("id: %d,  name: %s, description: %s, url: %s, category: %s", this.id, name, description,url,category);
+        return String.format("id: %d,  name: %s, description: %s, url: %s, category: %s",
+                this.id, name, description,url,category);
 
     }
 }
