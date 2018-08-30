@@ -9,17 +9,26 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.controller.AddButtonListener;
+import com.rmit.geotracking.controller.AddTrackingButtonListener;
 import com.rmit.geotracking.controller.ViewRouteListener;
+import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
-public class TrackableListAdapter extends BaseAdapter{
+/*
+ * Trackable List Adapter is used to generate trackable list
+ *
+ * It will be updated whenever the filteredTrackable list is changed (filter spinner item selected)
+ */
+public class TrackableListAdapter extends BaseAdapter implements Observer {
     private Context context;
-    Map<Integer, Trackable> trackableMap;
-    private final ArrayList<Integer> trackableKeyArray;
+    private Map<Integer, Trackable> trackableMap;
+    private List<Integer> trackableKeyArray;
 //            = TrackManager.getSingletonInstance(context).getTrackableMap();
 
     public TrackableListAdapter(Context context, Map<Integer, Trackable> trackableMap){
@@ -27,6 +36,7 @@ public class TrackableListAdapter extends BaseAdapter{
         this.trackableMap = trackableMap;
         this.trackableKeyArray = new ArrayList<>();
         trackableKeyArray.addAll(trackableMap.keySet());
+        TrackManager.getSingletonInstance(context).addObserver(this);
     }
 
     @Override
@@ -49,7 +59,7 @@ public class TrackableListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup viewGroup) {
         final View result;
         if (convertView == null){
-            result = LayoutInflater.from(context).inflate(R.layout.single_trackable_view, viewGroup, false);
+            result = LayoutInflater.from(context).inflate(R.layout.single_item_view, viewGroup, false);
         } else {
             result = convertView;
         }
@@ -57,17 +67,24 @@ public class TrackableListAdapter extends BaseAdapter{
         final Trackable trackable = trackableMap.get(getItem(position));
 
         // set trackable data into textView
-//        context.getResources().getString(R.string.textview)
         ((TextView) result.findViewById(R.id.trackable_item)).setText(trackable.getName());
         ((TextView) result.findViewById(R.id.item_description)).setText(trackable.getDescription());
         ((TextView) result.findViewById(R.id.item_url)).setText(trackable.getUrl());
 
         // set listner to "Add" button
         Button boundTrackingBut = (Button) result.findViewById(R.id.item_add_button);
-        boundTrackingBut.setOnClickListener(new AddButtonListener(context, trackable.getId(), trackable.getName()));
+        boundTrackingBut.setOnClickListener(new AddTrackingButtonListener(context, trackable.getId()));
         Button viewButton = (Button) result.findViewById(R.id.item_view_button);
         viewButton.setOnClickListener(new ViewRouteListener(context, trackable.getId()));
 
         return result;
+    }
+
+    // update adapter whenever filtered
+    @Override
+    public void update(Observable o, Object arg) {
+        this.trackableKeyArray = TrackManager.getSingletonInstance(context).getFilteredTrackableIds();
+        notifyDataSetChanged();
+
     }
 }

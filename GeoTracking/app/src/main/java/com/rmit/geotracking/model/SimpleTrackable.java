@@ -1,6 +1,8 @@
 package com.rmit.geotracking.model;
 
 
+import android.annotation.SuppressLint;
+
 public class SimpleTrackable implements Trackable {
 
     private int id;
@@ -10,8 +12,8 @@ public class SimpleTrackable implements Trackable {
     private String category;
     private String photo;
 
-    public SimpleTrackable(int id, String name, String description, String url,
-                           String category, String photo) {
+    SimpleTrackable(int id, String name, String description, String url,
+                    String category, String photo) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -20,9 +22,9 @@ public class SimpleTrackable implements Trackable {
         this.photo = photo;
     }
 
-    // optional constructor
-    public SimpleTrackable(int id, String name, String description, String url,
-                           String category){
+    // optional constructor without optinal photo attribute
+    SimpleTrackable(int id, String name, String description, String url,
+                    String category){
         this(id, name, description, url, category, null);
     }
 
@@ -86,6 +88,7 @@ public class SimpleTrackable implements Trackable {
         this.photo = photo;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public String toString() {
 

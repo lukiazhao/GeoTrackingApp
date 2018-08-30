@@ -11,7 +11,7 @@
         android:layout_below="@+id/route_title"
         android:gravity="center"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:text="@string/routedialog_title1" />
+        android:text="@string/routedialog_title" />
 
     <TextView
         android:id="@+id/route_title"
@@ -21,7 +21,7 @@
         android:layout_alignParentTop="true"
         android:gravity="center"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:text="@string/routedialog_title1" />
+        android:text="@string/routedialog_title" />
 
     <ListView
         android:id="@+id/route_ListView"

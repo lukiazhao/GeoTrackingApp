@@ -13,7 +13,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="11dp"
-        android:text="@string/textview"
+        android:text="@string/single_item_name"
         android:textAlignment="viewStart"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textSize="24sp"
@@ -26,10 +26,10 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/trackable_item"
         android:layout_marginStart="11dp"
-        android:text="@string/item_description"
+        android:text="@string/single_item_description"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textSize="13sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/item_url"
@@ -38,7 +38,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/item_description"
         android:layout_marginStart="11dp"
-        android:text="@string/item_url"
+        android:text="@string/single_item_url"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textSize="12sp" />
 
@@ -49,8 +49,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/item_add_button"
         android:layout_alignTop="@+id/trackable_item"
-        android:text="@string/view"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:text="@string/single_item_view_button" />
 
     <Button
         android:id="@+id/item_add_button"
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/trackable_item"
-        android:text="@string/add"
+        android:text="@string/single_item_add_button"
         android:focusable="false"/>
 
 </RelativeLayout>

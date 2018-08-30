@@ -5,6 +5,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+/*
+ * Hide software keyboard whenever the user clicks somewhere else on the screen.
+ */
 public class HideKeyboardListener implements View.OnFocusChangeListener {
     private Context context;
     public HideKeyboardListener(Context context){
@@ -17,8 +20,11 @@ public class HideKeyboardListener implements View.OnFocusChangeListener {
         }
     }
 
-    public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager) context
+                                                    .getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }
