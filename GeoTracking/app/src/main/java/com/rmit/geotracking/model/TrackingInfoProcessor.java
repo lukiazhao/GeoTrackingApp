@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class TrackingInfoProcessor {
     private Context context;
@@ -43,7 +44,6 @@ public class TrackingInfoProcessor {
     }
 
 
-
     public List<Date> getMeetTimeList(Date startTime, Date endTime) {
 
         List<Date> meetTimes = new ArrayList<>();
@@ -68,6 +68,26 @@ public class TrackingInfoProcessor {
             }
         }
         return meetLocation;
+    }
+
+
+    // Find current location according to the system time
+    public String findCurrentLocation(int trackableId) {
+        // current system time:
+        Date currentTime = Calendar.getInstance().getTime();
+        String currentLocation = null;
+        // extract current location from tracking service according to the current time
+        List<TrackingService.TrackingInfo> info = trackingService.getTrackingInfoList();
+        for (int i = 0; i < info.size() - 1; i++) {
+
+            if(trackableId == info.get(i).trackableId
+                    && currentTime.after(info.get(i).date)
+                    && currentTime.before(info.get(i + 1).date)) {
+
+                currentLocation = info.get(i).latitude + " , " + info.get(i).longitude;
+            }
+        }
+        return currentLocation;
     }
 
     public class Pair<T> {

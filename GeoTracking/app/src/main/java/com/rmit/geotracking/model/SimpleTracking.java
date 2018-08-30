@@ -2,7 +2,10 @@ package com.rmit.geotracking.model;
 
 import android.support.annotation.NonNull;
 
+import com.rmit.geotracking.service.TrackingService;
+
 import java.security.SecureRandom;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
 
@@ -89,14 +92,16 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
     }
 
     @Override
-    public void editTrackingInfo(String title, Date startTime, Date endTime, Date meetTime, String meetLocation) {
+    public void editTrackingInfo(String title, Date startTime, Date endTime, Date meetTime, String currentLocation, String meetLocation) {
         this.title = title;
         this.targetStartTime = startTime;
         this.targetEndTime = endTime;
         this.meetTime = meetTime;
+        this.currentLocation = currentLocation;
         this.meetLocation = meetLocation;
 
     }
+
 
     public int compareTo(Tracking tracking1) {
         if(this.meetTime.compareTo(tracking1.getMeetTime()) >= 0) {
@@ -105,4 +110,5 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
             return -1;
         }
     }
+
 }

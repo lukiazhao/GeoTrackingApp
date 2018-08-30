@@ -1,10 +1,17 @@
 package com.rmit.geotracking.controller;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 
+import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.view.AddToTrackingActivity;
+import com.rmit.geotracking.view.TrackableActivity;
+
+import java.util.Date;
+import java.util.List;
 
 public class AddButtonListener implements View.OnClickListener {
 
@@ -18,9 +25,23 @@ public class AddButtonListener implements View.OnClickListener {
     }
     @Override
     public void onClick(View view) {
-        Intent toAddActivityIntent = new Intent(context, AddToTrackingActivity.class);
-        toAddActivityIntent.putExtra("Trackable_Id", trackableId);
-        toAddActivityIntent.putExtra("Trackable_Name", trackableName);
-        context.startActivity(toAddActivityIntent);
+        if (hasTrackingInfo()){
+            Intent toAddActivityIntent = new Intent(context, AddToTrackingActivity.class);
+            toAddActivityIntent.putExtra("Trackable_Id", trackableId);
+            toAddActivityIntent.putExtra("Trackable_Name", trackableName);
+            context.startActivity(toAddActivityIntent);
+        } else {
+            ((TrackableActivity) context).showNoTrackingInfoAlertDialog();
+        }
+    }
+
+
+    public boolean hasTrackingInfo(){
+        List<Date> trackingStartList = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor().getStartTimes(trackableId);
+        if(trackingStartList.size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

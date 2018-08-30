@@ -48,8 +48,8 @@ public class TrackingManager extends Observable{
         notifyObservers();
     }
 
-    public void editTracking(Tracking tracking, String title, Date startTime, Date endTime, Date meetTime, String meetLocation) {
-        tracking.editTrackingInfo(title, startTime, endTime, meetTime, meetLocation);
+    public void editTracking(Tracking tracking, String title, Date startTime, Date endTime, Date meetTime, String currentLocation, String meetLocation) {
+        tracking.editTrackingInfo(title, startTime, endTime, meetTime, currentLocation, meetLocation);
         setChanged();
         notifyObservers();
     }
