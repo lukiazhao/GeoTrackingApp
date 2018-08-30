@@ -12,6 +12,12 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * When an item is selected in the Start Time Spinner,
+ * this listener will be called to
+ * 1. update end time TextView
+ * 2. update meet time spinner
+ */
 public class TimeSelectionListener implements AdapterView.OnItemSelectedListener {
 
     private Context context;
@@ -50,7 +56,7 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         ((ModifyTrackingActivity) context).updateMeetLocation(location.toString());
     }
 
-    public Date extractEndTime(Date startTime) {
+    private Date extractEndTime(Date startTime) {
         Date endTime = null;
         List<TrackingInfoProcessor.Pair> pairs = TrackManager.getSingletonInstance(context)
                                                              .getTrackingInfoProcessor()

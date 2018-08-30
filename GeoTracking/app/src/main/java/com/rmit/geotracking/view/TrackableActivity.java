@@ -1,20 +1,16 @@
 package com.rmit.geotracking.view;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.FilterSpinnerAdapter;
@@ -26,7 +22,6 @@ import com.rmit.geotracking.controller.SortCategoryListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,13 +40,12 @@ public class TrackableActivity extends MainActivity {
         setContentView(R.layout.activity_trackable_list);
 
         trackableMap = trackManager.getTrackableMap();
-        listView = (ListView) findViewById(R.id.trackable_list);
-
+        ListView listView = findViewById(R.id.trackable_list);
         // add spinner
         loadSpinner();
 
         // call adapter
-        adapter = new TrackableListAdapter(this, trackableMap);
+        TrackableListAdapter adapter = new TrackableListAdapter(this, trackableMap);
 
         // set adapter into list view
         listView.setAdapter(adapter);
@@ -59,10 +53,10 @@ public class TrackableActivity extends MainActivity {
 
     public void loadSpinner(){
 
-        List<String> category = trackManager.getCategory();
+        List<String> category = trackManager.readAllCategories();
 
         // get reference of widgets from xml layout.
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
 
         final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, category);
 
@@ -70,7 +64,7 @@ public class TrackableActivity extends MainActivity {
 
         spinner.setAdapter(adapterSpin);
 
-        spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
+        spinner.setOnItemSelectedListener(new SortCategoryListener(this));
     }
 
 
@@ -78,7 +72,7 @@ public class TrackableActivity extends MainActivity {
     public void showRouteDialog(int trackableID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = inflater.inflate(R.layout.route_dialog, null);
+        @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.route_dialog, null);
 
         TextView title2 = v.findViewById(R.id.route_trackablename);
         ListView routelv = v.findViewById(R.id.route_ListView);

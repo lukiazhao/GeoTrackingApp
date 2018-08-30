@@ -6,13 +6,18 @@ import com.rmit.geotracking.service.TrackingService;
 
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
+/*
+ * This class maily process the tracking info extraction, including
+ * search startTime - endTime Pair for certain trackable,
+ * extract route information,
+ * and other relavent tracking information extraction.
+ *
+ */
 public class TrackingInfoProcessor {
 
     private TrackingService trackingService;
@@ -29,7 +34,7 @@ public class TrackingInfoProcessor {
             if (info.trackableId == selectedTrackableId && info.stopTime > 0) {
                 endCal.setTime(info.date);
                 endCal.set(Calendar.MINUTE, endCal.get(Calendar.MINUTE) + info.stopTime);
-                startEndPairs.add(new Pair<Date>(info.date, endCal.getTime()));
+                startEndPairs.add(new Pair<>(info.date, endCal.getTime()));
 
             }
         }
@@ -38,9 +43,8 @@ public class TrackingInfoProcessor {
 
     public List<String> getStartTimes(int selectedTrackableId) {
         List<String> startTimes = new ArrayList<>();
-        for(Pair<Date> pair: getStartEndPairs(selectedTrackableId)){
-            Date time = pair.getFirstAttribute();
-            startTimes.add(getFormatedDate(time));
+        for(Pair pair:getStartEndPairs(selectedTrackableId)){
+            startTimes.add(getFormatedDate((Date) pair.getFirstAttribute()));
         }
 
         return startTimes;
@@ -66,7 +70,7 @@ public class TrackingInfoProcessor {
         Pair<Double> meetLocation = null;
         for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
             if (info.trackableId == selectedTrackableId && info.date.equals(startTime)) {
-                meetLocation = new Pair<Double>(info.latitude, info.longitude);
+                meetLocation = new Pair<>(info.latitude, info.longitude);
             }
         }
         return meetLocation;
@@ -92,6 +96,32 @@ public class TrackingInfoProcessor {
         return currentLocation;
     }
 
+
+
+    public List<String[]> createRouteList(int trackableID) {
+        List<String[]> routelist = new ArrayList<>();
+
+        for(TrackingService.TrackingInfo trackingInfo : trackingService.getTrackingInfoList()) {
+            if(trackingInfo.trackableId == trackableID) {
+                String[] routeDetailInfo = new String [3];
+                routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
+                routeDetailInfo[1] = getFormatedDate(trackingInfo.date);
+                routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
+                routelist.add(routeDetailInfo);
+            }
+        }
+        return routelist;
+    }
+
+    public String getFormatedDate(Date date){
+        return DateFormat.getDateTimeInstance(
+                DateFormat.SHORT, DateFormat.MEDIUM).format(date);
+    }
+
+    public Date parseStringToDate(String date) throws ParseException {
+        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).parse(date);
+    }
+
     public class Pair<T> {
         T firstAttribute;
         T secondAttribute;
@@ -111,31 +141,5 @@ public class TrackingInfoProcessor {
         public String toString() {
             return firstAttribute.toString() + " , " + secondAttribute.toString();
         }
-    }
-
-    public List<String[]> createRouteList(int trackableID) {
-        List<String[]> routelist = new ArrayList<>();
-
-        for(TrackingService.TrackingInfo trackingInfo : trackingService.getTrackingInfoList()) {
-            if(trackingInfo.trackableId == trackableID) {
-                String[] routeDetailInfo = new String [3];
-                routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
-                routeDetailInfo[1] = getFormatedDate(trackingInfo.date);
-                routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
-                routelist.add(routeDetailInfo);
-            }
-        }
-        return routelist;
-    }
-
-    public String getFormatedDate(Date date){
-        String formatedDate = DateFormat.getDateTimeInstance(
-                DateFormat.SHORT, DateFormat.MEDIUM).format(date);
-        return formatedDate;
-    }
-
-    public Date parseStringToDate(String date) throws ParseException {
-
-        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).parse(date);
     }
 }

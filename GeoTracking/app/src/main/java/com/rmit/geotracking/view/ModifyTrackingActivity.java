@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.controller.AddTrackingListener;
+import com.rmit.geotracking.controller.ModifyTrackingListener;
 import com.rmit.geotracking.controller.HideKeyboardListener;
 import com.rmit.geotracking.controller.TimeSelectionListener;
 import com.rmit.geotracking.model.TrackManager;
@@ -29,7 +29,6 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     private Spinner meetTimeSpinner;
     private TextView endTimeTextView;
     private EditText title ;
-    private ArrayAdapter<String> meetTimeAdapter;
     private ArrayAdapter<String> startTimeAdapter;
     private String selectedTrakcingId = null;
     private Tracking selectedTracking = null;
@@ -44,9 +43,8 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         //get incoming intent's data
         getIncomingIntentExtras();
 
-
-        // title
-        title = (EditText) findViewById(R.id.edit_title);
+        // set edit title text to hide keyboard listener
+        title = findViewById(R.id.edit_title);
         title.setOnFocusChangeListener(new HideKeyboardListener(this));
 
         if(selectedTrakcingId != null) {
@@ -63,8 +61,8 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         trackableName.setText(manager.getTrackableMap().get(selectedTrackableId).getName());
 
         // set listener to "finish" button
-        Button finishButton = (Button) findViewById(R.id.finish_button);
-        finishButton.setOnClickListener(new AddTrackingListener(this, this.selectedTrackableId, this.selectedTrakcingId));
+        Button finishButton = findViewById(R.id.finish_button);
+        finishButton.setOnClickListener(new ModifyTrackingListener(this, this.selectedTrackableId, this.selectedTrakcingId));
     }
 
     public void setTitle() {
@@ -77,7 +75,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         List<String> startTimes = processor.getStartTimes(selectedTrackableId);
 
-        startTimeSpinner = (Spinner) findViewById(R.id.select_start_spinner);
+        startTimeSpinner = findViewById(R.id.select_start_spinner);
         // initialise adapter
         startTimeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, startTimes);
 
@@ -100,8 +98,8 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     }
 
     public void updateMeetTimeSpinner(List<String> meetTimes) {
-        meetTimeSpinner = (Spinner) findViewById(R.id.select_meet_spinner);
-        meetTimeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
+        meetTimeSpinner = findViewById(R.id.select_meet_spinner);
+        ArrayAdapter<String> meetTimeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
         meetTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         meetTimeSpinner.setAdapter(meetTimeAdapter);
 
@@ -112,7 +110,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     }
 
     public void updateEndTimeTextView(Date date){
-        endTimeTextView = (TextView) findViewById(R.id.end_time_text);
+        endTimeTextView = findViewById(R.id.end_time_text);
         String newDate = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT, DateFormat.MEDIUM).format(date);
         endTimeTextView.setText(newDate);
@@ -134,7 +132,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     }
 
     public void updateMeetLocation(String selectedMeetLocation) {
-        TextView meetLocation = (TextView) findViewById(R.id.meet_location_text);
+        TextView meetLocation = findViewById(R.id.meet_location_text);
         meetLocation.setText(selectedMeetLocation);
     }
 
@@ -143,8 +141,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     }
 
     public TextView getMeetLocation() {
-        TextView meetLocation = findViewById(R.id.meet_location_text);
-        return meetLocation;
+        return findViewById(R.id.meet_location_text);
     }
 
     public Spinner getStartTimeSpinner() {

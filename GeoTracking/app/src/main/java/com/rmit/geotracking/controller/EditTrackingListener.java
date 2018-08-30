@@ -4,23 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.view.ModifyTrackingActivity;
 
-import java.util.Map;
 
+/*
+ * When the "Edit" button is clicked in the Tracking list,
+ * this listener will start the Modify Tracking Activity
+ */
 public class EditTrackingListener implements View.OnClickListener {
 
     private Context context;
-    private Map<String, Tracking> trackingMap;
     private Tracking tracking;
 
 
     public EditTrackingListener(Context context, Tracking tracking){
         this.context = context;
         this.tracking = tracking;
-        this.trackingMap = TrackManager.getSingletonInstance(context).getTrackingMap();
     }
 
     @Override

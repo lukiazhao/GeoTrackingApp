@@ -1,5 +1,7 @@
 package com.rmit.geotracking.model;
 
+import android.support.annotation.NonNull;
+
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Observable;
@@ -71,7 +73,7 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
         return meetLocation;
     }
 
-    public String generateRandomString(int length){
+    private String generateRandomString(int length){
         final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom rnd = new SecureRandom();
         StringBuilder sb = new StringBuilder(length);
@@ -100,8 +102,8 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
     }
 
 
-    public int compareTo(Tracking tracking1) {
-        if(this.meetTime.compareTo(tracking1.getMeetTime()) >= 0) {
+    public int compareTo(@NonNull Tracking trackingTarget) {
+        if(this.meetTime.compareTo(trackingTarget.getMeetTime()) >= 0) {
             return 1;
         } else {
             return -1;

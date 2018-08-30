@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusableInTouchMode="true"
-    tools:context=".view.ModifyTrackingActivity">
+    tools:context=".view.ModifyTrackingActivity"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/item_name"
@@ -17,7 +18,7 @@
         android:layout_marginTop="0dp"
         android:gravity="center"
         android:labelFor="@+id/item_name"
-        android:text="@string/TrackableName"
+        android:text="@string/modify_tracking_item_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <EditText
@@ -27,7 +28,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/item_name"
         android:ems="10"
-        android:hint="@string/title"
+        android:hint="@string/modify_tracking_item_title"
         android:textSize="30sp"
         android:gravity="center"
         android:inputType="text" />
@@ -41,7 +42,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="84dp"
         android:gravity="center"
-        android:text="@string/target_start_time"
+        android:text="@string/modify_tracking_start_time_label"
         android:textSize="20sp" />
 
 
@@ -63,7 +64,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="182dp"
         android:gravity="center"
-        android:text="@string/target_end_time"
+        android:text="@string/modify_tracking_end_time_label"
         android:textSize="20sp" />
 
     <TextView
@@ -74,7 +75,7 @@
         android:layout_below="@+id/target_end_time"
         android:layout_marginEnd="43dp"
         android:gravity="center"
-        android:text="@string/target_end_time"
+        android:text="@string/modify_tracking_end_time_text"
         android:textSize="18sp" />
 
 
@@ -84,7 +85,7 @@
         android:layout_height="38dp"
         android:layout_below="@id/end_time_text"
         android:layout_alignParentStart="true"
-        android:text="@string/choose_meet_time"
+        android:text="@string/modify_tracking_choose_meet_time"
         android:textSize="20sp" />
 
 
@@ -105,7 +106,7 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/select_meet_spinner"
         android:layout_marginStart="0dp"
-        android:text="@string/meet_location"
+        android:text="@string/modify_tracking_meet_location"
         android:textAlignment="gravity"
         android:textSize="20sp" />
 
@@ -115,9 +116,9 @@
         android:layout_height="43dp"
         android:layout_below="@+id/meet_location_label"
         android:layout_centerHorizontal="true"
-        android:text="@string/meet_location"
-        android:textSize="20sp"
-        android:textAlignment="center"/>
+        android:text="@string/modify_tracking_meet_location"
+        android:textAlignment="center"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/finish_button"
@@ -125,7 +126,7 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/meet_location_text"
-        android:text="@string/finish" />
+        android:text="@string/modify_tracking_finish_button" />
 
 
 </RelativeLayout>
