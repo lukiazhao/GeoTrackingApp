@@ -1,15 +1,11 @@
 package com.rmit.geotracking.model;
 
-import android.support.annotation.NonNull;
-
-import com.rmit.geotracking.service.TrackingService;
-
 import java.security.SecureRandom;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Observable;
 
 public class SimpleTracking extends Observable implements Tracking, Comparable<Tracking> {
+
     private static final Integer LENGTH = 4 ;
     private String trackingId;
     private int trackableId;

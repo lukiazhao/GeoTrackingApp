@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.rmit.geotracking.service.TrackingService;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -117,11 +119,17 @@ public class TrackingInfoProcessor {
             if(trackingInfo.trackableId == trackableID) {
                 String[] routeDetailInfo = new String [3];
                 routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
-                routeDetailInfo[1] = trackingInfo.date.toString();
+                routeDetailInfo[1] = getFormatedDate(trackingInfo.date);
                 routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
                 routelist.add(routeDetailInfo);
             }
         }
         return routelist;
+    }
+
+    public String getFormatedDate(Date date){
+        DateFormat formater = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        String formatedDate = formater.format(date);
+        return formatedDate;
     }
 }
