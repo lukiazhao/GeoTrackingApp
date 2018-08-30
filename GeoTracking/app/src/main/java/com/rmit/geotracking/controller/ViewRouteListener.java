@@ -27,7 +27,6 @@ public class ViewRouteListener implements View.OnClickListener {
     public ViewRouteListener(Context context, int trackableID){
         this.trackableID = trackableID;
         this.context = context;
-        dataprocesser = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor();
     }
 
     @Override
