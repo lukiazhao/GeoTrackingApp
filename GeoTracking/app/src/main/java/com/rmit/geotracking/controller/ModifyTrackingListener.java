@@ -8,13 +8,10 @@ import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.view.ModifyTrackingActivity;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
-import static java.lang.Integer.parseInt;
-
-public class AddTrackingListener implements View.OnClickListener {
+public class ModifyTrackingListener implements View.OnClickListener {
 
      private ModifyTrackingActivity context;
      private Integer trackableId;
@@ -24,14 +21,12 @@ public class AddTrackingListener implements View.OnClickListener {
      private Date startTime, endTime, meetTime;
      private TrackingInfoProcessor processor;
 
-     public AddTrackingListener(ModifyTrackingActivity context, Integer trackableId, String trackingId)
+     public ModifyTrackingListener(ModifyTrackingActivity context, Integer trackableId, String trackingId)
      {
         this.context = context;
         this.trackableId = trackableId;
         this.trackingId = trackingId;
         this.processor = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor();
-
-
      }
 
     @Override
@@ -50,7 +45,7 @@ public class AddTrackingListener implements View.OnClickListener {
          context.finish();
     }
 
-    public void readTracking() {
+    private void readTracking() {
 
         try {
             title = context.getTrackingTitle().getText().toString();
@@ -58,7 +53,8 @@ public class AddTrackingListener implements View.OnClickListener {
             startTime = processor.parseStringToDate((String) context.getStartTimeSpinner().getSelectedItem());
             meetTime = processor.parseStringToDate((String) context.getMeetTimeSpinner().getSelectedItem());
             endTime = processor.parseStringToDate(context.getEndTimeTextView().getText().toString());
-            currLocation = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor().findCurrentLocation(trackableId);
+            currLocation = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor()
+                                                                     .findCurrentLocation(trackableId);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -66,18 +62,22 @@ public class AddTrackingListener implements View.OnClickListener {
 
     }
 
-    public void createTracking() {
+    private void createTracking() {
 
         Tracking tracking = new SimpleTracking(trackableId, title, startTime, endTime, meetTime,
                 currLocation, meetLocation);
 
         // add tracking
-        TrackManager.getSingletonInstance(context).getTrackingMap().put(tracking.getTrackingId(), tracking);
+        TrackManager.getSingletonInstance(context)
+                    .getTrackingMap()
+                    .put(tracking.getTrackingId(), tracking);
     }
 
-    public void updateTracking() {
+    private void updateTracking() {
        Tracking tracking =  TrackManager.getSingletonInstance(context).getTrackingMap().get(trackingId);
-       TrackManager.getSingletonInstance(context).getTrackingManager().editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
+       TrackManager.getSingletonInstance(context)
+                   .getTrackingManager()
+                   .editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
      }
 
 }

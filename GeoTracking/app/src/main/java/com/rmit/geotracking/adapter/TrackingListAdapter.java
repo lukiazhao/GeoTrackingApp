@@ -58,7 +58,7 @@ public class TrackingListAdapter extends BaseAdapter implements Observer {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        View v = LayoutInflater.from(context).inflate(R.layout.single_trackable_view, viewGroup, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.single_item_view, viewGroup, false);
 
         // get all elements from view
         TextView trackingTitleView = v.findViewById(R.id.trackable_item);

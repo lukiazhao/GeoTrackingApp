@@ -1,35 +1,33 @@
 package com.rmit.geotracking.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.service.TrackingService;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
 public class TrackManager extends Observable {
-    // search and filter
-    // load and save
-//    public static TrackManager INSTANCE = null;
-    private String LOG_TAG = this.getClass().getName();
+
     private Map<Integer, Trackable> trackableMap;
     private Map<String, Tracking> trackingMap;
+    private List<Integer> filteredTrackableIds;
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     private TrackingManager trackingManager;
     private TrackingInfoProcessor processor;
-    //if use singleton, change this to private !!!!
+
+    //use singleton, private constructor
     private TrackManager(){
         this.trackableMap = loadTrackable();
-        this.trackingMap = new HashMap<String, Tracking>();
+        this.trackingMap = new HashMap<>();
         this.trackingManager = new TrackingManager(trackingMap);
         this.processor = new TrackingInfoProcessor(context);
     }
@@ -37,27 +35,36 @@ public class TrackManager extends Observable {
     // singleton support
     private static class LazyHolder
     {
+        @SuppressLint("StaticFieldLeak")
         static final TrackManager INSTANCE = new TrackManager();
     }
 
-//    // singleton
+    // singleton
     public static TrackManager getSingletonInstance(Context context)
     {
         TrackManager.context = context;
         return LazyHolder.INSTANCE;
     }
 
-
-
+    // getter
     public Map<Integer, Trackable> getTrackableMap(){
         return this.trackableMap;
     }
     public Map<String, Tracking> getTrackingMap() { return this.trackingMap; }
+    public TrackingManager getTrackingManager() {
+        return trackingManager;
+    }
+    public TrackingInfoProcessor getTrackingInfoProcessor() {
+        return processor;
+    }
 
-    public Map<Integer, Trackable> loadTrackable(){
+
+    // load Trackables from txt file
+    private Map<Integer, Trackable> loadTrackable(){
+        @SuppressLint("UseSparseArrays")
         Map<Integer,Trackable> trackablesMap = new HashMap<>();
 
-        InputStream inputStream = this.context.getResources().openRawResource(R.raw.food_truck_data);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.food_truck_data);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
         String line;
@@ -83,22 +90,13 @@ public class TrackManager extends Observable {
             }
 
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return trackablesMap;
-
     }
 
-
-
-    public TrackingManager getTrackingManager() {
-        return trackingManager;
-    }
-    public TrackingInfoProcessor getTrackingInfoProcessor() {
-        return processor;
-    }
-
-    public List<String> getCategory(){
+    // read all category types from original file
+    public List<String> readAllCategories(){
         List<String> category = new ArrayList<>();
         category.add("Select Category");
         for (Trackable trackable: trackableMap.values()){
@@ -110,6 +108,25 @@ public class TrackManager extends Observable {
         return category;
     }
 
+    // filter trackable list
+    public void setfilteredTrackable(String category) {
+        List<Integer> selected = new ArrayList<>();
+        if(category == null) {
+            selected.addAll(trackableMap.keySet());
+        } else {
+            for(Trackable trackable: trackableMap.values()){
+                if(trackable.getCategory().equals(category)){
+                    selected.add(trackable.getId());
+                }
+            }
+        }
+        this.filteredTrackableIds = selected;
 
+        setChanged();
+        notifyObservers();
+    }
 
+    public List<Integer> getFilteredTrackableIds() {
+        return this.filteredTrackableIds;
+    }
 }

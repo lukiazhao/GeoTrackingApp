@@ -16,9 +16,7 @@ public class FilterSpinnerAdapter  extends ArrayAdapter {
 
     public FilterSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
-
     }
-
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -32,7 +30,6 @@ public class FilterSpinnerAdapter  extends ArrayAdapter {
         } else {
             tv.setTextColor(Color.BLACK);
         }
-
         return view;
     }
 }
