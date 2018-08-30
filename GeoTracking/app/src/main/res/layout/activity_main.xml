@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
 
     <!--<include-->
     <!--android:id = "@+id/action_bar"-->
@@ -14,25 +15,38 @@
     <Button
         android:id="@+id/trackable_button"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="58dp"
-        android:layout_marginTop="160dp"
+        android:layout_width="170dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="48dp"
         android:text="Trackable List"
         app:layout_constraintBottom_toTopOf="@+id/tracking_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/tracking_button"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="197dp"
+        android:layout_width="170dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="123dp"
         android:text="Tracking List"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/trackable_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trackable_button" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="83dp"
+        android:layout_marginTop="87dp"
+        android:text="@string/mainactivity_welcom_text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/trackable_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

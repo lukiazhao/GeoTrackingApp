@@ -41,10 +41,10 @@ public class TrackingActivity extends MainActivity {
     }
 
     public void loadListView(){
-        BaseAdapter adapter = new TrackingListAdapter(this, trackManager);
+        BaseAdapter adapter = new TrackingListAdapter(this);
         ListView trackingView = findViewById(R.id.tracking_list);
         trackingView.setAdapter(adapter);
-        trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this, adapter));
+        trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this));
     }
 
     public void viewTrackingView(Tracking tracking){
@@ -75,9 +75,9 @@ public class TrackingActivity extends MainActivity {
                 sections[0], tracking.getTrackableId(),
                 sections[1], tracking.getTrackingId(),
                 sections[2], tracking.getTitle(),
-                sections[3], tracking.getMeetTime(),
-                sections[4], tracking.getTargetStartTime(),
-                sections[5], tracking.getTargetEndTime(),
+                sections[3], trackManager.getTrackingInfoProcessor().getFormatedDate(tracking.getMeetTime()),
+                sections[4], trackManager.getTrackingInfoProcessor().getFormatedDate(tracking.getTargetStartTime()),
+                sections[5], trackManager.getTrackingInfoProcessor().getFormatedDate(tracking.getTargetEndTime()),
                 sections[6], tracking.getMeetLocation(),
                 sections[7], tracking.getCurrentLocation());
         //output.

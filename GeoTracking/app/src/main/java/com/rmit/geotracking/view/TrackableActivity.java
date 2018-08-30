@@ -73,9 +73,6 @@ public class TrackableActivity extends MainActivity {
         spinner.setOnItemSelectedListener(new SortCategoryListener(this, adapter));
     }
 
-    public void showNoRouteToast(){
-        Toast.makeText(this, getResources().getString(R.string.routedialog_norouteToast), Toast.LENGTH_SHORT).show();
-    }
 
 
     public void showRouteDialog(int trackableID) {
@@ -93,7 +90,7 @@ public class TrackableActivity extends MainActivity {
         if (routeList.size() != 0) {
             routelv.setAdapter(new RouteListAdapter(this, routeList));
         } else {
-            this.showNoRouteToast();
+            this.showNoTrackingInfoAlertDialog();
             return;
         }
         builder.setView(v);
