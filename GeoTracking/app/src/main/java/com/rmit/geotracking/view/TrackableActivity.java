@@ -58,12 +58,10 @@ public class TrackableActivity extends MainActivity {
         // get reference of widgets from xml layout.
         Spinner spinner = findViewById(R.id.spinner);
 
-        final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this, android.R.layout.simple_spinner_dropdown_item, category);
-
+        final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item, category);
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         spinner.setAdapter(adapterSpin);
-
         spinner.setOnItemSelectedListener(new SortCategoryListener(this));
     }
 
@@ -96,9 +94,14 @@ public class TrackableActivity extends MainActivity {
 
     public void showNoTrackingInfoAlertDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("No Tracking Information available for this item. Please check later.")
-                    .setNeutralButton("OK", null)
+            builder.setMessage(this.getResources().getString(R.string.trackablelist_noinfo))
+                    .setNeutralButton(this.getResources()
+                            .getString(R.string.viewtracking_confirmButton), null)
                     .setCancelable(false).show();
     }
 
+    public void onRestart(){
+        super.onRestart();
+        this.finish();
+    }
 }

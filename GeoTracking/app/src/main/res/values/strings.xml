@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">GeoTracking</string>
 
+
+    <string name="button">Button</string>
+
+
     <!--string resources for mainActivity-->
     <string name="mainactivity_welcom_text">Welcome to GeoTracking!</string>
     <string name="mainactivity_trackableButton">Trackable List</string>
@@ -33,7 +37,13 @@
     <string name="routedialog_stoptimelabel">Stop Time:  </string>
     <string name="routedialog_stoptimeunit">   mins</string>
 
+    <!--string resources for trackable list -->
+    <string name="sortcategory_message">You have selected  </string>
+    <string name="trackablelist_noinfo">No Tracking Information available for this item.
+        Please check later.</string>
 
+
+    <!--string resources for trackinglist -->
     <string name="singletrackingview_editbutton">EDIT</string>
     <string name="viewtracking_confirmButton">OK</string>
     <string name="viewtracking_title">Tracking Information</string>
@@ -45,9 +55,9 @@
     <string name="viewtracking_currentlocation">Current Location</string>
     <string name="viewtracking_meetlocation">Meet Location</string>
 
+    <!--string resources for remove tracking -->
     <string name="removetracking_message">Delete this Tracking?</string>
     <string name="removetracking_toast">Tracking deleted</string>
-
 
     <!--string resources for single item view-->
     <string name="single_item_name">item_name</string>
@@ -55,6 +65,10 @@
     <string name="single_item_url">item_url</string>
     <string name="single_item_view_button">View</string>
     <string name="single_item_add_button">Add</string>
+
+    <!--string resources for model-->
+    <string name="trackmanager_default_category">Select Category</string>
+
 
 
 </resources>

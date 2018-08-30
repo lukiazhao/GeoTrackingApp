@@ -47,7 +47,8 @@ public class RouteListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        @SuppressLint("ViewHolder") View v = LayoutInflater.from(context).inflate(R.layout.single_route_view, viewGroup, false);
+        @SuppressLint("ViewHolder") View v = LayoutInflater.from(context)
+                .inflate(R.layout.single_route_view, viewGroup, false);
 
         // three elements here are current location, time and duration of stop time
         TextView location = v.findViewById(R.id.location_TextView);
