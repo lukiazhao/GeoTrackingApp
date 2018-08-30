@@ -5,53 +5,49 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/location_TextView"
-        android:layout_width="301dp"
-        android:layout_height="36dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="46dp" />
-
-    <TextView
-        android:id="@+id/location_time_TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="114dp" />
-
-    <TextView
-        android:id="@+id/location_stoptime_TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="162dp" />
-
-    <TextView
-        android:id="@+id/textView"
+        android:id="@+id/location_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/location_stoptime_TextView"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="-162dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="11dp"
+        android:text="@string/routedialog_locationlabel" />
+
+    <TextView
+        android:id="@+id/location_TextView"
+        android:layout_width="301dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/location_label" />
+
+    <TextView
+        android:id="@+id/stoptime_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="118dp"
         android:text="@string/routedialog_stoptimelabel" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/location_time_TextView"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="-114dp"
-        android:text="@string/routedialog_timelabel" />
-
-    <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/time_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="18dp"
-        android:text="@string/routedialog_locationlabel" />
+        android:layout_marginTop="70dp"
+        android:text="@string/routedialog_timelabel" />
+
+    <TextView
+        android:id="@+id/location_time_TextView"
+        android:layout_width="358dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/time_label" />
+
+    <TextView
+        android:id="@+id/location_stoptime_TextView"
+        android:layout_width="359dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/stoptime_label" />
+
 </RelativeLayout>

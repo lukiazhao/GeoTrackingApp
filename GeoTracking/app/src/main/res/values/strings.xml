@@ -3,6 +3,11 @@
 
     <string name="button">Button</string>
 
+    <!--string resources for mainActivity-->
+    <string name="mainactivity_welcom_text">Welcome to GeoTracking!</string>
+    <string name="mainactivity_trackableButton">Trackable List</string>
+    <string name="mainactivity_trackingButton">Tracking List</string>
+
     <!--string resources for menu-->
     <string name="menu_trackable_list">Show Trackables</string>
     <string name="menu_tracking_list">Show Current Trackings</string>
@@ -49,6 +54,8 @@
     <string name="viewtracking_meetlocation">Meet Location</string>
 
     <string name="removetracking_message">Delete this Tracking?</string>
+    <string name="removetracking_toast">Tracking deleted</string>
+
 
 
     <string name="item_description">item_description</string>

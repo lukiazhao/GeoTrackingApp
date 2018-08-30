@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.model.TrackManager;
 
 import java.util.List;
 

@@ -22,6 +22,7 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.Tracking;
 
+import java.util.Calendar;
 import java.util.Objects;
 
 
@@ -75,9 +76,9 @@ public class TrackingActivity extends MainActivity {
                 sections[0], tracking.getTrackableId(),
                 sections[1], tracking.getTrackingId(),
                 sections[2], tracking.getTitle(),
-                sections[3], tracking.getMeetTime(),
-                sections[4], tracking.getTargetStartTime(),
-                sections[5], tracking.getTargetEndTime(),
+                sections[3], trackManager.getTrackingInfoProcessor().getFormatedDate(tracking.getMeetTime()),
+                sections[4], trackManager.getTrackingInfoProcessor().getFormatedDate(tracking.getTargetStartTime()),
+                sections[5], trackManager.getTrackingInfoProcessor().getFormatedDate(tracking.getTargetEndTime()),
                 sections[6], tracking.getMeetLocation(),
                 sections[7], tracking.getCurrentLocation());
         //output.

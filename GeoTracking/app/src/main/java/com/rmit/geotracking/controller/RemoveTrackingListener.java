@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.widget.Toast;
 
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
@@ -23,10 +24,8 @@ public class RemoveTrackingListener implements DialogInterface.OnClickListener {
 
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
-
         trackManager.getTrackingManager().removeTracking(tracking);
-        Toast toast = Toast.makeText(context, "Tracking deleted.", LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, context.getResources().getString(R.string.removetracking_toast), LENGTH_SHORT);
         toast.show();
-
     }
 }

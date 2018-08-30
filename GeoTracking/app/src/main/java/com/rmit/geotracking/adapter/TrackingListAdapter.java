@@ -13,7 +13,6 @@ import com.rmit.geotracking.controller.ViewTrackingListener;
 import com.rmit.geotracking.controller.EditTrackingListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
-import com.rmit.geotracking.view.TrackingActivity;
 
 import java.util.Map;
 import java.util.Observable;
@@ -52,15 +51,15 @@ public class TrackingListAdapter extends BaseAdapter implements Observer {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         View v = LayoutInflater.from(context).inflate(R.layout.single_trackable_view, viewGroup, false);
-        TextView trackingTitleView = (TextView) v.findViewById(R.id.trackable_item);
-        TextView trackingMeetView = (TextView) v.findViewById(R.id.item_description);
-        TextView trackingLocationView = (TextView) v.findViewById(R.id.item_url);
-        Button trackingViewButton = (Button) v.findViewById(R.id.item_view_button);
-        Button trackingEditButton = (Button) v.findViewById(R.id.item_add_button);
+        TextView trackingTitleView = v.findViewById(R.id.trackable_item);
+        TextView trackingMeetView = v.findViewById(R.id.item_description);
+        TextView trackingLocationView = v.findViewById(R.id.item_url);
+        Button trackingViewButton = v.findViewById(R.id.item_view_button);
+        Button trackingEditButton = v.findViewById(R.id.item_add_button);
 
         trackingEditButton.setText(context.getResources().getString(R.string.singletrackingview_editbutton));
         trackingTitleView.setText(trackingMap.get(keyArray[position]).getTitle());
-        trackingMeetView.setText(trackingMap.get(keyArray[position]).getMeetTime().toString());
+        trackingMeetView.setText(manager.getTrackingInfoProcessor().getFormatedDate(trackingMap.get(keyArray[position]).getMeetTime()));
         trackingLocationView.setText(trackingMap.get(keyArray[position]).getMeetLocation());
 
         trackingViewButton.setOnClickListener(new ViewTrackingListener(context, trackingMap.get(keyArray[position])));
