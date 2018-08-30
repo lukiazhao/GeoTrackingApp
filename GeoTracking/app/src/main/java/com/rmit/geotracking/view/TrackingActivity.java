@@ -44,7 +44,7 @@ public class TrackingActivity extends MainActivity {
         BaseAdapter adapter = new TrackingListAdapter(this);
         ListView trackingView = findViewById(R.id.tracking_list);
         trackingView.setAdapter(adapter);
-        trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this, adapter));
+        trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this));
     }
 
     public void viewTrackingView(Tracking tracking){
