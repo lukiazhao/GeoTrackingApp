@@ -32,7 +32,6 @@ public class TrackManager extends Observable {
         this.trackingMap = new HashMap<String, Tracking>();
         this.trackingManager = new TrackingManager(trackingMap);
         this.processor = new TrackingInfoProcessor(context);
-
     }
 
     // singleton support

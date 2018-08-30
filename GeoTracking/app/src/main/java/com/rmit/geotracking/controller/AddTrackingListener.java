@@ -5,6 +5,7 @@ import android.view.View;
 import com.rmit.geotracking.model.SimpleTracking;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
+import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.view.ModifyTrackingActivity;
 
 import java.text.DateFormat;
@@ -21,13 +22,14 @@ public class AddTrackingListener implements View.OnClickListener {
 
      private String title, meetLocation, currLocation;
      private Date startTime, endTime, meetTime;
-
+     private TrackingInfoProcessor processor;
 
      public AddTrackingListener(ModifyTrackingActivity context, Integer trackableId, String trackingId)
      {
         this.context = context;
         this.trackableId = trackableId;
         this.trackingId = trackingId;
+        this.processor = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor();
 
 
      }
@@ -53,10 +55,9 @@ public class AddTrackingListener implements View.OnClickListener {
         try {
             title = context.getTrackingTitle().getText().toString();
             meetLocation = context.getMeetLocation().getText().toString();
-            startTime = (Date) context.getStartTimeSpinner().getSelectedItem();
-            meetTime = (Date) context.getMeetTimeSpinner().getSelectedItem();
-            endTime = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM)
-                            .parse(context.getEndTimeTextView().getText().toString());
+            startTime = processor.parseStringToDate((String) context.getStartTimeSpinner().getSelectedItem());
+            meetTime = processor.parseStringToDate((String) context.getMeetTimeSpinner().getSelectedItem());
+            endTime = processor.parseStringToDate(context.getEndTimeTextView().getText().toString());
             currLocation = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor().findCurrentLocation(trackableId);
 
         } catch (ParseException e) {
