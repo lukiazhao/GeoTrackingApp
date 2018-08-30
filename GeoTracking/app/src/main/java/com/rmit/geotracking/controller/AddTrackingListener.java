@@ -58,7 +58,7 @@ public class AddTrackingListener implements View.OnClickListener {
             meetTime = (Date) context.getMeetTimeSpinner().getSelectedItem();
             endTime = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM)
                             .parse(context.getEndTimeTextView().getText().toString());
-            currLocation = null;
+            currLocation = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor().findCurrentLocation(trackableId);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -73,16 +73,11 @@ public class AddTrackingListener implements View.OnClickListener {
 
         // add tracking
         TrackManager.getSingletonInstance(context).getTrackingMap().put(tracking.getTrackingId(), tracking);
-
-        System.out.println("Tracking size after adding: " + TrackManager.getSingletonInstance(context).getTrackingMap().size());
-
     }
 
     public void updateTracking() {
        Tracking tracking =  TrackManager.getSingletonInstance(context).getTrackingMap().get(trackingId);
-       TrackManager.getSingletonInstance(context).getTrackingManager().editTracking(tracking,title, startTime, endTime, meetTime, meetLocation);
-
+       TrackManager.getSingletonInstance(context).getTrackingManager().editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
     }
-
 
 }
