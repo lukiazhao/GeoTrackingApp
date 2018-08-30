@@ -1,11 +1,7 @@
 package com.rmit.geotracking.view;
 
-import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,40 +11,35 @@ import android.widget.TextView;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.AddTrackingListener;
 import com.rmit.geotracking.controller.HideKeyboardListener;
-import com.rmit.geotracking.controller.RemoveTrackingListener;
 import com.rmit.geotracking.controller.TimeSelectionListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
-
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-
-public class AddToTrackingActivity extends AppCompatActivity {
-
-    private static final String TAG = "AddToTrackingActivity";
+public class ModifyTrackingActivity extends AppCompatActivity {
 
     private Integer selectedTrackableId;
     private Spinner startTimeSpinner;
     private Spinner meetTimeSpinner;
     private TextView endTimeTextView;
-    private TextView meetLocation;
     private EditText title ;
-    private ArrayAdapter meetTimeAdapter;
+    private ArrayAdapter<Date> meetTimeAdapter;
+    private ArrayAdapter<Date> startTimeAdapter;
     private String selectedTrakcingId = null;
+    private Tracking selectedTracking = null;
     TrackManager manager = TrackManager.getSingletonInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_to_tracking);
+        setContentView(R.layout.activity_modify_tracking);
 
         //get incoming intent's data
         getIncomingIntentExtras();
+
 
         // title
         title = (EditText) findViewById(R.id.edit_title);
@@ -56,20 +47,19 @@ public class AddToTrackingActivity extends AppCompatActivity {
 
         if(selectedTrakcingId != null) {
             selectedTrackableId = manager.getTrackingMap().get(selectedTrakcingId).getTrackableId();
+            selectedTracking = manager.getTrackingMap().get(selectedTrakcingId);
             setTitle();
+            loadTimesWithDefault();
+        } else {
+            loadStartTimeSpinner();
         }
 
         // set intent data to text (trackable name is shown as title for customer to refer to)
         TextView trackableName = findViewById(R.id.item_name);
         trackableName.setText(manager.getTrackableMap().get(selectedTrackableId).getName());
 
-
-        // load Target Start Time Spinner and Meet Time Spinner
-        loadDateTimeSpinners();
-
         // set listener to "finish" button
         Button finishButton = (Button) findViewById(R.id.finish_button);
-
         finishButton.setOnClickListener(new AddTrackingListener(this, this.selectedTrackableId, this.selectedTrakcingId));
     }
 
@@ -79,13 +69,13 @@ public class AddToTrackingActivity extends AppCompatActivity {
 
 
 
-    public void loadDateTimeSpinners() {
+    public void loadStartTimeSpinner() {
 
         List<Date> startTimes = manager.getTrackingInfoProcessor().getStartTimes(selectedTrackableId);
 
         startTimeSpinner = (Spinner) findViewById(R.id.select_start_spinner);
         // initialise adapter
-        ArrayAdapter startTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, startTimes);
+        startTimeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, startTimes);
 
         // set adatper to spinner
         startTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -93,13 +83,28 @@ public class AddToTrackingActivity extends AppCompatActivity {
 
         // set listener to spinner
         startTimeSpinner.setOnItemSelectedListener(new TimeSelectionListener(this, selectedTrackableId));
+
+    }
+
+    public void loadTimesWithDefault() {
+        loadStartTimeSpinner();
+        selectedTracking = manager.getTrackingMap().get(selectedTrakcingId);
+        int startTimePosition = startTimeAdapter.getPosition(selectedTracking.getTargetStartTime());
+
+        startTimeSpinner.setSelection(startTimePosition);
+        updateEndTimeTextView(selectedTracking.getTargetEndTime());
     }
 
     public void updateMeetTimeSpinner(List<Date> meetTimes) {
         meetTimeSpinner = (Spinner) findViewById(R.id.select_meet_spinner);
-        meetTimeAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
+        meetTimeAdapter = new ArrayAdapter<Date>(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
         meetTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         meetTimeSpinner.setAdapter(meetTimeAdapter);
+
+        if (selectedTrakcingId != null) {
+            int meetTimePosition = meetTimeAdapter.getPosition(selectedTracking.getMeetTime());
+            meetTimeSpinner.setSelection(meetTimePosition);
+        }
     }
 
     public void updateEndTimeTextView(Date date){
@@ -125,16 +130,13 @@ public class AddToTrackingActivity extends AppCompatActivity {
         meetLocation.setText(selectedMeetLocation);
     }
 
-
-
     public TextView getTrackingTitle() {
-        TextView title = findViewById(R.id.edit_title);
         return title;
     }
 
     public TextView getMeetLocation() {
-        TextView location = findViewById(R.id.meet_location_text);
-        return location;
+        TextView meetLocation = findViewById(R.id.meet_location_text);
+        return meetLocation;
     }
 
     public Spinner getStartTimeSpinner() {

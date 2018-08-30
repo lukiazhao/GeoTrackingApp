@@ -1,13 +1,11 @@
 package com.rmit.geotracking.controller;
 
 import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.rmit.geotracking.model.SimpleTracking;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
-import com.rmit.geotracking.view.AddToTrackingActivity;
+import com.rmit.geotracking.view.ModifyTrackingActivity;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,7 +15,7 @@ import static java.lang.Integer.parseInt;
 
 public class AddTrackingListener implements View.OnClickListener {
 
-     private AddToTrackingActivity context;
+     private ModifyTrackingActivity context;
      private Integer trackableId;
      private String trackingId;
 
@@ -25,18 +23,19 @@ public class AddTrackingListener implements View.OnClickListener {
      private Date startTime, endTime, meetTime;
 
 
-     public AddTrackingListener(AddToTrackingActivity context, Integer trackableId, String trackingId)
+     public AddTrackingListener(ModifyTrackingActivity context, Integer trackableId, String trackingId)
      {
         this.context = context;
         this.trackableId = trackableId;
         this.trackingId = trackingId;
+
 
      }
 
     @Override
     public void onClick(View view) {
 
-         readTracking();
+        readTracking();
 
         if(trackingId == null) {
             // new tracking object
@@ -78,6 +77,6 @@ public class AddTrackingListener implements View.OnClickListener {
     public void updateTracking() {
        Tracking tracking =  TrackManager.getSingletonInstance(context).getTrackingMap().get(trackingId);
        TrackManager.getSingletonInstance(context).getTrackingManager().editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
-    }
+     }
 
 }

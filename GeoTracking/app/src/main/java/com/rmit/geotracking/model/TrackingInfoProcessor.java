@@ -29,7 +29,7 @@ public class TrackingInfoProcessor {
             if (info.trackableId == selectedTrackableId && info.stopTime > 0) {
                 endCal.setTime(info.date);
                 endCal.set(Calendar.MINUTE, endCal.get(Calendar.MINUTE) + info.stopTime);
-                startEndPairs.add(new Pair(info.date, endCal.getTime()));
+                startEndPairs.add(new Pair<Date>(info.date, endCal.getTime()));
 
             }
         }
@@ -62,7 +62,7 @@ public class TrackingInfoProcessor {
 
     public Pair<Double> getMeetLocation(int selectedTrackableId, Date startTime){
 
-        Pair meetLocation = null;
+        Pair<Double> meetLocation = null;
         for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
             if (info.trackableId == selectedTrackableId && info.date.equals(startTime)) {
                 meetLocation = new Pair<Double>(info.latitude, info.longitude);
@@ -128,8 +128,8 @@ public class TrackingInfoProcessor {
     }
 
     public String getFormatedDate(Date date){
-        DateFormat formater = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-        String formatedDate = formater.format(date);
+        String formatedDate = DateFormat.getDateTimeInstance(
+                DateFormat.SHORT, DateFormat.MEDIUM).format(date);
         return formatedDate;
     }
 }
