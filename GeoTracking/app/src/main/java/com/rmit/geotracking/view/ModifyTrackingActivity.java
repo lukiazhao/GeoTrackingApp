@@ -14,6 +14,7 @@ import com.rmit.geotracking.controller.HideKeyboardListener;
 import com.rmit.geotracking.controller.TimeSelectionListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
+import com.rmit.geotracking.model.TrackingInfoProcessor;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -26,11 +27,12 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     private Spinner meetTimeSpinner;
     private TextView endTimeTextView;
     private EditText title ;
-    private ArrayAdapter<Date> meetTimeAdapter;
-    private ArrayAdapter<Date> startTimeAdapter;
+    private ArrayAdapter<String> meetTimeAdapter;
+    private ArrayAdapter<String> startTimeAdapter;
     private String selectedTrakcingId = null;
     private Tracking selectedTracking = null;
-    TrackManager manager = TrackManager.getSingletonInstance(this);
+    private TrackManager manager = TrackManager.getSingletonInstance(this);
+    private TrackingInfoProcessor processor = manager.getTrackingInfoProcessor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
     public void loadStartTimeSpinner() {
 
-        List<Date> startTimes = manager.getTrackingInfoProcessor().getStartTimes(selectedTrackableId);
+        List<String> startTimes = processor.getStartTimes(selectedTrackableId);
 
         startTimeSpinner = (Spinner) findViewById(R.id.select_start_spinner);
         // initialise adapter
@@ -89,20 +91,20 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     public void loadTimesWithDefault() {
         loadStartTimeSpinner();
         selectedTracking = manager.getTrackingMap().get(selectedTrakcingId);
-        int startTimePosition = startTimeAdapter.getPosition(selectedTracking.getTargetStartTime());
+        int startTimePosition = startTimeAdapter.getPosition(processor.getFormatedDate(selectedTracking.getTargetStartTime()));
 
         startTimeSpinner.setSelection(startTimePosition);
         updateEndTimeTextView(selectedTracking.getTargetEndTime());
     }
 
-    public void updateMeetTimeSpinner(List<Date> meetTimes) {
+    public void updateMeetTimeSpinner(List<String> meetTimes) {
         meetTimeSpinner = (Spinner) findViewById(R.id.select_meet_spinner);
-        meetTimeAdapter = new ArrayAdapter<Date>(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
+        meetTimeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, meetTimes);
         meetTimeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         meetTimeSpinner.setAdapter(meetTimeAdapter);
 
         if (selectedTrakcingId != null) {
-            int meetTimePosition = meetTimeAdapter.getPosition(selectedTracking.getMeetTime());
+            int meetTimePosition = meetTimeAdapter.getPosition(processor.getFormatedDate(selectedTracking.getMeetTime()));
             meetTimeSpinner.setSelection(meetTimePosition);
         }
     }

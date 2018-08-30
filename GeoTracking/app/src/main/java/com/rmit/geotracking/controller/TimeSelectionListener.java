@@ -8,6 +8,7 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.view.ModifyTrackingActivity;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -15,14 +16,20 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
 
     private Context context;
     private int trackableId;
-
+    private TrackingInfoProcessor processor;
     public TimeSelectionListener(Context context, int trackableId) {
         this.context = context;
         this.trackableId = trackableId;
+        this.processor = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor();
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
-        Date selectedTime = (Date) parent.getItemAtPosition(position);
+        Date selectedTime = null;
+        try {
+            selectedTime = processor.parseStringToDate((String) parent.getItemAtPosition(position));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         // update target end time
         Date endTime = extractEndTime(selectedTime);
@@ -30,7 +37,7 @@ public class TimeSelectionListener implements AdapterView.OnItemSelectedListener
         ((ModifyTrackingActivity) context).updateEndTimeTextView(endTime);
 
         // update the meet time spinner list
-        List<Date> meetTimes = TrackManager.getSingletonInstance(context)
+        List<String> meetTimes = TrackManager.getSingletonInstance(context)
                                             .getTrackingInfoProcessor()
                                             .getMeetTimeList(selectedTime, endTime);
 

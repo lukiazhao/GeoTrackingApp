@@ -5,6 +5,7 @@ import android.content.Context;
 import com.rmit.geotracking.service.TrackingService;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,11 +14,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class TrackingInfoProcessor {
-    private Context context;
+
     private TrackingService trackingService;
 
-    public TrackingInfoProcessor(Context context){
-        this.context = context;
+    TrackingInfoProcessor(Context context){
         this.trackingService = TrackingService.getSingletonInstance(context);
     }
 
@@ -36,25 +36,26 @@ public class TrackingInfoProcessor {
         return startEndPairs;
     }
 
-    public List<Date> getStartTimes(int selectedTrackableId) {
-        List<Date> startTimes = new ArrayList<>();
+    public List<String> getStartTimes(int selectedTrackableId) {
+        List<String> startTimes = new ArrayList<>();
         for(Pair<Date> pair: getStartEndPairs(selectedTrackableId)){
-            startTimes.add(pair.getFirstAttribute());
+            Date time = pair.getFirstAttribute();
+            startTimes.add(getFormatedDate(time));
         }
 
         return startTimes;
     }
 
-    public List<Date> getMeetTimeList(Date startTime, Date endTime) {
+    public List<String> getMeetTimeList(Date startTime, Date endTime) {
 
-        List<Date> meetTimes = new ArrayList<>();
+        List<String> meetTimes = new ArrayList<>();
         Calendar targetStartCal = Calendar.getInstance();
         Calendar targetEndCal = Calendar.getInstance();
 
         targetStartCal.setTime(startTime);
         targetEndCal.setTime(endTime);
         while (targetStartCal.before(targetEndCal)) {
-            meetTimes.add(targetStartCal.getTime());
+            meetTimes.add(getFormatedDate(targetStartCal.getTime()));
             targetStartCal.set(Calendar.MINUTE, targetStartCal.get(Calendar.MINUTE) + 1);
         }
         return meetTimes;
@@ -113,7 +114,7 @@ public class TrackingInfoProcessor {
     }
 
     public List<String[]> createRouteList(int trackableID) {
-        List<String[]> routelist = new ArrayList<String[]>();
+        List<String[]> routelist = new ArrayList<>();
 
         for(TrackingService.TrackingInfo trackingInfo : trackingService.getTrackingInfoList()) {
             if(trackingInfo.trackableId == trackableID) {
@@ -131,5 +132,10 @@ public class TrackingInfoProcessor {
         String formatedDate = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT, DateFormat.MEDIUM).format(date);
         return formatedDate;
+    }
+
+    public Date parseStringToDate(String date) throws ParseException {
+
+        return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).parse(date);
     }
 }

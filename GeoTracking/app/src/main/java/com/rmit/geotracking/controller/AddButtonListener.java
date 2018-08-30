@@ -35,7 +35,7 @@ public class AddButtonListener implements View.OnClickListener {
 
 
     public boolean hasTrackingInfo(){
-        List<Date> trackingStartList = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor().getStartTimes(trackableId);
+        List<String> trackingStartList = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor().getStartTimes(trackableId);
         if(trackingStartList.size() == 0) {
             return false;
         } else {
