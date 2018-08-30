@@ -16,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TrackableActivity" />
-        <activity android:name=".fragment.TabActivity" />
+        <activity android:name=".view.TrackableActivity" />
+        <activity android:name=".view.TrackingActivity" />
+        <activity android:name=".view.ModifyTrackingActivity"></activity>
     </application>
 
 </manifest>

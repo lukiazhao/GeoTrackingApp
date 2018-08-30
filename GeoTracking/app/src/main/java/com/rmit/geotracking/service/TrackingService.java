@@ -14,13 +14,18 @@ import android.util.Log;
 
 import com.rmit.geotracking.R;
 
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TrackingService
@@ -93,11 +98,13 @@ public class TrackingService
             trackingInfo.trackableId = Integer.parseInt(scanner.next());
             trackingInfo.stopTime = Integer.parseInt(scanner.next());
             trackingInfo.latitude = Double.parseDouble(scanner.next());
-            String next=scanner.next();
+            String next = scanner.next();
             int commentPos;
             // strip trailing comment
-            if((commentPos=next.indexOf("//")) >=0)
-               next=next.substring(0, commentPos);
+            if((commentPos=next.indexOf("//")) >=0) {
+               next = next.substring(0, commentPos);
+               Log.i(LOG_TAG, next);
+            }
             trackingInfo.longitude = Double.parseDouble(next);
             trackingList.add(trackingInfo);
          }
@@ -150,6 +157,7 @@ public class TrackingService
          {
          }
          Log.i(LOG_TAG, trackingInfo.toString());
+
       }
    }
 
@@ -164,5 +172,20 @@ public class TrackingService
          if (dateInRange(trackingInfo.date, date, periodMinutes, periodSeconds))
             returnList.add(trackingInfo);
       return returnList;
+   }
+
+   public List<TrackingInfo> getTrackingInfoList() {
+      parseFile(context);
+      return this.trackingList;
+   }
+
+   public String generateRandomString(int length) {
+       final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+       SecureRandom rnd = new SecureRandom();
+         StringBuilder sb = new StringBuilder(length);
+         for( int i = 0; i < length; i++ ) {
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+         }
+         return sb.toString();
    }
 }

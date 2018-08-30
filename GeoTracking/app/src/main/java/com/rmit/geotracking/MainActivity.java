@@ -1,55 +1,69 @@
 package com.rmit.geotracking;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.rmit.geotracking.service.TestTrackingService;
-
-import java.util.ArrayList;
+import com.rmit.geotracking.controller.ActivityEntryListener;
+import com.rmit.geotracking.model.TrackManager;
+import com.rmit.geotracking.view.TrackableActivity;
+import com.rmit.geotracking.view.TrackingActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab_view);
+        setContentView(R.layout.activity_main);
+        TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
+        View trackableBut = findViewById(R.id.trackable_button);
+        View trackingBut = findViewById(R.id.tracking_button);
 
-        TestTrackingService.test(this);
+        trackableBut.setOnClickListener(new ActivityEntryListener(this));
+        trackingBut.setOnClickListener(new ActivityEntryListener(this));
+    }
 
-        /* spinner **/
-//        String[] data = new String[]{"Category first", "selection 2", "selection 3", "selection 4", "Category last"};
-        ArrayList<String> data = new ArrayList<>();
-        data.add("selection 1"); data.add("selection 3"); data.add("category last");
-        Spinner spinner = findViewById(R.id.spinner);
-        ArrayAdapter adapterSpin = new ArrayAdapter(this, android.R.layout.simple_spinner_item, data);
-        adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    //Import methods related to menu options and selections
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        spinner.setAdapter(adapterSpin);
-//        spinner.setSelection(adapterSpin.getCount());
-//        spinner.setSelection(adapterSpin.getCount());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.trackable_list:
+                goTrackable();
+                //Test
+                Toast.makeText(this, getResources().getString(R.string.menu_trackable_list), Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tracking_list:
+                goTracking();
+                Toast.makeText(this, getResources().getString(R.string.menu_tracking_list), Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
 
-        /* Recycler view of trackables **/
-
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_trackables);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        // create an adapter object
-        RecyclerAdapter adapter = new RecyclerAdapter(this);
-
-        // associate the recycler view with the adapter
-        recyclerView.setAdapter(adapter);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
+    public void goTrackable (){
+        Intent myIntent = new Intent(this, TrackableActivity.class);
+        startActivity(myIntent);
+    }
 
-
+    public void goTracking (){
+        Intent myIntent = new Intent(this, TrackingActivity.class);
+        startActivity(myIntent);
+    }
 }
