@@ -68,7 +68,7 @@ public class TrackableListAdapter extends BaseAdapter{
         Button boundTrackingBut = (Button) result.findViewById(R.id.item_add_button);
         boundTrackingBut.setOnClickListener(new AddButtonListener(context, trackable.getId(), trackable.getName()));
         Button viewButton = (Button) result.findViewById(R.id.item_view_button);
-        viewButton.setOnClickListener(new ViewRouteListener(context, trackable));
+        viewButton.setOnClickListener(new ViewRouteListener(context, trackable.getId()));
 
         return result;
     }

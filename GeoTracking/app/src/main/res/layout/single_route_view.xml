@@ -5,12 +5,53 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/location_view"
+        android:id="@+id/location_TextView"
         android:layout_width="301dp"
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="38dp"
-         />
+        android:layout_marginTop="46dp" />
+
+    <TextView
+        android:id="@+id/location_time_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="114dp" />
+
+    <TextView
+        android:id="@+id/location_stoptime_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="162dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/location_stoptime_TextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="-162dp"
+        android:text="@string/routedialog_stoptimelabel" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/location_time_TextView"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="-114dp"
+        android:text="@string/routedialog_timelabel" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="18dp"
+        android:text="@string/routedialog_locationlabel" />
 </RelativeLayout>

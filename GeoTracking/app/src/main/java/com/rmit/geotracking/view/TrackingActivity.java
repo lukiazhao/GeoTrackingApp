@@ -1,15 +1,25 @@
 package com.rmit.geotracking.view;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.TrackingListAdapter;
+import com.rmit.geotracking.controller.DialogDismissListener;
+import com.rmit.geotracking.controller.EditTrackingListener;
 import com.rmit.geotracking.controller.RemoveTrackingDialogListener;
+import com.rmit.geotracking.controller.ViewTrackingListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.Tracking;
@@ -40,6 +50,26 @@ public class TrackingActivity extends MainActivity {
         trackingView = findViewById(R.id.tracking_list);
         trackingView.setAdapter(adapter);
         trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this, adapter));
+    }
+
+    public void viewTrackingView(Tracking tracking){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View trackingview = inflater.inflate(R.layout.info_dialog, null);
+
+        TextView trackingdetails = trackingview.findViewById(R.id.info_TextView);
+        TextView title = (TextView) trackingview.findViewById(R.id.info_title_TextView);
+        Button confirmbutton = (Button) trackingview.findViewById(R.id.info_button);
+
+        title.setText(tracking.getTitle());
+        trackingdetails.setText(this.generateDetailView(tracking));
+
+        builder.setView(trackingview);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
+
     }
 
     public String generateDetailView(Tracking tracking){

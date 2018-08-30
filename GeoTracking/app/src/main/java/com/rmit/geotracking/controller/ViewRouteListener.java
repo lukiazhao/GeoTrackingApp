@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.RouteListAdapter;
+import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
+import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.service.TrackingService;
 import com.rmit.geotracking.view.TrackableActivity;
 
@@ -19,17 +21,14 @@ import java.util.List;
 
 public class ViewRouteListener implements View.OnClickListener {
 
-    private Trackable trackable;
-    private List<TrackingService.TrackingInfo> trackingInfoList;
+    private int trackableID;
     private Context context;
-    private boolean hasInfo;
+    private TrackingInfoProcessor dataprocesser;
 
-
-    public ViewRouteListener(Context context, Trackable trackable){
-        this.trackable = trackable;
+    public ViewRouteListener(Context context, int trackableID){
+        this.trackableID = trackableID;
         this.context = context;
-        trackingInfoList = TrackingService.getSingletonInstance(context).getTrackingInfoList();
-        hasInfo = false;
+        dataprocesser = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor();
     }
 
     @Override
@@ -38,15 +37,14 @@ public class ViewRouteListener implements View.OnClickListener {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = inflater.inflate(R.layout.route_dialog, null);
 
-        TextView title1 = (TextView) v.findViewById(R.id.route_title);
-        TextView title2 = (TextView) v.findViewById(R.id.route_trackablename);
-        ListView routelv = (ListView) v.findViewById(R.id.route_ListView);
-        Button confirmbutton = (Button) v.findViewById(R.id.route_confirm);
+        TextView title2 = v.findViewById(R.id.route_trackablename);
+        ListView routelv = v.findViewById(R.id.route_ListView);
+        Button confirmbutton = v.findViewById(R.id.route_confirm);
 
-        title2.setText(trackable.getName());
-        List<String> routeList = createRouteList();
+        title2.setText(TrackManager.getSingletonInstance(context).getTrackableMap().get(trackableID).getName());
+        List<String[]> routeList = dataprocesser.createRouteList(trackableID);
 
-        if(hasInfo) {
+        if(routeList.size() != 0) {
             routelv.setAdapter(new RouteListAdapter(context, routeList));
         } else {
             ((TrackableActivity) context).showNoRouteToast();
@@ -57,18 +55,5 @@ public class ViewRouteListener implements View.OnClickListener {
         AlertDialog dialog = builder.create();
         dialog.show();
         confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
-    }
-
-    public List<String> createRouteList() {
-        List<String> routelist = new ArrayList<String>();
-
-        for(TrackingService.TrackingInfo trackingInfo : trackingInfoList) {
-            if(trackingInfo.trackableId == trackable.getId()) {
-                routelist.add(trackingInfo.latitude + "  " + trackingInfo.longitude);
-                hasInfo = true;
-            }
-        }
-
-        return routelist;
     }
 }

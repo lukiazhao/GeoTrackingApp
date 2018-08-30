@@ -90,4 +90,19 @@ public class TrackingInfoProcessor {
             return firstAttribute.toString() + " , " + secondAttribute.toString();
         }
     }
+
+    public List<String[]> createRouteList(int trackableID) {
+        String[] routeDetailInfo = new String [3];
+        List<String[]> routelist = new ArrayList<String[]>();
+
+        for(TrackingService.TrackingInfo trackingInfo : trackingService.getTrackingInfoList()) {
+            if(trackingInfo.trackableId == trackableID) {
+                routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
+                routeDetailInfo[1] = trackingInfo.date.toString();
+                routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
+                routelist.add(routeDetailInfo);
+            }
+        }
+        return routelist;
+    }
 }
