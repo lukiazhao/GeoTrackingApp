@@ -1,8 +1,11 @@
 package com.rmit.geotracking.view;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,12 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.FilterSpinnerAdapter;
+import com.rmit.geotracking.adapter.RouteListAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
 import com.rmit.geotracking.MainActivity;
+import com.rmit.geotracking.controller.DialogDismissListener;
 import com.rmit.geotracking.controller.SortCategoryListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
@@ -69,6 +75,31 @@ public class TrackableActivity extends MainActivity {
 
     public void showNoRouteToast(){
         Toast.makeText(this, getResources().getString(R.string.routedialog_norouteToast), Toast.LENGTH_SHORT).show();
+    }
+
+    public void showRouteDialog(int trackableID){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.route_dialog, null);
+
+        TextView title2 = v.findViewById(R.id.route_trackablename);
+        ListView routelv = v.findViewById(R.id.route_ListView);
+        Button confirmbutton = v.findViewById(R.id.route_confirm);
+
+        title2.setText(TrackManager.getSingletonInstance(this).getTrackableMap().get(trackableID).getName());
+        List<String[]> routeList = trackManager.getTrackingInfoProcessor().createRouteList(trackableID);
+
+        if(routeList.size() != 0) {
+            routelv.setAdapter(new RouteListAdapter(this, routeList));
+        } else {
+            this.showNoRouteToast();
+            return;
+        }
+        builder.setView(v);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
     }
 
 }
