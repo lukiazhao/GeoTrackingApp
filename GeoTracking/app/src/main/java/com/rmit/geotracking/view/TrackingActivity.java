@@ -2,13 +2,13 @@ package com.rmit.geotracking.view;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,27 +17,23 @@ import android.widget.TextView;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.TrackingListAdapter;
 import com.rmit.geotracking.controller.DialogDismissListener;
-import com.rmit.geotracking.controller.EditTrackingListener;
 import com.rmit.geotracking.controller.RemoveTrackingDialogListener;
-import com.rmit.geotracking.controller.ViewTrackingListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.Tracking;
 
-import java.util.Map;
+import java.util.Objects;
 
 
 public class TrackingActivity extends MainActivity {
 
     private static final String LOG_TAG = "TrackingActivity";
     private TrackManager trackManager;
-    private ListView trackingView;
-    private BaseAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackinglist));
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.actionbar_trackinglist));
         trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_tracking);
         Log.i(LOG_TAG, "start");
@@ -45,17 +41,18 @@ public class TrackingActivity extends MainActivity {
     }
 
     public void loadListView(){
-        adapter = new TrackingListAdapter(this, trackManager);
-        trackingView = findViewById(R.id.tracking_list);
+        BaseAdapter adapter = new TrackingListAdapter(this, trackManager);
+        ListView trackingView = findViewById(R.id.tracking_list);
         trackingView.setAdapter(adapter);
         trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this, adapter));
     }
 
     public void viewTrackingView(Tracking tracking){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        Builder builder = new Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View trackingview = inflater.inflate(R.layout.info_dialog, null);
+        assert inflater != null;
+        @SuppressLint("InflateParams") View trackingview = inflater.inflate(R.layout.info_dialog, null);
 
         TextView trackingdetails = trackingview.findViewById(R.id.info_TextView);
         TextView title = trackingview.findViewById(R.id.info_title_TextView);

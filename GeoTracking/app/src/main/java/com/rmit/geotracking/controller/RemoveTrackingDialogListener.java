@@ -26,7 +26,7 @@ public class RemoveTrackingDialogListener implements AdapterView.OnItemLongClick
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(((Tracking)adapterView.getItemAtPosition(i)).getTitle())
                 .setMessage(context.getResources().getString(R.string.removetracking_message))
-                .setPositiveButton(android.R.string.yes, new RemoveTrackingListener(context, (Tracking)adapterView.getItemAtPosition(i), adapter))
+                .setPositiveButton(android.R.string.yes, new RemoveTrackingListener(context, (Tracking)adapterView.getItemAtPosition(i)))
                 .setNegativeButton(android.R.string.no, null)
                 .show();
 

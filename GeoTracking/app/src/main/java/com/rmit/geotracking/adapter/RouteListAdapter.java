@@ -46,7 +46,7 @@ public class RouteListAdapter extends BaseAdapter {
 
         location.setText(getItem(i)[0]);
         date.setText(getItem(i)[1]);
-        stoptime.setText(getItem(i)[2]);
+        stoptime.setText(getItem(i)[2] + "  " + context.getResources().getString(R.string.routedialog_stoptimeunit));
         return v;
     }
 }
