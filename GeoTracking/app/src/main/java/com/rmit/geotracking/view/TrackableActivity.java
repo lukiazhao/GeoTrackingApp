@@ -27,19 +27,20 @@ import java.util.Map;
 
 public class TrackableActivity extends MainActivity {
 
-    private TrackManager trackManager = TrackManager.getSingletonInstance(this);
-    private Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
+    private ListView listView;
+    private TrackManager trackManager;
+    private Map<Integer, Trackable> trackableMap;
+    private TrackableListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackablelist));
+        trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_trackable_list);
 
-        System.out.println("Instance 2 hash:" + trackManager.hashCode());
-
+        trackableMap = trackManager.getTrackableMap();
         ListView listView = findViewById(R.id.trackable_list);
-
         // add spinner
         loadSpinner();
 

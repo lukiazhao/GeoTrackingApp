@@ -6,6 +6,7 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Observable;
 
+
 public class SimpleTracking extends Observable implements Tracking, Comparable<Tracking> {
 
     private static final Integer LENGTH = 4 ;

@@ -1,5 +1,6 @@
 package com.rmit.geotracking.view;
 
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ModifyTrackingListener;
@@ -112,6 +114,10 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         String newDate = DateFormat.getDateTimeInstance(
                 DateFormat.SHORT, DateFormat.MEDIUM).format(date);
         endTimeTextView.setText(newDate);
+    }
+
+    public void noTitleTrackingAlert(){
+        Toast.makeText(this, "No Title", Toast.LENGTH_LONG).show();
     }
 
     public void getIncomingIntentExtras() {

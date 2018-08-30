@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class ModifyTrackingListener implements View.OnClickListener {
 
-     private ModifyTrackingActivity context;
+     private ModifyTrackingActivity modifyTrackingActivity;
      private Integer trackableId;
      private String trackingId;
 
@@ -21,12 +21,12 @@ public class ModifyTrackingListener implements View.OnClickListener {
      private Date startTime, endTime, meetTime;
      private TrackingInfoProcessor processor;
 
-     public ModifyTrackingListener(ModifyTrackingActivity context, Integer trackableId, String trackingId)
+     public ModifyTrackingListener(ModifyTrackingActivity modifyTrackingActivity, Integer trackableId, String trackingId)
      {
-        this.context = context;
+        this.modifyTrackingActivity = modifyTrackingActivity;
         this.trackableId = trackableId;
         this.trackingId = trackingId;
-        this.processor = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor();
+        this.processor = TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingInfoProcessor();
      }
 
     @Override
@@ -34,32 +34,34 @@ public class ModifyTrackingListener implements View.OnClickListener {
 
         readTracking();
 
-        if(trackingId == null) {
-            // new tracking object
-            createTracking();
+        if (title.equals("")) {
+            modifyTrackingActivity.noTitleTrackingAlert();
         } else {
-            // edit old tracking object
-            updateTracking();
+            if (trackingId == null) {
+                // new tracking object
+                createTracking();
+
+            } else {
+                // edit old tracking object
+                updateTracking();
+            }
         }
 
-         context.finish();
+        modifyTrackingActivity.finish();
     }
 
     private void readTracking() {
 
         try {
-            title = context.getTrackingTitle().getText().toString();
-            meetLocation = context.getMeetLocation().getText().toString();
-            startTime = processor.parseStringToDate((String) context.getStartTimeSpinner().getSelectedItem());
-            meetTime = processor.parseStringToDate((String) context.getMeetTimeSpinner().getSelectedItem());
-            endTime = processor.parseStringToDate(context.getEndTimeTextView().getText().toString());
-            currLocation = TrackManager.getSingletonInstance(context).getTrackingInfoProcessor()
-                                                                     .findCurrentLocation(trackableId);
-
+            title = modifyTrackingActivity.getTrackingTitle().getText().toString();
+            meetLocation = modifyTrackingActivity.getMeetLocation().getText().toString();
+            startTime = processor.parseStringToDate((String) modifyTrackingActivity.getStartTimeSpinner().getSelectedItem());
+            meetTime = processor.parseStringToDate((String) modifyTrackingActivity.getMeetTimeSpinner().getSelectedItem());
+            endTime = processor.parseStringToDate(modifyTrackingActivity.getEndTimeTextView().getText().toString());
+            currLocation = TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingInfoProcessor().findCurrentLocation(trackableId);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
     }
 
     private void createTracking() {
@@ -68,16 +70,11 @@ public class ModifyTrackingListener implements View.OnClickListener {
                 currLocation, meetLocation);
 
         // add tracking
-        TrackManager.getSingletonInstance(context)
-                    .getTrackingMap()
-                    .put(tracking.getTrackingId(), tracking);
+        TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingMap().put(tracking.getTrackingId(), tracking);
     }
 
-    private void updateTracking() {
-       Tracking tracking =  TrackManager.getSingletonInstance(context).getTrackingMap().get(trackingId);
-       TrackManager.getSingletonInstance(context)
-                   .getTrackingManager()
-                   .editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
-     }
-
+    public void updateTracking() {
+       Tracking tracking =  TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingMap().get(trackingId);
+       TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingManager().editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
+    }
 }
