@@ -119,8 +119,8 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
     public void noTitleTrackingAlert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Please Enter A Title")
-                .setNeutralButton("Ok", null)
+        builder.setMessage(R.string.modify_tracking_no_title_message)
+                .setNeutralButton(R.string.viewtracking_confirmButton, null)
                 .show();
     }
 
