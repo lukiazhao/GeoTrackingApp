@@ -49,7 +49,6 @@ public class TrackingService
       public int stopTime;
       public double latitude;
       public double longitude;
-//      public String location;
 
       @Override
       public String toString()
@@ -108,10 +107,6 @@ public class TrackingService
             }
             trackingInfo.longitude = Double.parseDouble(next);
             trackingList.add(trackingInfo);
-//            next = scanner.next();
-//            if(next != ""){
-//               Log.i(LOG_TAG, next);
-//            }
          }
       }
       catch (Resources.NotFoundException e)
@@ -184,17 +179,7 @@ public class TrackingService
       return this.trackingList;
    }
 
-//   public Map<String, TrackingInfo> getTrackingMap() {
-//      Map<String, TrackingInfo> trackingInfoMap = new HashMap<>();
-//      for(TrackingInfo trackingInfo:trackingList){
-//
-//         trackingInfoMap.put(generateRandomString(4), trackingInfo);
-//
-//      }
-//      return trackingInfoMap;
-//   }
-
-   public String generateRandomString(int length){
+   public String generateRandomString(int length) {
        final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
        SecureRandom rnd = new SecureRandom();
          StringBuilder sb = new StringBuilder(length);
@@ -203,6 +188,4 @@ public class TrackingService
          }
          return sb.toString();
    }
-
-
 }

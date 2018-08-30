@@ -1,7 +1,6 @@
 package com.rmit.geotracking.view;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -77,6 +76,7 @@ public class TrackableActivity extends MainActivity {
         Toast.makeText(this, getResources().getString(R.string.routedialog_norouteToast), Toast.LENGTH_SHORT).show();
     }
 
+
     public void showRouteDialog(int trackableID){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -100,6 +100,14 @@ public class TrackableActivity extends MainActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
+
+    public void showNoTrackingInfoAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("No Tracking Information available for this item. Please check later.")
+                .setNeutralButton("OK", null)
+                .setCancelable(false).show();
+
+
     }
 
 }
