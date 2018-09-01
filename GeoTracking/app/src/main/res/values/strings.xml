@@ -27,6 +27,7 @@
     <string name="modify_tracking_end_time_text">Target End Time Text</string>
     <string name="modify_tracking_meet_location">Meet Location</string>
     <string name="modify_tracking_finish_button">Finish</string>
+    <string name="modify_tracking_no_title_message">Please Enter A Title</string>
 
     <!--string resources for route dialog -->
     <string name="routedialog_title">Route Map</string>
