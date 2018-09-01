@@ -16,10 +16,19 @@ import com.rmit.geotracking.model.Tracking;
  */
 public class RemoveTrackingDialogListener implements AdapterView.OnItemLongClickListener {
 
-    private Context context;
+    private static Context context;
 
-    public RemoveTrackingDialogListener(Context context){
-        this.context = context;
+
+    private static class LazyHolder
+    {
+        static final RemoveTrackingDialogListener INSTANCE = new RemoveTrackingDialogListener();
+    }
+
+    // singleton
+    public static RemoveTrackingDialogListener getSingletonInstance(Context context)
+    {
+        RemoveTrackingDialogListener.context = context;
+        return LazyHolder.INSTANCE;
     }
 
     // An addtional remove tracking listener is registered on confirm button in the dialog.

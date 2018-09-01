@@ -62,7 +62,7 @@ public class TrackableActivity extends MainActivity {
                 android.R.layout.simple_spinner_dropdown_item, category);
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterSpin);
-        spinner.setOnItemSelectedListener(new SortCategoryListener(this));
+        spinner.setOnItemSelectedListener(SortCategoryListener.getSingletonInstance(this));
     }
 
     // Call when user click view button for a specific trackable item.

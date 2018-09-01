@@ -26,7 +26,7 @@ public class ViewTrackingListener implements View.OnClickListener {
     // call show dialog from tracking activity.
     @Override
     public void onClick(View view) {
-        ((TrackingActivity)context).viewTrackingView(tracking);
+        ((TrackingActivity) context).viewTrackingView(tracking);
     }
 }
 
