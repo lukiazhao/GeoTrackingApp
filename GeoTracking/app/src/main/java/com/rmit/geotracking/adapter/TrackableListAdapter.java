@@ -1,5 +1,6 @@
 package com.rmit.geotracking.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,18 +26,28 @@ import java.util.Observer;
  *
  * It will be updated whenever the filteredTrackable list is changed (filter spinner item selected)
  */
+
 public class TrackableListAdapter extends BaseAdapter implements Observer {
-    private Context context;
+    private static Context context;
     private Map<Integer, Trackable> trackableMap;
     private List<Integer> trackableKeyArray;
-//            = TrackManager.getSingletonInstance(context).getTrackableMap();
 
-    public TrackableListAdapter(Context context, Map<Integer, Trackable> trackableMap){
-        this.context = context;
-        this.trackableMap = trackableMap;
+    private TrackableListAdapter(){
+        this.trackableMap = TrackManager.getSingletonInstance(context).getTrackableMap();;
         this.trackableKeyArray = new ArrayList<>();
         trackableKeyArray.addAll(trackableMap.keySet());
         TrackManager.getSingletonInstance(context).addObserver(this);
+    }
+
+    private static class LazyHolder {
+        @SuppressLint("StaticFieldLeak")
+        static final TrackableListAdapter INSTANCE = new TrackableListAdapter();
+    }
+
+    // singleton
+    public static TrackableListAdapter getSingletonInstance(Context context) {
+        TrackableListAdapter.context = context;
+        return LazyHolder.INSTANCE;
     }
 
     @Override
@@ -53,7 +64,6 @@ public class TrackableListAdapter extends BaseAdapter implements Observer {
     public long getItemId(int i) {
         return 0;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {

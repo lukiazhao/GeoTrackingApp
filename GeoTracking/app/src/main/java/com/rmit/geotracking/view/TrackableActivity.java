@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.adapter.FilterSpinnerAdapter;
 import com.rmit.geotracking.adapter.RouteListAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
 import com.rmit.geotracking.MainActivity;
@@ -48,12 +47,8 @@ public class TrackableActivity extends MainActivity {
         ListView listView = findViewById(R.id.trackable_list);
         // add spinner
         loadSpinner();
-
-        // call adapter
-        TrackableListAdapter adapter = new TrackableListAdapter(this, trackableMap);
-
         // set adapter into list view
-        listView.setAdapter(adapter);
+        listView.setAdapter(TrackableListAdapter.getSingletonInstance(this));
     }
 
     public void loadSpinner() {
@@ -63,7 +58,7 @@ public class TrackableActivity extends MainActivity {
         // get reference of widgets from xml layout.
         Spinner spinner = findViewById(R.id.spinner);
 
-        final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this,
+        final ArrayAdapter<String> adapterSpin = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, category);
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterSpin);
@@ -84,7 +79,7 @@ public class TrackableActivity extends MainActivity {
         List<String[]> routeList = trackManager.getTrackingInfoProcessor().createRouteList(trackableID);
 
         if (routeList.size() != 0) {
-            routelv.setAdapter(new RouteListAdapter(this, routeList));
+            routelv.setAdapter(RouteListAdapter.getSingletonInstance(this, routeList));
         } else {
             this.showNoTrackingInfoAlertDialog();
             return;

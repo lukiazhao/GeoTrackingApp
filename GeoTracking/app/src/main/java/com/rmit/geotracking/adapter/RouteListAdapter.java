@@ -22,12 +22,22 @@ import java.util.List;
 
 public class RouteListAdapter extends BaseAdapter {
 
-    private List<String[]> routelist; //generate from TrackingInfoProccessor
-    private Context context;
+    private static List<String[]> routelist; //generate from TrackingInfoProccessor
+    private static Context context;
 
-    public RouteListAdapter(Context context, List<String[]> routelist){
-        this.context = context;
-        this.routelist = routelist;
+    private RouteListAdapter(){
+    }
+
+    private static class LazyHolder {
+        @SuppressLint("StaticFieldLeak")
+        static final RouteListAdapter INSTANCE = new RouteListAdapter();
+    }
+
+    // singleton
+    public static RouteListAdapter getSingletonInstance(Context context, List<String[]> routelist) {
+        RouteListAdapter.context = context;
+        RouteListAdapter.routelist = routelist;
+        return LazyHolder.INSTANCE;
     }
 
     @Override
