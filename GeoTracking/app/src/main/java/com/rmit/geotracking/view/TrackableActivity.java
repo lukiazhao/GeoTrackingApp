@@ -13,7 +13,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.adapter.FilterSpinnerAdapter;
 import com.rmit.geotracking.adapter.RouteListAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
 import com.rmit.geotracking.MainActivity;
@@ -59,7 +58,7 @@ public class TrackableActivity extends MainActivity {
         // get reference of widgets from xml layout.
         Spinner spinner = findViewById(R.id.spinner);
 
-        final ArrayAdapter adapterSpin = new FilterSpinnerAdapter(this,
+        final ArrayAdapter<String> adapterSpin = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_dropdown_item, category);
         adapterSpin.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapterSpin);
