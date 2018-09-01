@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         View trackableBut = findViewById(R.id.trackable_button);
         View trackingBut = findViewById(R.id.tracking_button);
 
-        trackableBut.setOnClickListener(new ActivityEntryListener(this));
-        trackingBut.setOnClickListener(new ActivityEntryListener(this));
+        trackableBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
+        trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
     }
 
     //Import methods related to menu options and selections

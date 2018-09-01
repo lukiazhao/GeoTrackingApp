@@ -18,12 +18,26 @@ import java.util.List;
  */
 public class AddTrackingButtonListener implements View.OnClickListener {
 
-    private Context context;
+    private static Context context;
     private int trackableId;
     public AddTrackingButtonListener(Context context, int trackableId) {
         this.context = context;
         this.trackableId = trackableId;
     }
+
+//    private static class LazyHolder
+//    {
+//        static final AddTrackingButtonListener INSTANCE = new AddTrackingButtonListener();
+//    }
+//
+//    // singleton
+//    public static AddTrackingButtonListener getSingletonInstance(Context context)
+//    {
+//        AddTrackingButtonListener.context = context;
+//        return LazyHolder.INSTANCE;
+//    }
+
+
     @Override
     public void onClick(View view) {
         if (hasTrackingInfo()){
