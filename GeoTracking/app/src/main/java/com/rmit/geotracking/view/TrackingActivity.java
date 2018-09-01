@@ -24,9 +24,17 @@ import com.rmit.geotracking.model.Tracking;
 
 import java.util.Objects;
 
+/**
+ * This activity is mainly for providing UI to let user viewing all trackings and
+ * providing AlertDialog functions
+ *
+ * Related UI components such as Buttons are also created with this activity.
+ *
+ */
 
 public class TrackingActivity extends MainActivity {
 
+    //A reference of model is created from singleton
     private TrackManager trackManager;
 
     @Override
@@ -45,6 +53,7 @@ public class TrackingActivity extends MainActivity {
         trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this));
     }
 
+    //Show user all detail info related to tracking in a dialog
     public void viewTrackingView(Tracking tracking){
         Builder builder = new Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,9 +72,9 @@ public class TrackingActivity extends MainActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
         confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
-
     }
 
+    //Tool method to help generate text in view tracking dialog.
     public String generateDetailView(Tracking tracking){
         String[] sections = generateTracingDetailSections();
         @SuppressLint("DefaultLocale") String output = String.format("%s:   %d\n\n%s:   %s\n\n" +
@@ -82,6 +91,7 @@ public class TrackingActivity extends MainActivity {
         return output;
     }
 
+    //Tool method to help generate string from resources.
     public String[] generateTracingDetailSections(){
         Resources resources = getResources();
         String[] sections = new String[8];
@@ -96,6 +106,8 @@ public class TrackingActivity extends MainActivity {
         return sections;
     }
 
+    //Old tracking activity would be finished automaticly
+    //to let the user back to home page.
     public void onRestart(){
         super.onRestart();
         this.finish();

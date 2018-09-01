@@ -14,6 +14,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
+/**
+ * This class stores all data including trackable map, tracking map and trackable ID list.
+ * Use singleton to help access the data from controller without keeping the reference.
+ * All methods related to filter are included in this class.
+ *
+ */
+
 public class TrackManager extends Observable {
 
     private Map<Integer, Trackable> trackableMap;
