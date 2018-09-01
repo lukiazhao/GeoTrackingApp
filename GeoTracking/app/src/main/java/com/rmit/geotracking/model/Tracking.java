@@ -2,8 +2,13 @@ package com.rmit.geotracking.model;
 
 import java.util.Date;
 
+/**
+ *  Tracking interface represent a single tracking protocol.
+ *
+ */
+
 public interface Tracking extends Comparable<Tracking> {
-    String getTrackingId();
+    String getTrackingId(); //unique trackingID
 
     int getTrackableId();
 
@@ -19,5 +24,6 @@ public interface Tracking extends Comparable<Tracking> {
 
     String getMeetLocation();
 
+    //A tracking is able to edit itself in model.
     void editTrackingInfo(String title, Date startTime, Date endTime, Date meetTime, String currentLocation, String meetLocation);
 }

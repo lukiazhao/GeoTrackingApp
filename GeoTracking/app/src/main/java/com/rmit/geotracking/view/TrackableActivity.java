@@ -25,9 +25,16 @@ import com.rmit.geotracking.model.Trackable;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This activity is mainly for providing UI to let user viewing all trackables and
+ * providing AlertDialog functions
+ *
+ * Related UI components such as Buttons are also created with this activity.
+ *
+ */
+
 public class TrackableActivity extends MainActivity {
 
-    private ListView listView;
     private TrackManager trackManager;
     private Map<Integer, Trackable> trackableMap;
     private TrackableListAdapter adapter;
@@ -51,7 +58,7 @@ public class TrackableActivity extends MainActivity {
         listView.setAdapter(adapter);
     }
 
-    public void loadSpinner(){
+    public void loadSpinner() {
 
         List<String> category = trackManager.readAllCategories();
 
@@ -65,8 +72,7 @@ public class TrackableActivity extends MainActivity {
         spinner.setOnItemSelectedListener(new SortCategoryListener(this));
     }
 
-
-
+    // Call when user click view button for a specific trackable item.
     public void showRouteDialog(int trackableID) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -92,6 +98,7 @@ public class TrackableActivity extends MainActivity {
         confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
     }
 
+    //This app will block user to view or add upon a trackable without any route info
     public void showNoTrackingInfoAlertDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(this.getResources().getString(R.string.trackablelist_noinfo))
@@ -100,7 +107,9 @@ public class TrackableActivity extends MainActivity {
                     .setCancelable(false).show();
     }
 
-    public void onRestart(){
+    //Old trackable activity would be finished automaticly
+    //to let the user back to home page.
+    public void onRestart() {
         super.onRestart();
         this.finish();
     }

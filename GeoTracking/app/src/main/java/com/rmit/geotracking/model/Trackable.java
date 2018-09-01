@@ -1,8 +1,12 @@
 package com.rmit.geotracking.model;
 
+/**
+ * An interface represents trackable protocol
+ */
+
 public interface Trackable {
 
-    int getId();
+    int getId(); // every Trackable should have unique ID
 
     void setId(int id);
 

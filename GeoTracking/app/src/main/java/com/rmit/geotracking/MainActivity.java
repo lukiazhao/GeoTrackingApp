@@ -14,13 +14,15 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.view.TrackableActivity;
 import com.rmit.geotracking.view.TrackingActivity;
 
+//Entrypoint of the whole application. including two buttons, trackinglist and trackable list.
+//A menu on actionbar is defined in this activity.
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
         View trackableBut = findViewById(R.id.trackable_button);
         View trackingBut = findViewById(R.id.tracking_button);
@@ -42,27 +44,21 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.trackable_list:
                 goTrackable();
-                //Test
-                Toast.makeText(this, getResources().getString(R.string.menu_trackable_list), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tracking_list:
                 goTracking();
-                Toast.makeText(this, getResources().getString(R.string.menu_tracking_list), Toast.LENGTH_SHORT).show();
                 break;
             default:
-                Toast.makeText(this, "default", Toast.LENGTH_SHORT).show();
-
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void goTrackable (){
+    public void goTrackable() {
         Intent myIntent = new Intent(this, TrackableActivity.class);
         startActivity(myIntent);
     }
 
-    public void goTracking (){
+    public void goTracking() {
         Intent myIntent = new Intent(this, TrackingActivity.class);
         startActivity(myIntent);
     }

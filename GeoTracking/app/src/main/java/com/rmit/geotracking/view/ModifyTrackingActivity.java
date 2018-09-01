@@ -1,7 +1,5 @@
 package com.rmit.geotracking.view;
 
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -22,6 +20,14 @@ import com.rmit.geotracking.model.TrackingInfoProcessor;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+
+/**
+ * This activity is mainly for providing UI to let user type in information related to creating
+ * or modificating tracking.
+ *
+ * Specific trackingID is passed from the other two activities.
+ *
+ */
 
 public class ModifyTrackingActivity extends AppCompatActivity {
 
