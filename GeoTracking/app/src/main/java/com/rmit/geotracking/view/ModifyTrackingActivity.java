@@ -124,7 +124,10 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     }
 
     public void noTitleTrackingAlert(){
-        Toast.makeText(this, "No Title", Toast.LENGTH_LONG).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.modify_tracking_no_title_message)
+                .setNeutralButton(R.string.viewtracking_confirmButton, null)
+                .show();
     }
 
     public void getIncomingIntentExtras() {

@@ -36,8 +36,6 @@ import java.util.Map;
 public class TrackableActivity extends MainActivity {
 
     private TrackManager trackManager;
-    private Map<Integer, Trackable> trackableMap;
-    private TrackableListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +44,7 @@ public class TrackableActivity extends MainActivity {
         trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_trackable_list);
 
-        trackableMap = trackManager.getTrackableMap();
+        Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
         ListView listView = findViewById(R.id.trackable_list);
         // add spinner
         loadSpinner();

@@ -47,9 +47,8 @@ public class ModifyTrackingListener implements View.OnClickListener {
                 // edit old tracking object
                 updateTracking();
             }
+            modifyTrackingActivity.finish();
         }
-
-        modifyTrackingActivity.finish();
     }
 
     private void readTracking() {
@@ -80,6 +79,7 @@ public class ModifyTrackingListener implements View.OnClickListener {
     }
 
     public void updateTracking() {
+
        Tracking tracking =  TrackManager.getSingletonInstance(modifyTrackingActivity)
                .getTrackingMap().get(trackingId);
        TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingManager()

@@ -7,10 +7,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.rmit.geotracking.controller.ActivityEntryListener;
-import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.view.TrackableActivity;
 import com.rmit.geotracking.view.TrackingActivity;
 
