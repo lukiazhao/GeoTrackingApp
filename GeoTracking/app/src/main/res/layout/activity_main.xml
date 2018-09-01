@@ -7,18 +7,14 @@
     tools:context=".MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
-    <!--<include-->
-    <!--android:id = "@+id/action_bar"-->
-    <!--layout = "@layout/action_bar">-->
-    <!--</include>-->
 
     <Button
         android:id="@+id/trackable_button"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="170dp"
-        android:layout_height="0dp"
+        android:layout_width="171dp"
+        android:layout_height="61dp"
         android:layout_marginBottom="48dp"
-        android:text="Trackable List"
+        android:text="@string/mainactivity_trackableButton"
         app:layout_constraintBottom_toTopOf="@+id/tracking_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +23,10 @@
     <Button
         android:id="@+id/tracking_button"
         style="@style/Widget.AppCompat.Button"
-        android:layout_width="170dp"
-        android:layout_height="0dp"
+        android:layout_width="171dp"
+        android:layout_height="61dp"
         android:layout_marginBottom="123dp"
-        android:text="Tracking List"
+        android:text="@string/mainactivity_trackingButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
