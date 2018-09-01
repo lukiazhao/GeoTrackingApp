@@ -79,7 +79,7 @@ public class TrackableActivity extends MainActivity {
         List<String[]> routeList = trackManager.getTrackingInfoProcessor().createRouteList(trackableID);
 
         if (routeList.size() != 0) {
-            routelv.setAdapter(new RouteListAdapter(this, routeList));
+            routelv.setAdapter(RouteListAdapter.getSingletonInstance(this, routeList));
         } else {
             this.showNoTrackingInfoAlertDialog();
             return;

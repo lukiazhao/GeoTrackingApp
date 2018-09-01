@@ -26,6 +26,7 @@ import java.util.Observer;
  *
  * It will be updated whenever the filteredTrackable list is changed (filter spinner item selected)
  */
+
 public class TrackableListAdapter extends BaseAdapter implements Observer {
     private static Context context;
     private Map<Integer, Trackable> trackableMap;
