@@ -28,10 +28,10 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/item_name"
         android:ems="10"
-        android:hint="@string/modify_tracking_item_title"
-        android:textSize="30sp"
         android:gravity="center"
-        android:inputType="text" />
+        android:hint="@string/modify_tracking_item_title"
+        android:inputType="text"
+        android:textSize="28sp" />
 
 
     <TextView
@@ -48,17 +48,18 @@
 
     <Spinner
         android:id="@+id/select_start_spinner"
-        android:layout_width="343dp"
+        android:layout_width="242dp"
         android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
         android:layout_below="@+id/start_time_label"
-        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="25dp"
         android:dropDownWidth="match_parent"
         android:gravity="center"
-        android:textSize="18sp" />
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/target_end_time"
-        android:layout_width="157dp"
+        android:layout_width="158dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
@@ -69,14 +70,14 @@
 
     <TextView
         android:id="@+id/end_time_text"
-        android:layout_width="318dp"
+        android:layout_width="241dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/target_end_time"
-        android:layout_marginEnd="43dp"
+        android:layout_marginEnd="71dp"
         android:gravity="center"
         android:text="@string/modify_tracking_end_time_text"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
 
     <TextView
@@ -91,10 +92,10 @@
 
     <Spinner
         android:id="@+id/select_meet_spinner"
-        android:layout_width="326dp"
+        android:layout_width="248dp"
         android:layout_height="50dp"
-        android:layout_below="@id/meet_time_label"
-        android:layout_centerHorizontal="true"
+        android:layout_alignStart="@+id/select_start_spinner"
+        android:layout_below="@+id/meet_time_label"
         android:dropDownWidth="match_parent"
         android:gravity="center"
         android:textSize="18sp" />

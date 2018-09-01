@@ -35,18 +35,23 @@ import java.util.Map;
 public class TrackableActivity extends MainActivity {
 
     private TrackManager trackManager;
+    private AlertDialog.Builder builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackablelist));
         trackManager = TrackManager.getSingletonInstance(this);
+        builder = new AlertDialog.Builder(this);
         setContentView(R.layout.activity_trackable_list);
 
-        Map<Integer, Trackable> trackableMap = trackManager.getTrackableMap();
-        ListView listView = findViewById(R.id.trackable_list);
         // add spinner
         loadSpinner();
+
+        // list view
+        ListView listView = findViewById(R.id.trackable_list);
+
         // set adapter into list view
         listView.setAdapter(TrackableListAdapter.getSingletonInstance(this));
     }
@@ -67,7 +72,7 @@ public class TrackableActivity extends MainActivity {
 
     // Call when user click view button for a specific trackable item.
     public void showRouteDialog(int trackableID) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.route_dialog, null);
 
@@ -93,7 +98,6 @@ public class TrackableActivity extends MainActivity {
 
     //This app will block user to view or add upon a trackable without any route info
     public void showNoTrackingInfoAlertDialog() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(this.getResources().getString(R.string.trackablelist_noinfo))
                     .setNeutralButton(this.getResources()
                             .getString(R.string.viewtracking_confirmButton), null)

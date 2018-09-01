@@ -1,5 +1,6 @@
 package com.rmit.geotracking.controller;
 
+import android.content.Context;
 import android.view.View;
 
 import com.rmit.geotracking.model.SimpleTracking;
@@ -30,6 +31,7 @@ public class ModifyTrackingListener implements View.OnClickListener {
         this.processor = TrackManager.getSingletonInstance(modifyTrackingActivity)
                 .getTrackingInfoProcessor();
      }
+
 
     @Override
     public void onClick(View view) {
