@@ -25,19 +25,6 @@ public class AddTrackingButtonListener implements View.OnClickListener {
         this.trackableId = trackableId;
     }
 
-//    private static class LazyHolder
-//    {
-//        static final AddTrackingButtonListener INSTANCE = new AddTrackingButtonListener();
-//    }
-//
-//    // singleton
-//    public static AddTrackingButtonListener getSingletonInstance(Context context)
-//    {
-//        AddTrackingButtonListener.context = context;
-//        return LazyHolder.INSTANCE;
-//    }
-
-
     @Override
     public void onClick(View view) {
         if (hasTrackingInfo()){

@@ -52,7 +52,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         // set edit title text to hide keyboard listener
         title = findViewById(R.id.edit_title);
-        title.setOnFocusChangeListener(new HideKeyboardListener(this));
+        title.setOnFocusChangeListener(HideKeyboardListener.getSingletonInstance(this));
 
         if(selectedTrakcingId != null) {
             selectedTrackableId = manager.getTrackingMap().get(selectedTrakcingId).getTrackableId();
