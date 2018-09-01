@@ -12,10 +12,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
-import com.rmit.geotracking.R;
-
-import java.nio.charset.Charset;
-import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;

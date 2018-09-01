@@ -1,5 +1,6 @@
 package com.rmit.geotracking.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,17 +28,27 @@ import java.util.Observer;
 
 public class TrackingListAdapter extends BaseAdapter implements Observer {
 
-    private Context context;
+    private static Context context;
     private Map<String, Tracking> trackingMap;
     private String [] keyArray;
     private TrackManager manager; // use manager to help format date and update key array
 
-    public TrackingListAdapter(Context context){
-        this.context = context;
+    private TrackingListAdapter(){
         manager = TrackManager.getSingletonInstance(context);
         this.trackingMap = manager.getTrackingMap();
         this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
         manager.getTrackingManager().addObserver(this);// use observer to update this adapter
+    }
+
+    private static class LazyHolder {
+        @SuppressLint("StaticFieldLeak")
+        static final TrackingListAdapter INSTANCE = new TrackingListAdapter();
+    }
+
+    // singleton
+    public static TrackingListAdapter getSingletonInstance(Context context) {
+        TrackingListAdapter.context = context;
+        return LazyHolder.INSTANCE;
     }
 
     @Override

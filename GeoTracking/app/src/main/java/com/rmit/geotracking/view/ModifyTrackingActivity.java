@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ModifyTrackingListener;
