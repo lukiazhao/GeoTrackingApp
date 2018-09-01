@@ -48,12 +48,8 @@ public class TrackableActivity extends MainActivity {
         ListView listView = findViewById(R.id.trackable_list);
         // add spinner
         loadSpinner();
-
-        // call adapter
-        TrackableListAdapter adapter = new TrackableListAdapter(this, trackableMap);
-
         // set adapter into list view
-        listView.setAdapter(adapter);
+        listView.setAdapter(TrackableListAdapter.getSingletonInstance(this));
     }
 
     public void loadSpinner() {

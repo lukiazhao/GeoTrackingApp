@@ -11,11 +11,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class FilterSpinnerAdapter  extends ArrayAdapter {
+public class FilterSpinnerAdapter extends ArrayAdapter {
 
     public FilterSpinnerAdapter(@NonNull Context context, int resource, @NonNull List<String> objects) {
         super(context, resource, objects);
     }
+
 
     @Override
     public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

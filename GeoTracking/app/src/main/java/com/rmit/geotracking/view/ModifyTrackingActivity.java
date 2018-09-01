@@ -1,5 +1,6 @@
 package com.rmit.geotracking.view;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -7,7 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ModifyTrackingListener;
