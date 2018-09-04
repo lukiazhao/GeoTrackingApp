@@ -24,6 +24,7 @@ public class AddTrackingButtonListener implements View.OnClickListener {
         this.context = context;
         this.trackableId = trackableId;
     }
+
     @Override
     public void onClick(View view) {
         if (hasTrackingInfo()){
@@ -35,8 +36,7 @@ public class AddTrackingButtonListener implements View.OnClickListener {
         }
     }
 
-
-    private boolean hasTrackingInfo(){
+    private boolean hasTrackingInfo() {
         List<String> trackingStartList = TrackManager.getSingletonInstance(context)
                                                      .getTrackingInfoProcessor()
                                                      .getStartTimes(trackableId);

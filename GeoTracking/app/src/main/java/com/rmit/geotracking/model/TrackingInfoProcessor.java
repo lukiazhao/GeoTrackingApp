@@ -92,7 +92,6 @@ public class TrackingInfoProcessor {
         return meetLocation;
     }
 
-
     // Find current location according to the system time
     public String findCurrentLocation(int trackableId) {
         // current system time:

@@ -34,7 +34,8 @@ public class RouteListAdapter extends BaseAdapter {
     }
 
     // singleton
-    public static RouteListAdapter getSingletonInstance(Context context, List<String[]> routelist) {
+    public static RouteListAdapter getSingletonInstance(Context context,
+                                                        List<String[]> routelist) {
         RouteListAdapter.context = context;
         RouteListAdapter.routelist = routelist;
         return LazyHolder.INSTANCE;
