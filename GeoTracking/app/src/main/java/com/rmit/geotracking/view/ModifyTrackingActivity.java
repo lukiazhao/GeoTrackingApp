@@ -52,8 +52,9 @@ public class ModifyTrackingActivity extends AppCompatActivity {
 
         // set edit title text to hide keyboard listener
         title = findViewById(R.id.edit_title);
-        title.setOnFocusChangeListener(new HideKeyboardListener(this));
+        title.setOnFocusChangeListener(HideKeyboardListener.getSingletonInstance(this));
 
+        // load content into the modify tracking activity if tracking exist, otherwise show empty content
         if(selectedTrakcingId != null) {
             selectedTrackableId = manager.getTrackingMap().get(selectedTrakcingId).getTrackableId();
             selectedTracking = manager.getTrackingMap().get(selectedTrakcingId);
@@ -71,11 +72,6 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         Button finishButton = findViewById(R.id.finish_button);
         finishButton.setOnClickListener(new ModifyTrackingListener(this, this.selectedTrackableId, this.selectedTrakcingId));
     }
-
-    public void setTitle() {
-        title.setText(manager.getTrackingMap().get(selectedTrakcingId).getTitle());
-    }
-
 
 
     public void loadStartTimeSpinner() {
@@ -142,6 +138,10 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     public void updateMeetLocation(String selectedMeetLocation) {
         TextView meetLocation = findViewById(R.id.meet_location_text);
         meetLocation.setText(selectedMeetLocation);
+    }
+
+    public void setTitle() {
+        title.setText(manager.getTrackingMap().get(selectedTrakcingId).getTitle());
     }
 
     public TextView getTrackingTitle() {

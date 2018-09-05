@@ -48,8 +48,8 @@ public class TrackingActivity extends MainActivity {
 
     public void loadListView(){
         ListView trackingView = findViewById(R.id.tracking_list);
-        trackingView.setAdapter(TrackingListAdapter.getSingletonInstance(this));
-        trackingView.setOnItemLongClickListener(new RemoveTrackingDialogListener(this));
+        trackingView.setAdapter(new TrackingListAdapter(this));
+        trackingView.setOnItemLongClickListener(RemoveTrackingDialogListener.getSingletonInstance(this));
     }
 
     //Show user all detail info related to tracking in a dialog

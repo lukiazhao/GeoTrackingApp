@@ -10,9 +10,18 @@ import android.view.inputmethod.InputMethodManager;
  */
 public class HideKeyboardListener implements View.OnFocusChangeListener {
 
-    private Context context;
-    public HideKeyboardListener(Context context){
-        this.context = context;
+    private static Context context;
+
+    private static class LazyHolder
+    {
+        static final HideKeyboardListener INSTANCE = new HideKeyboardListener();
+    }
+
+    // singleton
+    public static HideKeyboardListener getSingletonInstance(Context context)
+    {
+        HideKeyboardListener.context = context;
+        return LazyHolder.INSTANCE;
     }
 
     @Override

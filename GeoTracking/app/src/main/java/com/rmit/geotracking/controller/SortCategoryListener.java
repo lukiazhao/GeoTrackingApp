@@ -13,10 +13,18 @@ import java.util.Observable;
 
 public class SortCategoryListener extends Observable implements AdapterView.OnItemSelectedListener {
 
-    private Context context;
+    private static Context context;
 
-    public SortCategoryListener(Context context) {
-        this.context = context;
+    private static class LazyHolder
+    {
+        static final SortCategoryListener INSTANCE = new SortCategoryListener();
+    }
+
+    // singleton
+    public static SortCategoryListener getSingletonInstance(Context context)
+    {
+        SortCategoryListener.context = context;
+        return LazyHolder.INSTANCE;
     }
 
     @Override
