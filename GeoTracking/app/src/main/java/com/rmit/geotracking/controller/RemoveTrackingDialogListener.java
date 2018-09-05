@@ -18,7 +18,6 @@ public class RemoveTrackingDialogListener implements AdapterView.OnItemLongClick
 
     private static Context context;
 
-
     private static class LazyHolder
     {
         static final RemoveTrackingDialogListener INSTANCE = new RemoveTrackingDialogListener();

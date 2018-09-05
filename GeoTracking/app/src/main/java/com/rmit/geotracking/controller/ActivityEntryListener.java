@@ -18,7 +18,6 @@ public class ActivityEntryListener implements View.OnClickListener {
 
     private static Context context;
 
-
     private ActivityEntryListener() {
     }
 

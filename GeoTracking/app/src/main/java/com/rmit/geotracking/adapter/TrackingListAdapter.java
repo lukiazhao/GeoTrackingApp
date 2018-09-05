@@ -28,27 +28,17 @@ import java.util.Observer;
 
 public class TrackingListAdapter extends BaseAdapter implements Observer {
 
-    private static Context context;
+    private Context context;
     private Map<String, Tracking> trackingMap;
     private String [] keyArray;
     private TrackManager manager; // use manager to help format date and update key array
 
-    private TrackingListAdapter(){
+    public TrackingListAdapter(Context context){
+        this.context = context;
         manager = TrackManager.getSingletonInstance(context);
         this.trackingMap = manager.getTrackingMap();
         this.keyArray = manager.getTrackingManager().generateTrackingAdapterArray();
         manager.getTrackingManager().addObserver(this);// use observer to update this adapter
-    }
-
-    private static class LazyHolder {
-        @SuppressLint("StaticFieldLeak")
-        static final TrackingListAdapter INSTANCE = new TrackingListAdapter();
-    }
-
-    // singleton
-    public static TrackingListAdapter getSingletonInstance(Context context) {
-        TrackingListAdapter.context = context;
-        return LazyHolder.INSTANCE;
     }
 
     @Override
