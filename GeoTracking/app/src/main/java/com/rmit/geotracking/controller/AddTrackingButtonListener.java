@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class AddTrackingButtonListener implements View.OnClickListener {
 
-    private Context context;
+    private static Context context;
     private int trackableId;
     public AddTrackingButtonListener(Context context, int trackableId) {
         this.context = context;

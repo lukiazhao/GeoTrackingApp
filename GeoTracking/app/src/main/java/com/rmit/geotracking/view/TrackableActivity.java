@@ -34,12 +34,15 @@ import java.util.Map;
 public class TrackableActivity extends MainActivity {
 
     private TrackManager trackManager;
+    private AlertDialog.Builder builder;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackablelist));
         trackManager = TrackManager.getSingletonInstance(this);
+        builder = new AlertDialog.Builder(this);
         setContentView(R.layout.activity_trackable_list);
 
         // add spinner
@@ -67,7 +70,10 @@ public class TrackableActivity extends MainActivity {
 
     // Call when user click view button for a specific trackable item.
     public void showRouteDialog(int trackableID) {
+<<<<<<< HEAD
+=======
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+>>>>>>> 4bd5540792f5f0265720776b87a4481c1e3d1c7f
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.route_dialog, null);
@@ -94,8 +100,12 @@ public class TrackableActivity extends MainActivity {
 
     //This app will block user to view or add upon a trackable without any route info
     public void showNoTrackingInfoAlertDialog() {
+<<<<<<< HEAD
+            builder.setMessage(this.getResources().getString(R.string.trackablelist_noinfo))
+=======
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(this.getResources().getString(R.string.trackablelist_noinfo))
+>>>>>>> 4bd5540792f5f0265720776b87a4481c1e3d1c7f
                     .setNeutralButton(this.getResources()
                             .getString(R.string.viewtracking_confirmButton), null)
                     .setCancelable(false).show();
