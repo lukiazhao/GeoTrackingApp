@@ -6,6 +6,9 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.model.SimpleTrackable;
+import com.rmit.geotracking.model.TrackManager;
+import com.rmit.geotracking.model.Trackable;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -16,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
 public class SyncTrackableTask implements Runnable {
     private final String LOG_TAG = this.getClass().getName();
@@ -27,60 +31,47 @@ public class SyncTrackableTask implements Runnable {
 
     @Override
     public void run() {
-            String db = "jdbc:sqldroid" + context.getDatabasePath("GeoTracking.db").getAbsolutePath();
-            try {
-                Class.forName("org.sqldroid.SQLDroidDriver");
-                Log.i(LOG_TAG, String.format("opening: %s", db));
+        String db = "jdbc:sqldroid" + context.getDatabasePath("GeoTracking.db").getAbsolutePath();
+        try {
+            Class.forName("org.sqldroid.SQLDroidDriver");
+            Log.i(LOG_TAG, String.format("opening: %s", db));
 
-                Connection con = DriverManager.getConnection(db);
-                Statement st = con.createStatement();
+            Connection con = DriverManager.getConnection(db);
+            Statement st = con.createStatement();
 
-                //import raw data to database if table not exist
-                if(!checkTrackableExist(con)) {
-                    st.executeUpdate("CREATE TABLE trackable ( ID CHAR(5), Name VARCHAR(40), Description VARCHAR(200), URL VARCHAR(100), Category VARCHAR(40), PRIMARY KEY (ID))");
-                    Log.i(LOG_TAG, "Create table trackable");
-                    importRawTrackableList(st);
-                    st.close();
-                    con.close();
-                    Log.i(LOG_TAG, "Tables created");
-                    return;
-                }
-
+            //import raw data to database if table not exist
+            if(!checkTrackableExist(con)) {
+                st.executeUpdate("CREATE TABLE trackable ( ID CHAR(5), Name VARCHAR(40), Description VARCHAR(200), URL VARCHAR(100), Category VARCHAR(40), PRIMARY KEY (ID))");
+                Log.i(LOG_TAG, "Create table trackable");
+                importTrackablesFromModel(st);
                 st.close();
                 con.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                Log.i(LOG_TAG, "Tables created");
+                return;
             }
 
-        }
-
-    private void importRawTrackableList(Statement st) {
-        InputStream inputStream = context.getResources().openRawResource(R.raw.food_truck_data);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String line;
-
-        try {
-
-            while ((line = bufferedReader.readLine()) != null) {
-                String[] arrOfElement = line.split(",\"");
-
-                int id = Integer.parseInt(arrOfElement[0]);
-                String name = arrOfElement[1].replaceAll("\"", "");
-                String desc = arrOfElement[2].replaceAll("\"", "");
-                String url = arrOfElement[3].replaceAll("\"", "");
-                String category = arrOfElement[4].replaceAll("\"", "");
-
-                st.executeUpdate("Insert Into trackable VALUES('" + id + "', '" + name +
-                        "', '" + desc + "', '" + url + "', '" + category + "')");
-            }
-
-            Log.i(LOG_TAG, "Finish loading");
+            st.close();
+            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void importTrackablesFromModel(Statement st) throws SQLException {
+        Map<Integer, Trackable> trackableMap = TrackManager.getSingletonInstance(context)
+                .getTrackableMap();
+        for (int key : trackableMap.keySet()) {
+            String name = trackableMap.get(key).getName();
+            String desc = trackableMap.get(key).getDescription();
+            String url = trackableMap.get(key).getUrl();
+            String category = trackableMap.get(key).getCategory();
+
+            st.executeUpdate("Insert Into trackable VALUES('" + key + "', '" + name +
+                    "', '" + desc + "', '" + url + "', '" + category + "')");
+        }
+
+        Log.i(LOG_TAG, "Finish save trackables from model");
     }
 
     private boolean checkTrackableExist(Connection con) throws SQLException {
