@@ -13,6 +13,7 @@ import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ModifyTrackingListener;
 import com.rmit.geotracking.controller.HideKeyboardListener;
 import com.rmit.geotracking.controller.TimeSelectionListener;
+import com.rmit.geotracking.database.SaveTrackingTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
@@ -71,6 +72,12 @@ public class ModifyTrackingActivity extends AppCompatActivity {
         // set listener to "finish" button
         Button finishButton = findViewById(R.id.finish_button);
         finishButton.setOnClickListener(new ModifyTrackingListener(this, this.selectedTrackableId, this.selectedTrakcingId));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        new Thread(new SaveTrackingTask(this)).start();
     }
 
 

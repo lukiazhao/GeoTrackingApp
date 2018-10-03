@@ -3,6 +3,7 @@ package com.rmit.geotracking.view;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SyncAdapterType;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +16,12 @@ import android.widget.TextView;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.RouteListAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
-import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.controller.DialogDismissListener;
 import com.rmit.geotracking.controller.SortCategoryListener;
+import com.rmit.geotracking.database.SyncTrackableTask;
 import com.rmit.geotracking.model.TrackManager;
-import com.rmit.geotracking.model.Trackable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * This activity is mainly for providing UI to let user viewing all trackables and
@@ -51,6 +50,14 @@ public class TrackableActivity extends MainActivity {
 
         // set adapter into list view
         listView.setAdapter(TrackableListAdapter.getSingletonInstance(this));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //Sync trackable list from database
+        new Thread(new SyncTrackableTask(this)).start();
     }
 
     public void loadSpinner() {
