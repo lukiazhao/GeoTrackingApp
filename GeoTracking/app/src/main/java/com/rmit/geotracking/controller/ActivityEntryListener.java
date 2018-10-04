@@ -1,18 +1,12 @@
 package com.rmit.geotracking.controller;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.rmit.geotracking.MainActivity;
+import com.rmit.geotracking.view.MainActivity;
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.model.TrackManager;
-import com.rmit.geotracking.view.TrackableActivity;
-import com.rmit.geotracking.view.TrackingActivity;
 
 public class ActivityEntryListener implements View.OnClickListener {
 

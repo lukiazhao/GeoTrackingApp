@@ -1,4 +1,4 @@
-package com.rmit.geotracking;
+package com.rmit.geotracking.view;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ActivityEntryListener;
 import com.rmit.geotracking.view.TrackableActivity;
 import com.rmit.geotracking.view.TrackingActivity;

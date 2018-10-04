@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +19,13 @@
         <activity android:name=".view.TrackableActivity" />
         <activity android:name=".view.TrackingActivity" />
         <activity android:name=".view.ModifyTrackingActivity"></activity>
+
+        <receiver android:name=".broadcast_receiver.ModifyTrackingReminderReceiver"  android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.AutoDismissReceiver"  android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.CancelTrackingReceiver"  android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.RemindLaterReceiver"  android:exported="true"/>
+
+
     </application>
 
 </manifest>

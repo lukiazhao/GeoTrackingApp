@@ -1,8 +1,9 @@
 package com.rmit.geotracking.controller;
 
-import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 
+import com.rmit.geotracking.broadcast_receiver.ModifyTrackingReminderReceiver;
 import com.rmit.geotracking.model.SimpleTracking;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
@@ -78,6 +79,13 @@ public class ModifyTrackingListener implements View.OnClickListener {
         // add tracking
         TrackManager.getSingletonInstance(modifyTrackingActivity)
                 .getTrackingMap().put(tracking.getTrackingId(), tracking);
+
+        //add reminder by sending intent
+        Intent intent = new Intent(modifyTrackingActivity, ModifyTrackingReminderReceiver.class);
+        intent.putExtra("TrackingID", tracking.getTrackingId());
+        intent.putExtra("Meettime", tracking.getMeetTime().getTime());
+        intent.putExtra("type", "ADD");
+        modifyTrackingActivity.sendBroadcast(intent);
     }
 
     public void updateTracking() {
@@ -86,5 +94,10 @@ public class ModifyTrackingListener implements View.OnClickListener {
                .getTrackingMap().get(trackingId);
        TrackManager.getSingletonInstance(modifyTrackingActivity).getTrackingManager()
                .editTracking(tracking,title, startTime, endTime, meetTime, currLocation ,meetLocation);
+        Intent intent = new Intent(modifyTrackingActivity, ModifyTrackingReminderReceiver.class);
+        intent.putExtra("TrackingID", tracking.getTrackingId());
+        intent.putExtra("Meettime", tracking.getMeetTime().getTime());
+        intent.putExtra("type", "ADD");
+        modifyTrackingActivity.sendBroadcast(intent);
     }
 }
