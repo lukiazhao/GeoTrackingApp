@@ -32,6 +32,15 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
         this.meetLocation = meetLocation;
     }
 
+    // Only for database sync
+    public SimpleTracking(String trackingID, int trackableId, String title,
+                          Date targetStartTime, Date targetEndTime, Date meetTime,
+                          String currentLocation, String meetLocation) {
+        this(trackableId, title,targetStartTime, targetEndTime,
+                meetTime, currentLocation, meetLocation);
+        this.trackingId = trackingID;
+    }
+
 
     @Override
     public String getTrackingId() {
@@ -98,9 +107,7 @@ public class SimpleTracking extends Observable implements Tracking, Comparable<T
         this.meetTime = meetTime;
         this.currentLocation = currentLocation;
         this.meetLocation = meetLocation;
-
     }
-
 
     public int compareTo(@NonNull Tracking trackingTarget) {
         if(this.meetTime.compareTo(trackingTarget.getMeetTime()) >= 0) {

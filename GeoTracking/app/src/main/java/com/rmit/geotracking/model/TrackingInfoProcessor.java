@@ -14,12 +14,14 @@ import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import java.util.Locale;
 
 /*
  * This class maily process the tracking info extraction, including
@@ -287,4 +289,21 @@ public class TrackingInfoProcessor {
             return firstAttribute.toString() + " , " + secondAttribute.toString();
         }
     }
+
+    //test date parsing
+    public Date parseStringToDateDatabase(String dateText) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+        Date date = null;
+        try {
+            date = sdf.parse(dateText);
+        } catch  (Exception e){
+            e.printStackTrace();
+        }
+
+        return date;
+
+
+    }
+
+
 }

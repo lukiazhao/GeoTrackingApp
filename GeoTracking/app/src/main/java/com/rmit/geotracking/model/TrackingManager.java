@@ -61,4 +61,22 @@ public class TrackingManager extends Observable {
         setChanged();
         notifyObservers();
     }
+
+    public void createTracking(String trackingID, int trackableId, String title, Date startTime,
+                               Date endTime, Date meetTime,
+                               String currLocation, String meetLocation) {
+        if (trackingID == null) {
+            Tracking tracking = new SimpleTracking(trackableId, title, startTime, endTime, meetTime,
+                    currLocation, meetLocation);
+
+            // add tracking
+            trackingMap.put(tracking.getTrackingId(), tracking);
+        } else {
+            trackingMap.put(trackingID, new SimpleTracking(trackingID, trackableId, title, startTime, endTime, meetTime,
+                    currLocation, meetLocation));
+        }
+
+        setChanged();
+        notifyObservers();
+    }
 }
