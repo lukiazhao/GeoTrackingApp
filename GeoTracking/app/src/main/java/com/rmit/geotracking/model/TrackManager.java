@@ -2,8 +2,11 @@ package com.rmit.geotracking.model;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.Location;
 
 import com.rmit.geotracking.R;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -37,6 +40,7 @@ public class TrackManager extends Observable {
         this.trackingMap = new HashMap<>();
         this.trackingManager = new TrackingManager(trackingMap);
         this.processor = new TrackingInfoProcessor(context);
+        setfilteredTrackable(null); // set default/inital filtered trackable list to whole trackables.
     }
 
     // singleton support
@@ -129,6 +133,23 @@ public class TrackManager extends Observable {
         this.filteredTrackableIds = selected;
         setChanged();
         notifyObservers();
+    }
+
+
+    public List<TrackingInfoProcessor.Pair> getAllReachables(Location currLocation) throws JSONException {
+
+        List<TrackingInfoProcessor.Pair> allReachables = new ArrayList<>();
+        for (Integer trackableId: trackableMap.keySet()){
+            // filter out the trackables that don't have tracking infos
+            if(processor.getTrackingInfoWithId(trackableId).size() != 0) {
+
+                List<TrackingInfoProcessor.Pair> reachables = processor.getReachablesbyId(currLocation, trackableId);
+                allReachables.addAll(reachables);
+            }
+        }
+
+        System.out.println("All Reachables = " + allReachables.size());
+        return allReachables;
     }
 
     public List<Integer> getFilteredTrackableIds() {

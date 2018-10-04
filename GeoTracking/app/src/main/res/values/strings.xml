@@ -9,6 +9,7 @@
     <string name="mainactivity_welcom_text">Welcome to GeoTracking!</string>
     <string name="mainactivity_trackableButton">Trackable List</string>
     <string name="mainactivity_trackingButton">Tracking List</string>
+    <string name="mainactivity_progressBar">Progress Bar</string>
 
     <!--string resources for menu-->
     <string name="menu_trackable_list">Show Trackables</string>
@@ -69,7 +70,7 @@
 
     <!--string resources for model-->
     <string name="trackmanager_default_category">Select Category</string>
-
+    <string name="request_permission">request permission</string>
 
 
 </resources>

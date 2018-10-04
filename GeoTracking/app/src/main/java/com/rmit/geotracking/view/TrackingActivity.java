@@ -6,10 +6,8 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,7 +17,6 @@ import com.rmit.geotracking.adapter.TrackingListAdapter;
 import com.rmit.geotracking.controller.DialogDismissListener;
 import com.rmit.geotracking.controller.RemoveTrackingDialogListener;
 import com.rmit.geotracking.model.TrackManager;
-import com.rmit.geotracking.MainActivity;
 import com.rmit.geotracking.model.Tracking;
 
 import java.util.Objects;

@@ -95,6 +95,5 @@ public class TrackableListAdapter extends BaseAdapter implements Observer {
     public void update(Observable o, Object arg) {
         this.trackableKeyArray = TrackManager.getSingletonInstance(context).getFilteredTrackableIds();
         notifyDataSetChanged();
-
     }
 }
