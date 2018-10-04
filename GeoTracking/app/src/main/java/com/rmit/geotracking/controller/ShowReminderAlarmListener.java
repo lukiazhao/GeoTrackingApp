@@ -25,6 +25,9 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
     private Context context;
     private String trackingID;
 
+    private final int NOTIFY_ID = 1;
+    private final String CHANNEL_ID = "2";
+
     private NotificationManagerCompat manager;
 
     public ShowReminderAlarmListener(Context context, String trackingID) {
@@ -45,58 +48,52 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
         String message = "You should go to pick up tracking '" + TrackManager.getSingletonInstance(context)
                 .getTrackingMap().get(trackingID).getTitle() + "' now!";
 
-        Notification notification = new NotificationCompat.Builder(context, "1")
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+        Log.i(LOG_TAG, String.format("Tracking ID in send on chanel "));
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
+        builder.setSmallIcon(android.R.drawable.ic_dialog_alert)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setContentIntent(getDismissIntent())
-                .addAction(android.R.drawable.ic_dialog_alert, "Dismiss",getDismissIntent())
-                .addAction(android.R.drawable.ic_dialog_alert, "Cancel",getCancelIntent())
-                .addAction(android.R.drawable.ic_dialog_alert, "RemindLater",getRemindLaterIntent(trackingID))
-                .setAutoCancel(true)
-                .build();
+                .addAction(android.R.drawable.ic_dialog_alert, "Dismiss", getDismissIntent())
+                .addAction(android.R.drawable.ic_dialog_alert, "Cancel", getCancelIntent())
+                .addAction(android.R.drawable.ic_dialog_alert, "RemindLater", getRemindLaterIntent())
+                .setAutoCancel(false);
+
         Log.i(LOG_TAG, String.format("Send on Channel TrackingID: " + trackingID));
 
-        manager.notify(2, notification);
+        manager.notify(NOTIFY_ID, builder.build());
     }
 
     private PendingIntent getDismissIntent() {
-        Log.i(LOG_TAG, String.format("Dismiss intent"));
-
         Intent buttonIntent = new Intent(context, AutoDismissReceiver.class);
-        buttonIntent.putExtra("notificationId", 1);
-        return PendingIntent.getBroadcast(context, 1, buttonIntent, 0);
+        buttonIntent.putExtra("notificationId", NOTIFY_ID);
+        return PendingIntent.getBroadcast(context, NOTIFY_ID, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 
     private PendingIntent getCancelIntent() {
-        Log.i(LOG_TAG, String.format("Cancel intent"));
         Intent buttonIntent = new Intent(context, CancelTrackingReceiver.class);
-        buttonIntent.putExtra("notificationId", 2);
-        return PendingIntent.getBroadcast(context, 2, buttonIntent, 0);
-
-//        return PendingIntent.getBroadcast(context, 1, buttonIntent, 0);
+        buttonIntent.putExtra("notificationId", NOTIFY_ID);
+        return PendingIntent.getBroadcast(context, NOTIFY_ID, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private PendingIntent getRemindLaterIntent(String specificTrackingID) {
+    private PendingIntent getRemindLaterIntent() {
         Log.i(LOG_TAG, String.format("RemindLater intent"));
         Intent buttonIntent = new Intent(context, RemindLaterReceiver.class);
-        buttonIntent.putExtra("notificationId", 3);
-        buttonIntent.putExtra("TrackingID", specificTrackingID);
-        Log.i(LOG_TAG, String.format("getRemindLater TrackingID : ", specificTrackingID));
+        buttonIntent.putExtra("notificationId", NOTIFY_ID);
+        buttonIntent.putExtra("TrackingID", trackingID);
 
-        return PendingIntent.getBroadcast(context, 3, buttonIntent, 0);
-
-//        return PendingIntent.getBroadcast(context, 1, buttonIntent, 0);
+        return PendingIntent.getBroadcast(context, NOTIFY_ID, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     // register channel, register as soon as possible
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("1", "Tracking", importance);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Tracking", importance);
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }

@@ -97,7 +97,7 @@ public class ModifyTrackingListener implements View.OnClickListener {
         Intent intent = new Intent(modifyTrackingActivity, ModifyTrackingReminderReceiver.class);
         intent.putExtra("TrackingID", tracking.getTrackingId());
         intent.putExtra("Meettime", tracking.getMeetTime().getTime());
-        intent.putExtra("type", "EDIT");
+        intent.putExtra("type", "ADD");
         modifyTrackingActivity.sendBroadcast(intent);
     }
 }

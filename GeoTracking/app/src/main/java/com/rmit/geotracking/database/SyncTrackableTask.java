@@ -43,6 +43,12 @@ public class SyncTrackableTask implements Runnable {
             if(!checkTrackableExist(con)) {
                 st.executeUpdate("CREATE TABLE trackable ( ID CHAR(5), Name VARCHAR(40), Description VARCHAR(200), URL VARCHAR(100), Category VARCHAR(40), PRIMARY KEY (ID))");
                 Log.i(LOG_TAG, "Create table trackable");
+                st.executeUpdate("CREATE TABLE tracking ( ID CHAR(10), TrackableID VARCHAR(40), " +
+                        "Title VARCHAR(40), Starttime VARCHAR(40), Endtime VARCHAR(40), \" +\n" +
+                        "                    \"Meettime VARCHAR(40), CurrentLocation VARCHAR(40), " +
+                        "Meetlocation VARCHAR(40), PRIMARY KEY (ID))");
+                Log.i(LOG_TAG, "Create table tracking");
+
                 importTrackablesFromModel(st);
                 st.close();
                 con.close();

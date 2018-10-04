@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.rmit.geotracking.model.TrackManager;
@@ -17,12 +18,15 @@ public class RemindLaterReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int notificationID = intent.getIntExtra("notificationId", 0);
-        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        String trackingID = intent.getStringExtra("TrackingID");
-        Log.i(LOG_TAG, String.format("CHECK tracking id:  " + trackingID));
-
         Log.i(LOG_TAG, String.format("Receive intent "));
+
+        Bundle bundle = intent.getExtras();
+
+        int notificationID = bundle.getInt("notificationId");
+        String trackingID = bundle.getString("TrackingID");
+
+        Log.i(LOG_TAG, String.format("CHECK tracking id:  " + trackingID));
+        Log.i(LOG_TAG, String.format("CHECK notification id:  " + notificationID));
 
         Calendar alarmTime = Calendar.getInstance();
         long currenttime = alarmTime.getTimeInMillis();
@@ -38,7 +42,8 @@ public class RemindLaterReceiver extends BroadcastReceiver {
 
             context.sendBroadcast(newIntent);
         }
-        manager.cancel(notificationID);
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        manager.cancel(notificationID);
     }
 }

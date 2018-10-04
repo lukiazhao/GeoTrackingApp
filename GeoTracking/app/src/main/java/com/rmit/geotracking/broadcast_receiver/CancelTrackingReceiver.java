@@ -16,6 +16,9 @@ public class CancelTrackingReceiver extends BroadcastReceiver {
         Log.i(LOG_TAG, String.format("Receive intent "));
 
         int notificationID = intent.getIntExtra("notificationId", 0);
+        Log.i(LOG_TAG, String.format("CHECK tracking id:  " + notificationID));
+
+
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(notificationID);
         Intent activityIntent = new Intent(context, TrackingActivity.class);
