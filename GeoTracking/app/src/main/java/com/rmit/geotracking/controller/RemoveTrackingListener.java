@@ -2,9 +2,11 @@ package com.rmit.geotracking.controller;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.broadcast_receiver.ModifyTrackingReminderReceiver;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
@@ -25,7 +27,7 @@ public class RemoveTrackingListener implements DialogInterface.OnClickListener {
     private Context context;
     private Tracking tracking;
 
-    RemoveTrackingListener(Context context, Tracking tracking) {
+    public RemoveTrackingListener(Context context, Tracking tracking) {
         this.context = context;
         this.tracking = tracking;
         trackManager = TrackManager.getSingletonInstance(context);
@@ -33,8 +35,17 @@ public class RemoveTrackingListener implements DialogInterface.OnClickListener {
 
     @Override
     public void onClick(DialogInterface dialogInterface, int i) {
+        //add reminder by sending intent
+        Intent intent = new Intent(context, ModifyTrackingReminderReceiver.class);
+        intent.putExtra("TrackingID", tracking.getTrackingId());
+        intent.putExtra("Meettime", tracking.getMeetTime().getTime());
+        intent.putExtra("type", "REMOVE");
+        context.sendBroadcast(intent);
+
         trackManager.getTrackingManager().removeTracking(tracking);
         Toast toast = Toast.makeText(context, context.getResources().getString(R.string.removetracking_toast), LENGTH_SHORT);
         toast.show();
+
+
     }
 }

@@ -37,6 +37,12 @@
 
         <service android:enabled="true" android:name=".service.LocationService" />
 
+        <receiver android:name=".broadcast_receiver.ModifyTrackingReminderReceiver"  android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.AutoDismissReceiver"  android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.CancelTrackingReceiver"  android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.RemindLaterReceiver"  android:exported="true"/>
+
+
     </application>
 
 </manifest>
