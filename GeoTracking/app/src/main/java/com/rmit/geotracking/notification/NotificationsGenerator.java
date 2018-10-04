@@ -57,7 +57,8 @@ public class NotificationsGenerator {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
 //                .setContentIntent(getDismissIntent())
-//                .addAction(android.R.drawable.ic_dialog_alert, "Dismiss",getDismissIntent())
+//                .addAction(android.R.drawable.ic_dialog_alert, "Accept", getAcceptIntent())
+//                .addAction(android.R.drawable.ic_dialog_alert, "No", getSkipIntent())
 //                .addAction(android.R.drawable.ic_dialog_alert, "Cancel",getCancelIntent())
                 .setAutoCancel(true);
 
