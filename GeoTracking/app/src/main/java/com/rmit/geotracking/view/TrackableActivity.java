@@ -23,7 +23,6 @@ import com.rmit.geotracking.database.SyncTrackableTask;
 import com.rmit.geotracking.model.TrackManager;
 
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
