@@ -24,5 +24,8 @@ public class CancelTrackingReceiver extends BroadcastReceiver {
         Intent activityIntent = new Intent(context, TrackingActivity.class);
         context.startActivity(activityIntent);
 
+
+
+        // prolly change the intent to
     }
 }
