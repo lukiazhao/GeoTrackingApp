@@ -32,13 +32,13 @@ import java.util.List;
 
 public class TrackableActivity extends MainActivity {
 
-    private TrackManager trackManager;
+ //   private TrackManager trackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle(getResources().getString(R.string.actionbar_trackablelist));
-        trackManager = TrackManager.getSingletonInstance(this);
+   //     trackManager = TrackManager.getSingletonInstance(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         setContentView(R.layout.activity_trackable_list);
 
@@ -61,7 +61,7 @@ public class TrackableActivity extends MainActivity {
     }
 
     public void loadSpinner() {
-        List<String> category = trackManager.readAllCategories();
+        List<String> category = TrackManager.getSingletonInstance(this).readAllCategories();
 
         // get reference of widgets from xml layout.
         Spinner spinner = findViewById(R.id.spinner);
@@ -86,7 +86,7 @@ public class TrackableActivity extends MainActivity {
         Button confirmbutton = v.findViewById(R.id.route_confirm);
 
         title2.setText(TrackManager.getSingletonInstance(this).getTrackableMap().get(trackableID).getName());
-        List<String[]> routeList = trackManager.getTrackingInfoProcessor().createRouteList(trackableID);
+        List<String[]> routeList = TrackManager.getSingletonInstance(this).getTrackingInfoProcessor().createRouteList(trackableID);
 
         if (routeList.size() != 0) {
             routelv.setAdapter(RouteListAdapter.getSingletonInstance(this, routeList));
