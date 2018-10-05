@@ -1,9 +1,16 @@
 package com.rmit.geotracking.model;
 
 import android.content.Context;
+import android.location.Location;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.rmit.geotracking.service.LocationService;
 import com.rmit.geotracking.service.TrackingService;
+import com.rmit.geotracking.utilities.JsonProcessor;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -12,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import java.util.Locale;
 
 /*
@@ -22,6 +30,7 @@ import java.util.Locale;
  *
  */
 public class TrackingInfoProcessor {
+    private final String LOG_TAG = LocationService.class.getName();
 
     private TrackingService trackingService;
 
@@ -36,11 +45,12 @@ public class TrackingInfoProcessor {
     public List<TrackingService.TrackingInfo> getTrackingInfoWithId(int selectedTrackableId) {
         List<TrackingService.TrackingInfo> infos = new ArrayList<>();
         for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
-            if(info.trackableId == selectedTrackableId) {
+            if (info.trackableId == selectedTrackableId) {
                 infos.add(info);
             }
 
         }
+
         return infos;
     }
 
@@ -66,6 +76,14 @@ public class TrackingInfoProcessor {
         }
 
         return startTimes;
+    }
+
+    public List<Date> getEndTimes(int selectedTrackableId){
+        List<Date> endTimes = new ArrayList<>();
+        for(Pair pair:getStartEndPairs(selectedTrackableId)){
+            endTimes.add((Date) pair.getSecondAttribute());
+        }
+        return endTimes;
     }
 
     public List<String> getMeetTimeList(Date startTime, Date endTime) {
@@ -94,33 +112,89 @@ public class TrackingInfoProcessor {
         return meetLocation;
     }
 
+
+
     // Find current location according to the system time
     public String findCurrentLocation(int trackableId) {
-        // current system time:
-        Date currentTime = Calendar.getInstance().getTime();
+//        // current system time:
+//        Date currentTime = Calendar.getInstance().getTime();
         String currentLocation = null;
 
-        // extract current location from tracking service according to the current time
+//
+//        // extract current location from tracking service according to the current time
+//        List<TrackingService.TrackingInfo> info = getTrackingInfoWithId(trackableId);
+//
+//        if (currentTime.getTime() < info.get(0).date.getTime()){
+//            currentLocation = info.get(0).latitude + "," + info.get(0).longitude;
+//        } else if (currentTime.getTime() > info.get(info.size() - 1).date.getTime()) {
+//            currentLocation = info.get(info.size() - 1).latitude + "," + info.get(info.size() - 1).longitude;
+//        } else {
+//
+//            for (int i = 0; i < info.size() - 1; i++) {
+//
+//                if (currentTime.after(info.get(i).date) && currentTime.before(info.get(i + 1).date)) {
+//                    // check which time point is closer to current time
+//                    long diffToPrev = currentTime.getTime() - info.get(i).date.getTime();
+//                    long diffToNext = info.get(i + 1).date.getTime() - currentTime.getTime();
+//                    if (diffToPrev < diffToNext) {
+//                        currentLocation = info.get(i).latitude + "," + info.get(i).longitude;
+//                    } else {
+//                        currentLocation = info.get(i + 1).latitude + "," + info.get(i + 1).longitude;
+//                    }
+//                }
+//            }
+//        }
+
+        TrackingService.TrackingInfo info = findCurrentTrackingInfo(trackableId);
+        return info.latitude + "," + info.longitude;
+    }
+
+    public TrackingService.TrackingInfo findCurrentTrackingInfo(int trackableId){
+        Date currentTime = Calendar.getInstance().getTime();
         List<TrackingService.TrackingInfo> info = getTrackingInfoWithId(trackableId);
-        for (int i = 0; i < info.size() - 1; i++) {
-            if(currentTime.after(info.get(i).date) && currentTime.before(info.get(i + 1).date)) {
-                currentLocation = info.get(i).latitude + " , " + info.get(i).longitude;
+        TrackingService.TrackingInfo currentInfo = null;
+
+        if (currentTime.getTime() < info.get(0).date.getTime()){
+            currentInfo =  info.get(0);
+        } else if (currentTime.getTime() > info.get(info.size() - 1).date.getTime()) {
+            currentInfo = info.get(info.size() - 1);
+        } else {
+
+            for (int i = 0; i < info.size() - 1; i++) {
+
+                if (currentTime.after(info.get(i).date) && currentTime.before(info.get(i + 1).date)) {
+                    // check which time point is closer to current time
+                    long diffToPrev = currentTime.getTime() - info.get(i).date.getTime();
+                    long diffToNext = info.get(i + 1).date.getTime() - currentTime.getTime();
+                    if (diffToPrev < diffToNext) {
+                        currentInfo = info.get(i);
+                    } else {
+                        currentInfo = info.get(i + 1);
+                    }
+                }
             }
         }
-        return currentLocation;
+        return currentInfo;
+    }
+
+    public List<TrackingService.TrackingInfo> findStationaryTrackingInfo(int trackableId) {
+        List<TrackingService.TrackingInfo> stationaryInfo = new ArrayList<>();
+        for (TrackingService.TrackingInfo info:getTrackingInfoWithId(trackableId)) {
+            if (info.stopTime > 0) {
+                stationaryInfo.add(info);
+            }
+        }
+
+        return stationaryInfo;
     }
 
 
-
-    public List<String[]> createRouteList(int trackableID) {
-        List<String[]> routelist = new ArrayList<>();
+    public List<Pair> createRouteList(int trackableID) {
+        List<Pair> routelist = new ArrayList<>();
 
         for(TrackingService.TrackingInfo trackingInfo : getTrackingInfoWithId(trackableID)) {
-            String[] routeDetailInfo = new String [3];
-            routeDetailInfo[0] = trackingInfo.latitude + "  " + trackingInfo.longitude;
-            routeDetailInfo[1] = getFormatedDate(trackingInfo.date);
-            routeDetailInfo[2] = Integer.toString(trackingInfo.stopTime);
-            routelist.add(routeDetailInfo);
+            routelist.add(new Pair<>(trackingInfo.latitude, trackingInfo.longitude));
+
         }
         return routelist;
     }
@@ -133,6 +207,66 @@ public class TrackingInfoProcessor {
     public Date parseStringToDate(String date) throws ParseException {
         return DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).parse(date);
     }
+
+
+    public List<Pair> getReachablesbyId(Location currLocation, Integer trackableId) throws JSONException {
+        Log.i(LOG_TAG, "GET Reachables for id = "+ trackableId);
+        List<Pair> reachables = new ArrayList<>();
+
+        JsonProcessor jsonProcessor = new JsonProcessor();
+        // obtain stationary info (lines)
+        List<TrackingService.TrackingInfo> stationaryTrackingInfo = findStationaryTrackingInfo(trackableId);
+
+        Log.i(LOG_TAG, "stationary tracking information: id:" + trackableId + "size = " + stationaryTrackingInfo.size());
+
+        Date now = Calendar.getInstance().getTime();
+
+        for (TrackingService.TrackingInfo info: stationaryTrackingInfo){
+
+            Log.i(LOG_TAG, "Tracking info "+ info.date + " now: "+ now);
+
+            if(info.date.after(now)){ // in the future
+                // find stationary location
+                String stationaryLocation = info.latitude + "," + info.longitude;
+                Log.i(LOG_TAG, "The Trackable is still in the future at" + stationaryLocation);
+                // get json (duration)
+
+                JSONObject json = jsonProcessor.getJson(currLocation, stationaryLocation);
+                String durationString = jsonProcessor.parseJson(json);      // time to get there
+                int duration = Integer.parseInt(durationString.replaceAll("[^0-9]", ""));
+                Log.i(LOG_TAG, "DURATION=" + duration);
+                // duration + current time <= end time
+                Calendar plannedArriveTime = Calendar.getInstance();
+                Log.i(LOG_TAG, "NOW ?" + plannedArriveTime.getTime());
+
+
+                plannedArriveTime.set(Calendar.MINUTE, plannedArriveTime.get(Calendar.MINUTE) + duration);
+                Log.i(LOG_TAG, "planned arrive time : " + plannedArriveTime.getTime());
+
+                Calendar stationaryEndTime = Calendar.getInstance();
+                stationaryEndTime.setTime(info.date);
+                stationaryEndTime.set(Calendar.MINUTE, stationaryEndTime.get(Calendar.MINUTE) + info.stopTime);
+
+                Log.i(LOG_TAG, "stationary end time = "+ stationaryEndTime.getTime());
+
+                if(plannedArriveTime.getTime().before(stationaryEndTime.getTime())){        // before stationary time finish
+                    reachables.add(new Pair<>(trackableId, duration));
+                    Log.i(LOG_TAG, "BEFORE stationary time finish; size = " + reachables.size());
+                }
+
+            }
+        }
+
+        Log.i(LOG_TAG, "Reachable size =" + reachables.size());
+
+        for(Pair p: reachables){
+            Log.i(LOG_TAG, "reachable id"+ p.getFirstAttribute() + "time taken=" + p.getSecondAttribute());
+        }
+        return reachables;
+    }
+
+
+
 
     public class Pair<T> {
         T firstAttribute;

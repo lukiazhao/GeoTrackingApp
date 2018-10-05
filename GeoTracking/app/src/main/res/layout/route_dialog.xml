@@ -27,8 +27,8 @@
         android:id="@+id/route_ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/route_trackablename" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/route_confirm"
