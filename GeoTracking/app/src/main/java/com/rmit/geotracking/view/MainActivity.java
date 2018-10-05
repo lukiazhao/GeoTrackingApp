@@ -38,7 +38,6 @@ import java.util.Calendar;
 public class MainActivity extends GetPermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
-    private int pollingTime = 10;
     private TrackManager trackManager;
 
 
@@ -54,55 +53,24 @@ public class MainActivity extends GetPermissionActivity {
         trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
 
 
-        // check permission
+        // check permission if no permission, ask for it.
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             startHandlePermission();
             return;
         }
         System.out.println("location permitted");
-        // create Notification with channels
-        NotificationsGenerator generator = NotificationsGenerator.getSingletonInstance(this);
-        trackManager = TrackManager.getSingletonInstance(this);
 
-//        setAlarm();
-//        System.out.println("Main Activity oncreate");
+        // create Notification channels
+        NotificationsGenerator.getSingletonInstance(this).createNotificationChannel();
 
-        // shared Preference
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("Polling Time", 10);
-        editor.apply();
-
-        setAlarm();
-
+//        trackManager = TrackManager.getSingletonInstance(this);
     }
-
-
-    public void setAlarm (){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        int polling = preferences.getInt("Polling Time", 60);
-        System.out.println("get pulling time from preference" + polling);
-
-
-
-        Calendar triggerAt = Calendar.getInstance();
-        triggerAt.set(Calendar.SECOND, triggerAt.get(Calendar.SECOND) + pollingTime);
-        AlarmManager manager = (AlarmManager) getSystemService(this.ALARM_SERVICE);
-        Intent myintent = new Intent(MainActivity.this, LocationService.class);
-        PendingIntent pendingIntent = PendingIntent.getService
-                (MainActivity.this, 0, myintent, PendingIntent.FLAG_ONE_SHOT);
-        if (manager != null) {
-            manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt.getTimeInMillis(), pendingIntent);
-        }
-//        manager.cancel(pendingIntent);
-    }
-
 
     public void startHandlePermission(){
         addPermissionHelper(REQUEST_FINE_LOCATION,
                 "REQUEST LOCATION PERMISSION", Manifest.permission.ACCESS_FINE_LOCATION);
         if(checkPermission(REQUEST_FINE_LOCATION)) {
-            Toast.makeText(this, "LOCATION permission added successfully", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Location permission added successfully", Toast.LENGTH_LONG).show();
         }
 
     }

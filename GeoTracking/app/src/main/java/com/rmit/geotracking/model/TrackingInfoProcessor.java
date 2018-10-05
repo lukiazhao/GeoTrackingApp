@@ -268,7 +268,7 @@ public class TrackingInfoProcessor {
 
 
 
-    public class Pair<T, S> {
+    public static class Pair<T, S> {
         T firstAttribute;
         S secondAttribute;
         Pair(T firstAttribute, S secondAttribute) {
