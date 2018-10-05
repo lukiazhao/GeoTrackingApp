@@ -32,7 +32,8 @@
         </activity>
         <activity android:name=".view.TrackableActivity" />
         <activity android:name=".view.TrackingActivity" />
-        <activity android:name=".view.ModifyTrackingActivity" />
+        <activity android:name=".view.ModifyTrackingActivity"></activity>
+        <activity android:name=".view.preference.FragmentPreferencesActivity" />
         <activity android:name=".view.MapActivity"/>
 
         <service android:enabled="true" android:name=".service.LocationService" />

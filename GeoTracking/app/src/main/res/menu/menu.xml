@@ -14,4 +14,9 @@
         android:title="@string/menu_tracking_list"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/Preferences"
+        android:orderInCategory="100"
+        android:title="Preferences"
+        app:showAsAction="never" />
 </menu>

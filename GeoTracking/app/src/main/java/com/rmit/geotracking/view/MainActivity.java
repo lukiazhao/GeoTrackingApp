@@ -1,5 +1,6 @@
 package com.rmit.geotracking.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,8 +11,9 @@ import android.view.View;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ActivityEntryListener;
-import com.rmit.geotracking.view.TrackableActivity;
-import com.rmit.geotracking.view.TrackingActivity;
+import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
+import com.rmit.geotracking.view.preference.PreferencesFragment;
+
 
 //Entrypoint of the whole application. including two buttons, trackinglist and trackable list.
 //A menu on actionbar is defined in this activity.
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         trackableBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
         trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
+
     }
 
     //Import methods related to menu options and selections
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.tracking_list:
                 goTracking();
                 break;
+            case R.id.Preferences:
+                goPreferences();
+                break;
             default:
         }
         return super.onOptionsItemSelected(item);
@@ -59,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void goTracking() {
         Intent myIntent = new Intent(this, TrackingActivity.class);
+        startActivity(myIntent);
+    }
+
+    public void goPreferences() {
+        Intent myIntent = new Intent(this, FragmentPreferencesActivity.class);
         startActivity(myIntent);
     }
 }
