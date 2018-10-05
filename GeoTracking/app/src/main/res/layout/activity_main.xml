@@ -2,11 +2,23 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="81dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/trackable_button"
@@ -14,10 +26,10 @@
         android:layout_width="171dp"
         android:layout_height="61dp"
         android:layout_marginBottom="48dp"
-        android:text="@string/mainactivity_trackableButton"
-        android:textSize="18sp"
-        android:textColor="@color/colorWhite"
         android:background="@color/design_default_color_primary"
+        android:text="@string/mainactivity_trackableButton"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/tracking_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,10 +41,10 @@
         android:layout_width="171dp"
         android:layout_height="61dp"
         android:layout_marginBottom="123dp"
-        android:text="@string/mainactivity_trackingButton"
-        android:textSize="18sp"
-        android:textColor="@color/colorWhite"
         android:background="@color/design_default_color_primary"
+        android:text="@string/mainactivity_trackingButton"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,13 +54,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="83dp"
+        android:layout_marginBottom="393dp"
         android:layout_marginTop="87dp"
         android:text="@string/mainactivity_welcom_text"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/trackable_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
 </android.support.constraint.ConstraintLayout>

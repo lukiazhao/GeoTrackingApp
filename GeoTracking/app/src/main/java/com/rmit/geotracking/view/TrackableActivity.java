@@ -1,9 +1,10 @@
 package com.rmit.geotracking.view;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+
 import android.content.Context;
-import android.content.SyncAdapterType;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.RouteListAdapter;
@@ -20,6 +22,7 @@ import com.rmit.geotracking.controller.DialogDismissListener;
 import com.rmit.geotracking.controller.SortCategoryListener;
 import com.rmit.geotracking.database.SyncTrackableTask;
 import com.rmit.geotracking.model.TrackManager;
+
 
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class TrackableActivity extends MainActivity {
         listView.setAdapter(TrackableListAdapter.getSingletonInstance(this));
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -59,6 +63,7 @@ public class TrackableActivity extends MainActivity {
         //Sync trackable list from database
         new Thread(new SyncTrackableTask(this)).start();
     }
+
 
     public void loadSpinner() {
         List<String> category = TrackManager.getSingletonInstance(this).readAllCategories();
@@ -73,33 +78,7 @@ public class TrackableActivity extends MainActivity {
         spinner.setOnItemSelectedListener(SortCategoryListener.getSingletonInstance(this));
     }
 
-    // Call when user click view button for a specific trackable item.
-    public void showRouteDialog(int trackableID) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        @SuppressLint("InflateParams") View v = inflater.inflate(R.layout.route_dialog, null);
-
-        TextView title2 = v.findViewById(R.id.route_trackablename);
-        ListView routelv = v.findViewById(R.id.route_ListView);
-        Button confirmbutton = v.findViewById(R.id.route_confirm);
-
-        title2.setText(TrackManager.getSingletonInstance(this).getTrackableMap().get(trackableID).getName());
-        List<String[]> routeList = TrackManager.getSingletonInstance(this).getTrackingInfoProcessor().createRouteList(trackableID);
-
-        if (routeList.size() != 0) {
-            routelv.setAdapter(RouteListAdapter.getSingletonInstance(this, routeList));
-        } else {
-            this.showNoTrackingInfoAlertDialog();
-            return;
-        }
-        builder.setView(v);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        confirmbutton.setOnClickListener(new DialogDismissListener(dialog));
-    }
 
     //This app will block user to view or add upon a trackable without any route info
     public void showNoTrackingInfoAlertDialog() {
