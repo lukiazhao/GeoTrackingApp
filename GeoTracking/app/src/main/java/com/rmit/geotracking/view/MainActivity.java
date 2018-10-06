@@ -2,6 +2,8 @@ package com.rmit.geotracking.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.broadcast_receiver.NetworkReceiver;
 import com.rmit.geotracking.controller.ActivityEntryListener;
 import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
 import com.rmit.geotracking.view.preference.PreferencesFragment;
@@ -19,6 +22,9 @@ import com.rmit.geotracking.view.preference.PreferencesFragment;
 //A menu on actionbar is defined in this activity.
 
 public class MainActivity extends AppCompatActivity {
+
+    // register connectivity receiver
+    NetworkReceiver networkReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         trackableBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
         trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
 
+        //register connectivity broadcast
+        networkReceiver = new NetworkReceiver();
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        this.registerReceiver(networkReceiver,filter );
     }
 
     //Import methods related to menu options and selections
