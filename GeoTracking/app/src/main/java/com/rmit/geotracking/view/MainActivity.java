@@ -2,8 +2,6 @@ package com.rmit.geotracking.view;
 
 
 import android.Manifest;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,20 +15,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.broadcast_receiver.NetworkReceiver;
 import com.rmit.geotracking.controller.ActivityEntryListener;
 
-import com.rmit.geotracking.model.TrackManager;
-import com.rmit.geotracking.notification.NotificationsGenerator;
 import com.rmit.geotracking.permission.GetPermissionActivity;
-import com.rmit.geotracking.service.LocationService;
-import com.rmit.geotracking.view.TrackableActivity;
-import com.rmit.geotracking.view.TrackingActivity;
 import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
-import com.rmit.geotracking.view.preference.PreferencesFragment;
-
-
-import java.util.Calendar;
 
 //Entrypoint of the whole application. including two buttons, trackinglist and trackable list.
 //A menu on actionbar is defined in this activity.
@@ -38,11 +26,11 @@ import java.util.Calendar;
 public class MainActivity extends GetPermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
-    private TrackManager trackManager;
+//    private TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
 
     // register connectivity receiver
-    NetworkReceiver networkReceiver;
+    private IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +43,6 @@ public class MainActivity extends GetPermissionActivity {
         trackableBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
         trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
 
-
-        //register connectivity broadcast
-        networkReceiver = new NetworkReceiver();
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-        this.registerReceiver(networkReceiver,filter );
-
-
         // check permission if no permission, ask for it.
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             startHandlePermission();
@@ -70,9 +51,8 @@ public class MainActivity extends GetPermissionActivity {
         System.out.println("location permitted");
 
         // create Notification channels
-        NotificationsGenerator.getSingletonInstance(this).createNotificationChannel();
+//        NotificationsGenerator.getSingletonInstance(this).createNotificationChannel();
 
-//        trackManager = TrackManager.getSingletonInstance(this);
     }
 
     public void startHandlePermission(){

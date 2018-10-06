@@ -25,7 +25,7 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
     private Context context;
     private String trackingID;
 
-    private final int NOTIFY_ID = 1;
+    private final int NOTIFY_ID = 2;
     private final String CHANNEL_ID = "2";
 
     private NotificationManagerCompat manager;
@@ -51,15 +51,15 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
         Log.i(LOG_TAG, String.format("Tracking ID in send on chanel "));
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
-        builder.setSmallIcon(android.R.drawable.ic_dialog_alert)
+        builder.setSmallIcon(android.R.drawable.ic_popup_reminder)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setContentIntent(getDismissIntent())
                 .addAction(android.R.drawable.ic_dialog_alert, "Dismiss", getDismissIntent())
-                .addAction(android.R.drawable.ic_dialog_alert, "Cancel", getCancelIntent())
-                .addAction(android.R.drawable.ic_dialog_alert, "RemindLater", getRemindLaterIntent())
+                .addAction(android.R.drawable.ic_dialog_alert, "Delete Tracking", getCancelIntent())
+                .addAction(android.R.drawable.ic_dialog_alert, "Remind Me Later", getRemindLaterIntent())
                 .setAutoCancel(false);
 
         Log.i(LOG_TAG, String.format("Send on Channel TrackingID: " + trackingID));
@@ -77,6 +77,7 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
     private PendingIntent getCancelIntent() {
         Intent buttonIntent = new Intent(context, CancelTrackingReceiver.class);
         buttonIntent.putExtra("notificationId", NOTIFY_ID);
+        buttonIntent.putExtra("TrackingID", trackingID);
         return PendingIntent.getBroadcast(context, NOTIFY_ID, buttonIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 

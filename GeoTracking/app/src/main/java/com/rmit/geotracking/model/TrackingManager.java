@@ -1,5 +1,7 @@
 package com.rmit.geotracking.model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,6 +17,8 @@ import java.util.Observable;
 public class TrackingManager extends Observable {
 
     private Map<String, Tracking> trackingMap;
+    private final String LOG_TAG = this.getClass().getName();
+
 
     // tracking map passed from track manager
     TrackingManager(Map<String, Tracking> trackingMap){
@@ -46,7 +50,10 @@ public class TrackingManager extends Observable {
 
     // Remove a specific tracking and notify adapter to update.
     public void removeTracking(Tracking tracking) {
-        trackingMap.remove(tracking.getTrackingId());
+        if(tracking != null) {
+            trackingMap.remove(tracking.getTrackingId());
+            Log.i(LOG_TAG, String.format("remove " + tracking.getTrackingId()));
+        }
         setChanged();
         notifyObservers();
     }

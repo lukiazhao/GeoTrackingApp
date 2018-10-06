@@ -35,14 +35,11 @@ import java.util.Objects;
 
 public class TrackingActivity extends MainActivity {
 
-    //A reference of model is created from singleton
-    private TrackManager trackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getResources().getString(R.string.actionbar_trackinglist));
-        trackManager = TrackManager.getSingletonInstance(this);
         setContentView(R.layout.activity_tracking);
         loadListView();
     }
@@ -88,6 +85,7 @@ public class TrackingActivity extends MainActivity {
 
     //Tool method to help generate text in view tracking dialog.
     public String generateDetailView(Tracking tracking){
+        TrackManager trackManager = TrackManager.getSingletonInstance(this);
         String[] sections = generateTracingDetailSections();
         @SuppressLint("DefaultLocale") String output = String.format("%s:   %d\n\n%s:   %s\n\n" +
                         "%s:   %s\n\n" + "%s:   %s\n\n%s:   %s\n\n%s:   %s\n\n%s:   %s\n\n%s:   %s",
