@@ -22,6 +22,7 @@ import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ActivityEntryListener;
 
 import com.rmit.geotracking.permission.GetPermissionActivity;
+import com.rmit.geotracking.service.LocationService;
 import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
 
 //Entrypoint of the whole application. including two buttons, trackinglist and trackable list.
