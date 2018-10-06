@@ -41,13 +41,13 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     private String selectedTrakcingId = null;
     private Tracking selectedTracking = null;
     private TrackManager manager = TrackManager.getSingletonInstance(this);
-    private TrackingInfoProcessor processor = manager.getTrackingInfoProcessor();
+    private TrackingInfoProcessor processor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_tracking);
-
+        processor = manager.getTrackingInfoProcessor();
         //get incoming intent's data
         getIncomingIntentExtras();
 

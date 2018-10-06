@@ -27,7 +27,7 @@
     <!--</PreferenceCategory>-->
     <PreferenceCategory android:title="Tracking Reminder Setting" >
         <EditTextPreference
-            android:dialogTitle="Tracking reminder setting"
+            android:dialogTitle="Tracking Remind Later"
             android:key="reminderTimeInterval"
             android:summary="Edit time interval for tracking reminders"
             android:title="Tracking reminder setting" />
@@ -40,6 +40,27 @@
             <!--android:summary="@string/summary_list_preference"-->
             <!--android:title="@string/title_list_preference" />-->
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="Suggestion Polling Time" >
+        <EditTextPreference
+            android:dialogTitle="Set the polling time for closest trackables suggestion"
+            android:key="PollingTime"
+            android:summary="Edit polling time interval for trackable suggestions"
+            android:title="Closest Trackable Polling Time" />
+
+        <!--<ListPreference-->
+        <!--android:dialogTitle="@string/dialog_title_list_preference"-->
+        <!--android:entries="@array/entries_list_preference"-->
+        <!--android:entryValues="@array/entryvalues_list_preference"-->
+        <!--android:key="list_preference"-->
+        <!--android:summary="@string/summary_list_preference"-->
+        <!--android:title="@string/title_list_preference" />-->
+    </PreferenceCategory>
+
+
+
+
+
     <!--<PreferenceCategory android:title="@string/launch_preferences" >-->
 
         <!--

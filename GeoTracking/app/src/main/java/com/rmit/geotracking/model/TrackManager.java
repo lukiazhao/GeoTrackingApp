@@ -136,14 +136,14 @@ public class TrackManager extends Observable {
     }
 
 
-    public List<TrackingInfoProcessor.Pair> getAllReachables(Location currLocation) throws JSONException {
+    public List<TrackingInfoProcessor.Pair<Integer, Integer>> getAllReachables(Location currLocation) throws JSONException {
 
-        List<TrackingInfoProcessor.Pair> allReachables = new ArrayList<>();
+        List<TrackingInfoProcessor.Pair<Integer, Integer>> allReachables = new ArrayList<>();
         for (Integer trackableId: trackableMap.keySet()){
             // filter out the trackables that don't have tracking infos
             if(processor.getTrackingInfoWithId(trackableId).size() != 0) {
 
-                List<TrackingInfoProcessor.Pair> reachables = processor.getReachablesbyId(currLocation, trackableId);
+                List<TrackingInfoProcessor.Pair<Integer, Integer>> reachables = processor.getReachablesbyId(currLocation, trackableId);
                 allReachables.addAll(reachables);
             }
         }

@@ -101,9 +101,9 @@ public class TrackingInfoProcessor {
         return meetTimes;
     }
 
-    public Pair<Double> getMeetLocation(int selectedTrackableId, Date startTime){
+    public Pair<Double, Double> getMeetLocation(int selectedTrackableId, Date startTime){
 
-        Pair<Double> meetLocation = null;
+        Pair<Double, Double> meetLocation = null;
         for (TrackingService.TrackingInfo info:getTrackingInfoWithId(selectedTrackableId)) {
             if (info.date.equals(startTime)) {
                 meetLocation = new Pair<>(info.latitude, info.longitude);
@@ -209,9 +209,9 @@ public class TrackingInfoProcessor {
     }
 
 
-    public List<Pair> getReachablesbyId(Location currLocation, Integer trackableId) throws JSONException {
+    public List<Pair<Integer, Integer>> getReachablesbyId(Location currLocation, Integer trackableId) throws JSONException {
         Log.i(LOG_TAG, "GET Reachables for id = "+ trackableId);
-        List<Pair> reachables = new ArrayList<>();
+        List<Pair<Integer, Integer>> reachables = new ArrayList<>();
 
         JsonProcessor jsonProcessor = new JsonProcessor();
         // obtain stationary info (lines)
@@ -268,10 +268,10 @@ public class TrackingInfoProcessor {
 
 
 
-    public class Pair<T> {
+    public static class Pair<T, S> {
         T firstAttribute;
-        T secondAttribute;
-        Pair(T firstAttribute, T secondAttribute) {
+        S secondAttribute;
+        Pair(T firstAttribute, S secondAttribute) {
             this.firstAttribute = firstAttribute;
             this.secondAttribute = secondAttribute;
         }
@@ -280,7 +280,7 @@ public class TrackingInfoProcessor {
             return firstAttribute;
         }
 
-        public T getSecondAttribute() {
+        public S getSecondAttribute() {
             return secondAttribute;
         }
         @Override
