@@ -12,12 +12,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.rmit.geotracking.R;
+import com.rmit.geotracking.Reachables;
 import com.rmit.geotracking.controller.LocationMonitorListener;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
@@ -36,61 +39,40 @@ public class LocationService extends IntentService {
     private final String LOG_TAG = LocationService.class.getName();
     private TrackManager manager;
 
+
     public LocationService() {
         super("Location Service");
+        Log.i(LOG_TAG, "lOCATION SERVICE CONSTRUCTOR FIRST?");
         manager = TrackManager.getSingletonInstance(LocationService.this);
-
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+
         //get gps location - LocationManagere
         Location currLocation = requestLocationUpdate();
 
+        Reachables reachableClass = Reachables.getSingletonInstance();
+
         try {
 
-            List<TrackingInfoProcessor.Pair> allReachables = manager.getAllReachables(currLocation);
-            Log.i(LOG_TAG, allReachables.size()+ "");
-            for (TrackingInfoProcessor.Pair p: allReachables){
-                Log.i(LOG_TAG, "trackable id =" + p.getFirstAttribute() + "; time taken to be there=" + p.getSecondAttribute());
-            }
+            // set all current reachables to Reachables Class
+            reachableClass.setReachables(manager.getAllReachables(currLocation));
+
+            TrackingInfoProcessor.Pair<Integer,Integer> closest = reachableClass.suggestClosestTrackable();
+
+            // start the first notification
+            NotificationsGenerator.getSingletonInstance(this).buildSuggestionNotification(closest);
+
+            Log.i(LOG_TAG, "closest pair id=" + closest.getFirstAttribute() + "duration" + closest.getSecondAttribute());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        NotificationsGenerator.getSingletonInstance(this).buildNotify();
-        //update polling time
-
-        // schedule next alarm
-//        setNextAlarm();
     }
 
 
 
-
-
-
-
-
-
-
-
-
-    public void setNextAlarm(){
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.SECOND, calendar.get(Calendar.SECOND) + 10);      // polling time
-
-        Intent myintent = new Intent(LocationService.this, LocationService.class);
-
-        PendingIntent pendingIntent = PendingIntent.getService
-                (LocationService.this, 0, myintent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
-
-    }
 
 
 
