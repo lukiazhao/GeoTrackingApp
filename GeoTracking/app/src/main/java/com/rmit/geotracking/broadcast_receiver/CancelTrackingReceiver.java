@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.rmit.geotracking.database.RemoveSingleTrackingTask;
+import com.rmit.geotracking.database.RemoveTrackingTask;
+import com.rmit.geotracking.model.TrackManager;
+import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.view.TrackingActivity;
 
 public class CancelTrackingReceiver extends BroadcastReceiver {
@@ -18,11 +22,23 @@ public class CancelTrackingReceiver extends BroadcastReceiver {
         int notificationID = intent.getIntExtra("notificationId", 0);
         Log.i(LOG_TAG, String.format("CHECK tracking id:  " + notificationID));
 
-
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(notificationID);
-        Intent activityIntent = new Intent(context, TrackingActivity.class);
-        context.startActivity(activityIntent);
+
+        String trackingID = intent.getStringExtra("TrackingID");
+
+        TrackManager trackManager = TrackManager.getSingletonInstance(context);
+        Tracking removeTracking = trackManager.getTrackingMap().get(trackingID);
+
+        if(trackingID != null) {
+
+            // remove tracking from model
+            trackManager.getTrackingManager().removeTracking(removeTracking);
+            Log.i(LOG_TAG, String.format("remove " + trackingID));
+
+            // remove tracking from database
+            new Thread(new RemoveSingleTrackingTask(trackingID, context)).run();
+        }
 
     }
 }

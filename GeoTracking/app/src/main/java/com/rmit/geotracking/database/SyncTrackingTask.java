@@ -68,6 +68,9 @@ public class SyncTrackingTask implements Runnable {
                                     processor.parseStringToDateDatabase(rs.getString(6)),
                                     rs.getString(7),
                                     rs.getString(8));
+                    Log.i(LOG_TAG, String.format("Add tracking to model: [title] " +
+                            rs.getString(3) + " [ID] + " + rs.getString(1)));
+
                 }
             }
 
