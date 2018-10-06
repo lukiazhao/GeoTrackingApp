@@ -7,6 +7,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +30,6 @@ import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
 public class MainActivity extends GetPermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
-//    private TrackManager trackManager = TrackManager.getSingletonInstance(this);
 
 
     // register connectivity receiver
@@ -54,6 +57,7 @@ public class MainActivity extends GetPermissionActivity {
 //        NotificationsGenerator.getSingletonInstance(this).createNotificationChannel();
 
     }
+
 
     public void startHandlePermission(){
         addPermissionHelper(REQUEST_FINE_LOCATION,
@@ -83,9 +87,18 @@ public class MainActivity extends GetPermissionActivity {
             case R.id.Preferences:
                 goPreferences();
                 break;
+            case R.id.suggest_now:
+                suggestionNow();
+                break;
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void suggestionNow(){
+        Intent suggestIntent = new Intent(this, LocationService.class);
+        suggestIntent.putExtra("suggest_now", true);
+        startService(suggestIntent);
     }
 
     public void goTrackable() {

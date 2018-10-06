@@ -1,6 +1,4 @@
-package com.rmit.geotracking.view;
 
-import android.app.Application;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
@@ -23,11 +21,15 @@ public class StartUp extends Application {
         //import existing tracking data from SQLite
         TrackManager.getSingletonInstance(this);
         new Thread(new SyncTrackingTask(this));
+      
+        // set first alarm
+        AlarmGenerator.getSingletonInstance(this).setAlarm();
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
         unregisterReceiver(networkReceiver);
+
     }
 }

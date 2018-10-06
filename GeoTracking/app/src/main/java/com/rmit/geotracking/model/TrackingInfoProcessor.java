@@ -42,8 +42,10 @@ public class TrackingInfoProcessor {
      * Support Function: reduce workload
      * group the tracking info for a particular trackable ID
      */
-    public List<TrackingService.TrackingInfo> getTrackingInfoWithId(int selectedTrackableId) {
+    public List<TrackingService.TrackingInfo> getTrackingInfoWithId(int selectedTrackableId)
+            throws java.util.ConcurrentModificationException {
         List<TrackingService.TrackingInfo> infos = new ArrayList<>();
+
         for (TrackingService.TrackingInfo info:trackingService.getTrackingInfoList()) {
             if (info.trackableId == selectedTrackableId) {
                 infos.add(info);
