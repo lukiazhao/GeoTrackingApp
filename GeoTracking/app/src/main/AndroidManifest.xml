@@ -44,7 +44,7 @@
         <receiver android:name=".broadcast_receiver.CancelTrackingReceiver"  android:exported="true"/>
         <receiver android:name=".broadcast_receiver.RemindLaterReceiver"  android:exported="true"/>
         <receiver android:name=".broadcast_receiver.CancelSuggestionReceiver" android:exported="true"/>
-        <receiver android:name=".broadcast_receiver.SkipSuggestionReciver" android:exported="true"/>
+        <receiver android:name=".broadcast_receiver.SkipSuggestionReceiver" android:exported="true"/>
 
 
     </application>

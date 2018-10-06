@@ -1,8 +1,6 @@
-package com.rmit.geotracking;
+package com.rmit.geotracking.model;
 
 import android.util.Log;
-
-import com.rmit.geotracking.model.TrackingInfoProcessor;
 
 import java.util.List;
 

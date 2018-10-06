@@ -11,13 +11,12 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.rmit.geotracking.Reachables;
+import com.rmit.geotracking.model.Reachables;
 import com.rmit.geotracking.broadcast_receiver.CancelSuggestionReceiver;
-import com.rmit.geotracking.broadcast_receiver.SkipSuggestionReciver;
+import com.rmit.geotracking.broadcast_receiver.SkipSuggestionReceiver;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
-import com.rmit.geotracking.utilities.AlarmGenerator;
 import com.rmit.geotracking.view.ModifyTrackingActivity;
 
 import java.util.Map;
@@ -65,9 +64,8 @@ public class NotificationsGenerator {
         }
 
         Map<Integer, Trackable> trackableMap = TrackManager.getSingletonInstance(context).getTrackableMap();
-        String contentText = "Do you want add " + trackableMap.get(closestIdDurationPair.getFirstAttribute()).getName()
-                            + " to your Tracking List? It will take " + closestIdDurationPair.getSecondAttribute() +
-                            " to get there";
+        String contentText = trackableMap.get(closestIdDurationPair.getFirstAttribute()).getName()
+                            + " will take " + closestIdDurationPair.getSecondAttribute();
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
@@ -87,11 +85,6 @@ public class NotificationsGenerator {
 
         // remove current pair from reachable
         Reachables.getSingletonInstance().removeSuggestedReachable(closestIdDurationPair);
-        Log.i(LOG_TAG, "left reachables size= " + Reachables.getSingletonInstance().getReachables().size());
-
-
-        // set alarm for next service
-//        AlarmGenerator.getSingletonInstance(context).setAlarm();
     }
 
 
@@ -105,7 +98,7 @@ public class NotificationsGenerator {
     }
 
     private PendingIntent getSkipIntent(){
-        Intent skipIntent = new Intent(context, SkipSuggestionReciver.class);
+        Intent skipIntent = new Intent(context, SkipSuggestionReceiver.class);
         skipIntent.putExtra("notificationId", NOTIFY_ID);
         return PendingIntent.getBroadcast(context, NOTIFY_ID, skipIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
