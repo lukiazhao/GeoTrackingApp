@@ -1,42 +1,26 @@
 package com.rmit.geotracking.service;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.rmit.geotracking.R;
-import com.rmit.geotracking.Reachables;
+import com.rmit.geotracking.model.Reachables;
 import com.rmit.geotracking.controller.LocationMonitorListener;
 import com.rmit.geotracking.model.TrackManager;
-import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.notification.NotificationsGenerator;
 import com.rmit.geotracking.utilities.AlarmGenerator;
 
 import org.json.JSONException;
-
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class LocationService extends IntentService {
 

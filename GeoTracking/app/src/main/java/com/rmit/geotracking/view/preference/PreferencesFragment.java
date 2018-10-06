@@ -65,11 +65,10 @@ public class PreferencesFragment extends PreferenceFragment implements
 
        //set the changed polling time
        if (key.equals("PollingTime")) {
-           // set Alarm
+           // set a new alarm once the preferred polling time
           int changedPollingTime = Integer.parseInt(sharedPreferences.getString("PollingTime", "100"));
           AlarmGenerator.getSingletonInstance(getContext()).setAlarm();
        }
-
    }
 
 }

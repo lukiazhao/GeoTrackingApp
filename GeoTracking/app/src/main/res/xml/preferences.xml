@@ -27,11 +27,17 @@
     <!--</PreferenceCategory>-->
     <PreferenceCategory android:title="Tracking Reminder Setting" >
         <EditTextPreference
+            android:dialogTitle="Tracking Remind before Meeting"
+            android:key="reminderBeforeMeet"
+            android:inputType="number"
+            android:summary="Edit time before Meet time"
+            android:title="Tracking Remind before Meeting" />
+        <EditTextPreference
             android:dialogTitle="Tracking Remind Later"
             android:key="reminderTimeInterval"
+            android:inputType="number"
             android:summary="Edit time interval for tracking reminders"
-            android:title="Tracking reminder setting" />
-
+            android:title="Tracking Remind Later" />
         <!--<ListPreference-->
             <!--android:dialogTitle="@string/dialog_title_list_preference"-->
             <!--android:entries="@array/entries_list_preference"-->

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.rmit.geotracking.controller.ShowReminderAlarmListener;
@@ -17,6 +18,9 @@ public class ModifyTrackingReminderReceiver extends BroadcastReceiver {
     private Context context;
     private AlarmManager alarmManager;
     private static Map<String, AlarmManager.OnAlarmListener> reminderAlarms = new HashMap<>();
+    private final int timeOneMinutes = 60000;
+    private final int defaultRemindLaterInterval = 1;
+
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,16 +28,25 @@ public class ModifyTrackingReminderReceiver extends BroadcastReceiver {
         alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         long time = intent.getLongExtra("Meettime", 0);
+        Log.i(LOG_TAG, String.format("On receive time" + time));
 
         String trackingID = intent.getStringExtra("TrackingID");
         Log.i(LOG_TAG, String.format("On receive TrackingID" + trackingID));
+
+        long timeBefore = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context)
+                .getString("reminderBeforeMeet", "0")) * timeOneMinutes;
+
+        if (timeBefore == 0) {
+            timeBefore = defaultRemindLaterInterval * timeOneMinutes;
+        }
 
         String type = intent.getStringExtra("type");
         Log.i(LOG_TAG, String.format("Type info:" + type));
 
         if(type != null) {
             if(type.equals("ADD")){
-                registerAlarm(time, trackingID);
+                registerAlarm(time - timeBefore, trackingID);
+                Log.i(LOG_TAG, String.format("Registered add time: before:" + timeBefore + " Meettime:" + time ));
             } else if (type.equals("REMOVE")) {
                 removeAlarm(trackingID);
             } else {
