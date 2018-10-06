@@ -1,37 +1,26 @@
 package com.rmit.geotracking.notification;
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
-import android.util.Pair;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.rmit.geotracking.Reachables;
-import com.rmit.geotracking.broadcast_receiver.AutoDismissReceiver;
 import com.rmit.geotracking.broadcast_receiver.CancelSuggestionReceiver;
-import com.rmit.geotracking.broadcast_receiver.CancelTrackingReceiver;
-import com.rmit.geotracking.broadcast_receiver.ModifyTrackingReminderReceiver;
 import com.rmit.geotracking.broadcast_receiver.SkipSuggestionReciver;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
-import com.rmit.geotracking.service.LocationService;
+import com.rmit.geotracking.utilities.AlarmGenerator;
 import com.rmit.geotracking.view.ModifyTrackingActivity;
 
-import java.util.Calendar;
 import java.util.Map;
-
-import static android.content.Context.ALARM_SERVICE;
 
 
 public class NotificationsGenerator {
@@ -39,7 +28,7 @@ public class NotificationsGenerator {
     private final String LOG_TAG = this.getClass().getName();
 
     private static final String CHANNEL_SUGGESTION = "3";
-    private static final int NOTIFY_ID = 1;
+    public static final int NOTIFY_ID = 1;
     private static Context context;
 
 //    private NotificationsGenerator(){
@@ -91,8 +80,8 @@ public class NotificationsGenerator {
                 .setContentIntent(getCancelIntent())
                 .addAction(android.R.drawable.ic_dialog_alert, "Yes", getAcceptIntent(closestIdDurationPair.getFirstAttribute()))
                 .addAction(android.R.drawable.ic_dialog_alert, "No", getSkipIntent())
-                .addAction(android.R.drawable.ic_dialog_alert, "Cancel",getCancelIntent());
-//                .setAutoCancel(true);
+                .addAction(android.R.drawable.ic_dialog_alert, "Cancel",getCancelIntent())
+                .setAutoCancel(true);
 
         notificationManager.notify(NOTIFY_ID, mBuilder.build());
 
@@ -102,7 +91,7 @@ public class NotificationsGenerator {
 
 
         // set alarm for next service
-        setAlarm();
+//        AlarmGenerator.getSingletonInstance(context).setAlarm();
     }
 
 
@@ -110,6 +99,7 @@ public class NotificationsGenerator {
         Intent[] intents = new Intent[1];
         Intent acceptIntent = new Intent(context, ModifyTrackingActivity.class);
         acceptIntent.putExtra("Trackable_Id", trackableId);
+        acceptIntent.putExtra("notificationId", NOTIFY_ID);
         intents[0] = acceptIntent;
         return PendingIntent.getActivities(context, NOTIFY_ID, intents, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -129,20 +119,5 @@ public class NotificationsGenerator {
         return PendingIntent.getBroadcast(context, NOTIFY_ID, buttonIntent, PendingIntent.FLAG_ONE_SHOT);
     }
 
-
-    private void setAlarm(){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        int polling = preferences.getInt("Polling Time", 60);
-
-        Calendar triggerAt = Calendar.getInstance();
-        triggerAt.set(Calendar.SECOND, triggerAt.get(Calendar.SECOND) + polling);
-        AlarmManager manager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        Intent myintent = new Intent(context, LocationService.class);
-        PendingIntent pendingIntent = PendingIntent.getService
-                (context, 0, myintent, PendingIntent.FLAG_ONE_SHOT);
-        if (manager != null) {
-            manager.setExact(AlarmManager.RTC_WAKEUP, triggerAt.getTimeInMillis(), pendingIntent);
-        }
-    }
 
 }

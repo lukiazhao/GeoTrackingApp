@@ -1,5 +1,7 @@
 package com.rmit.geotracking.view;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import com.rmit.geotracking.database.SaveTrackingTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
+import com.rmit.geotracking.notification.NotificationsGenerator;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -136,9 +139,15 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     public void getIncomingIntentExtras() {
         Bundle extras = getIntent().getExtras();
 
+
         if(extras != null) {
             this.selectedTrackableId = extras.getInt("Trackable_Id");
             this.selectedTrakcingId = extras.getString("Tracking_Id");
+        }
+
+        if(extras.getInt("notificationId") == NotificationsGenerator.NOTIFY_ID){
+            NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            manager.cancel(NotificationsGenerator.NOTIFY_ID);
         }
     }
 

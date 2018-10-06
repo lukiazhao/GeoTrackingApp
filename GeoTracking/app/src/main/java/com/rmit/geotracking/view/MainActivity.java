@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,7 +39,6 @@ import java.util.Calendar;
 public class MainActivity extends GetPermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
-    private TrackManager trackManager;
 
 
     @Override
@@ -63,8 +63,8 @@ public class MainActivity extends GetPermissionActivity {
         // create Notification channels
         NotificationsGenerator.getSingletonInstance(this).createNotificationChannel();
 
-//        trackManager = TrackManager.getSingletonInstance(this);
     }
+
 
     public void startHandlePermission(){
         addPermissionHelper(REQUEST_FINE_LOCATION,
@@ -95,9 +95,18 @@ public class MainActivity extends GetPermissionActivity {
             case R.id.Preferences:
                 goPreferences();
                 break;
+            case R.id.suggest_now:
+                suggestionNow();
+                break;
             default:
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void suggestionNow(){
+        Intent suggestIntent = new Intent(this, LocationService.class);
+        suggestIntent.putExtra("suggest_now", true);
+        startService(suggestIntent);
     }
 
     public void goTrackable() {

@@ -40,7 +40,8 @@ public class Reachables {
                 smallestDuration = p.getSecondAttribute();
             }
         }
-        Log.i(LOG_TAG, "SUGGEST CLOSEST TRACKABLE=" + closest.getFirstAttribute());
+        Log.i(LOG_TAG, "SUGGEST CLOSEST TRACKABLE; IS NULL? "+ (closest == null));
+//        Log.i(LOG_TAG, "SUGGEST CLOSEST TRACKABLE=" + closest.getFirstAttribute());
         return closest;
     }
 

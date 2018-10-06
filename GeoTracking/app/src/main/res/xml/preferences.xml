@@ -45,6 +45,7 @@
         <EditTextPreference
             android:dialogTitle="Set the polling time for closest trackables suggestion"
             android:key="PollingTime"
+            android:inputType="number"
             android:summary="Edit polling time interval for trackable suggestions"
             android:title="Closest Trackable Polling Time" />
 

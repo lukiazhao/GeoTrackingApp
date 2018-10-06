@@ -11,8 +11,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -26,6 +29,7 @@ import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Trackable;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.notification.NotificationsGenerator;
+import com.rmit.geotracking.utilities.AlarmGenerator;
 
 import org.json.JSONException;
 
@@ -37,42 +41,63 @@ import java.util.Map;
 public class LocationService extends IntentService {
 
     private final String LOG_TAG = LocationService.class.getName();
-    private TrackManager manager;
-
+    private Handler handler;
 
     public LocationService() {
         super("Location Service");
-        Log.i(LOG_TAG, "lOCATION SERVICE CONSTRUCTOR FIRST?");
-        manager = TrackManager.getSingletonInstance(LocationService.this);
+    }
+
+    @Override
+    public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
+        handler = new Handler(Looper.getMainLooper());
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
+        // check network connection
+        if(!isNetworkConnected()){
+
+            Log.i(LOG_TAG, "INTERNET IS NOT CONNECTED");
+            handler.post(() -> Toast.makeText(getApplicationContext(), "No Internet!", Toast.LENGTH_LONG).show());
+            return;
+        }
+
+
+
         //get gps location - LocationManagere
         Location currLocation = requestLocationUpdate();
+
+
 
         Reachables reachableClass = Reachables.getSingletonInstance();
 
         try {
 
             // set all current reachables to Reachables Class
-            reachableClass.setReachables(manager.getAllReachables(currLocation));
+            reachableClass.setReachables(TrackManager.getSingletonInstance(this).getAllReachables(currLocation));
+
 
             TrackingInfoProcessor.Pair<Integer,Integer> closest = reachableClass.suggestClosestTrackable();
+
 
             // start the first notification
             NotificationsGenerator.getSingletonInstance(this).buildSuggestionNotification(closest);
 
-            Log.i(LOG_TAG, "closest pair id=" + closest.getFirstAttribute() + "duration" + closest.getSecondAttribute());
+            // if only suggest once
+            if(intent != null && intent.getBooleanExtra("suggest_now", false)){
+                return;
+            }
+
+            AlarmGenerator.getSingletonInstance(this).setAlarm();
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
-
-
-
 
 
 
@@ -89,6 +114,12 @@ public class LocationService extends IntentService {
             }
         }
         return location;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null;
     }
 
 }
