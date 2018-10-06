@@ -38,6 +38,7 @@ public class RemoveTrackingTask implements Runnable {
                 String trackingID = rs.getString(1);
                 if(trackingDeletedFromModel(trackingID)) {
                     deletedIDs.add(trackingID);
+                    Log.i(LOG_TAG, String.format("Add delete id: " + trackingID));
                 }
             }
 
@@ -57,6 +58,7 @@ public class RemoveTrackingTask implements Runnable {
         for (String id : TrackManager.getSingletonInstance(context).getTrackingMap().keySet()) {
             if (id.equals(trackingID)) {
                 deleted = false;
+                Log.i(LOG_TAG, String.format("Delete check true: " + trackingID));
             }
         }
 
