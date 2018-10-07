@@ -61,14 +61,23 @@ public class ModifyTrackingReminderReceiver extends BroadcastReceiver {
 
     private void handleAlarm(String type, String trackingID, long time, long currenttime,
                              long timeBefore) {
+        long timeInterval = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(context.getResources()
+                        .getString(R.string.prekey_remindinterval), "0")) * 60000;
+
         if(type != null) {
             if(type.equals("ADD") && time > currenttime){
                 registerAlarm(time - timeBefore, trackingID);
+                System.out.println("Time record: register later time -- Current time " + currenttime
+                        + "Time interval " + timeInterval + " Meettime " + time + " Time before " + timeBefore);
             } else if (type.equals("REMOVE")) {
                 removeAlarm(trackingID);
             } else if (type.equals("EDIT") && time > currenttime){
                 removeAlarm(trackingID);
                 registerAlarm(time, trackingID);
+            } else if (type.equals("LATER")) {
+                registerAlarm(currenttime + timeInterval, trackingID);
+                System.out.println("Time record: register later time -- " + (currenttime + timeInterval));
             }
         }
     }
@@ -78,9 +87,11 @@ public class ModifyTrackingReminderReceiver extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         AlarmManager.OnAlarmListener reminderListener = new ShowReminderAlarmListener(context, trackingID);
         reminderAlarms.put(trackingID, reminderListener);
+        System.out.println("Time record: register alarm time -- " + time);
+
         assert alarmManager != null;
         String ALARMTAG = "Reminders";
-        alarmManager.set(AlarmManager.RTC_WAKEUP, time, ALARMTAG, reminderListener, null);
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, time, ALARMTAG, reminderListener, null);
     }
 
     // delete an existing alarm

@@ -1,7 +1,5 @@
 package com.rmit.geotracking.view.preference;
 
-// Refactored and additions by Caspar Ryan and Zhongnian Lu
-
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;

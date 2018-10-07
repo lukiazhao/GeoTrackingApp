@@ -32,8 +32,10 @@ public class RemindLaterReceiver extends BroadcastReceiver {
         long timeInterval = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context)
                 .getString(context.getResources().getString(R.string.prekey_remindinterval), "0")) * timeOneMinutes;
 
+        System.out.println("Checking remind later : " + timeInterval);
+
         if (timeInterval == 0) {
-            int defaultRemindLaterInterval = 5;
+            int defaultRemindLaterInterval = 1;
             timeInterval = defaultRemindLaterInterval * timeOneMinutes;
         }
 
@@ -71,10 +73,11 @@ public class RemindLaterReceiver extends BroadcastReceiver {
                     trackingID);
             newIntent.putExtra(context.getResources().getString(R.string.intentkey_meettime),
                     meettime + timeInterval);
-            newIntent.putExtra(context.getString(R.string.intentkey_type), "ADD");
+            newIntent.putExtra(context.getString(R.string.intentkey_type), "LATER");
 
             Log.i(LOG_TAG, "CHECK tracking:  " + TrackManager
                     .getSingletonInstance(context).getTrackingMap().get(trackingID));
+            Log.i(LOG_TAG, "CHECK time interval:  " + timeInterval);
 
             context.sendBroadcast(newIntent);
         }
