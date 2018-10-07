@@ -8,41 +8,46 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.rmit.geotracking.R;
 import com.rmit.geotracking.model.TrackManager;
 
 import java.util.Calendar;
+
+/**
+ * Receive intent after the user click remind me later
+ */
 
 public class RemindLaterReceiver extends BroadcastReceiver {
 
     private final String LOG_TAG = this.getClass().getName();
     private Context context;
-    private final int defaultRemindLaterInterval = 5;
-    private final int timeOneMinutes = 60000;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(LOG_TAG, String.format("Receive intent "));
+        Log.i(LOG_TAG, "Receive intent ");
         this.context = context;
 
         // get time interval from SharedPreferences
+        int timeOneMinutes = 60000;
         long timeInterval = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context)
-                .getString("reminderTimeInterval", "0")) * timeOneMinutes;
+                .getString(context.getResources().getString(R.string.prekey_remindinterval), "0")) * timeOneMinutes;
 
         if (timeInterval == 0) {
+            int defaultRemindLaterInterval = 5;
             timeInterval = defaultRemindLaterInterval * timeOneMinutes;
         }
 
-        Log.i(LOG_TAG, String.format("CHECK time setting:  " + timeInterval));
+        Log.i(LOG_TAG, "CHECK time setting:  " + timeInterval);
 
         // access info from intent
         Bundle bundle = intent.getExtras();
 
         // get tracking info
-        int notificationID = bundle.getInt("notificationId");
-        String trackingID = bundle.getString("TrackingID");
-
-        Log.i(LOG_TAG, String.format("CHECK tracking id:  " + trackingID));
-        Log.i(LOG_TAG, String.format("CHECK notification id:  " + notificationID));
+        assert bundle != null;
+        int notificationID = bundle.getInt(context.getResources()
+                .getString(R.string.intentkey_notificationid));
+        String trackingID = bundle.getString(context.getResources()
+                .getString(R.string.intentkey_trackingid));
 
         // get current time and meet time
         Calendar alarmTime = Calendar.getInstance();
@@ -50,12 +55,10 @@ public class RemindLaterReceiver extends BroadcastReceiver {
         long meettime = TrackManager.getSingletonInstance(context)
                 .getTrackingMap().get(trackingID).getMeetTime().getTime();
 
-        Log.i(LOG_TAG, String.format("CHECK meettime:  " + meettime));
-        Log.i(LOG_TAG, String.format("CHECK time interval:  " + timeInterval));
-
         sendNewReminder(meettime, currenttime, timeInterval, trackingID);
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        assert manager != null;
         manager.cancel(notificationID);
     }
 
@@ -64,12 +67,14 @@ public class RemindLaterReceiver extends BroadcastReceiver {
                                  String trackingID ) {
         if((currenttime + timeInterval) < meettime){
             Intent newIntent = new Intent(context, ModifyTrackingReminderReceiver.class);
-            newIntent.putExtra("TrackingID", trackingID);
-            newIntent.putExtra("Meettime", meettime + timeInterval);
-            newIntent.putExtra("type", "ADD");
+            newIntent.putExtra(context.getResources().getString(R.string.intentkey_trackingid),
+                    trackingID);
+            newIntent.putExtra(context.getResources().getString(R.string.intentkey_meettime),
+                    meettime + timeInterval);
+            newIntent.putExtra(context.getString(R.string.intentkey_type), "ADD");
 
-            Log.i(LOG_TAG, String.format("CHECK tracking:  " + TrackManager
-                    .getSingletonInstance(context).getTrackingMap().get(trackingID)));
+            Log.i(LOG_TAG, "CHECK tracking:  " + TrackManager
+                    .getSingletonInstance(context).getTrackingMap().get(trackingID));
 
             context.sendBroadcast(newIntent);
         }

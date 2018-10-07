@@ -64,6 +64,12 @@
     <!--string resources for model-->
     <string name="trackmanager_default_category">Select Category</string>
 
+    <!--Strings for suggestion notification-->
+    <string name="suggestion_notification_title">Closest Available Trackable</string>
+    <string name="suggestion_notification_yes">Yes</string>
+    <string name="suggestion_notification_no">No</string>
+    <string name="suggestion_notification_cancel">Cancel</string>
+
     <!--Strings for reminder notification-->
     <string name="reminder_notification_title">Tracking Reminder</string>
     <string name="reminder_notification_dialog1">"You should go to pick up tracking "</string>
@@ -72,8 +78,17 @@
     <string name="reminder_notification_delete">Delete tracking</string>
     <string name="reminder_notification_relater">Remind Me Later</string>
 
+    <!--Strings for Intent keys-->
+    <string name="intentkey_notificationid">notificationId</string>
+    <string name="intentkey_trackableid">Trackable_Id</string>
+    <string name="intentkey_trackingid">TrackingID</string>
+    <string name="intentkey_meettime">Meettime</string>
+    <string name="intentkey_type">type</string>
 
 
+    <!--Strings for Prefernces keys-->
+    <string name="prekey_meetbefore">reminderBeforeMeet</string>
+    <string name="prekey_remindinterval">reminderTimeInterval</string>
 
 
 </resources>

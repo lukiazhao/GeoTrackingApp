@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.content.pm.PackageManager;
-import android.net.ConnectivityManager;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -52,17 +49,12 @@ public class MainActivity extends GetPermissionActivity {
             startHandlePermission();
             return;
         }
-        System.out.println("location permitted");
-
-        // create Notification channels
-//        NotificationsGenerator.getSingletonInstance(this).createNotificationChannel();
-
     }
 
 
     public void startHandlePermission(){
         addPermissionHelper(REQUEST_FINE_LOCATION,
-                "REQUEST LOCATION PERMISSION", Manifest.permission.ACCESS_FINE_LOCATION);
+                Manifest.permission.ACCESS_FINE_LOCATION);
         if(checkPermission(REQUEST_FINE_LOCATION)) {
             Toast.makeText(this, "Location permission added successfully", Toast.LENGTH_LONG).show();
         }
