@@ -29,9 +29,6 @@ public class StartUp extends Application {
         //import existing tracking data from SQLite
         TrackManager.getSingletonInstance(this);
         new Thread(new SyncTrackingListTask(this)).start();
-      
-        // set first alarm
-        AlarmGenerator.getSingletonInstance(this).setAlarm();
     }
 
     @Override

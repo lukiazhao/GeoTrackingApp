@@ -139,22 +139,26 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     public void getIncomingIntentExtras() {
         Bundle extras = getIntent().getExtras();
 
-
         if(extras != null) {
             this.selectedTrackableId = extras.getInt("Trackable_Id");
             this.selectedTrakcingId = extras.getString("Tracking_Id");
+
+            if(extras.getInt("notificationId") == NotificationsGenerator.NOTIFY_ID){
+                NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+                if (manager != null) {
+                    manager.cancel(NotificationsGenerator.NOTIFY_ID);
+                }
+            }
         }
 
-        if(extras.getInt("notificationId") == NotificationsGenerator.NOTIFY_ID){
-            NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-            manager.cancel(NotificationsGenerator.NOTIFY_ID);
-        }
+
     }
 
     public void updateMeetLocation(String selectedMeetLocation) {
         TextView meetLocation = findViewById(R.id.meet_location_text);
         meetLocation.setText(selectedMeetLocation);
     }
+
 
     public void setTitle() {
         title.setText(manager.getTrackingMap().get(selectedTrakcingId).getTitle());

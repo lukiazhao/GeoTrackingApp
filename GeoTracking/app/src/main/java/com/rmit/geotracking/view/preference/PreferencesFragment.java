@@ -17,8 +17,6 @@ import java.util.Map;
 public class PreferencesFragment extends PreferenceFragment implements
       OnSharedPreferenceChangeListener  {
 
-   private final String LOG_TAG = this.getClass().getName();
-
 
    @Override
    public void onCreate(Bundle savedInstanceState)
@@ -55,17 +53,6 @@ public class PreferencesFragment extends PreferenceFragment implements
        SharedPreferences mySharedPreferences = PreferenceManager
                .getDefaultSharedPreferences(this.getActivity());
 
-       // display the preferences for debugging purposes
-       Map<String, ?> prefmap = mySharedPreferences.getAll();
-       Log.i(LOG_TAG, prefmap.toString());
-
-
-       //set the changed polling time
-       if (key.equals("PollingTime")) {
-           // set a new alarm once the preferred polling time
-          int changedPollingTime = Integer.parseInt(sharedPreferences.getString("PollingTime", "100"));
-          AlarmGenerator.getSingletonInstance(getContext()).setAlarm();
-       }
    }
 
 }

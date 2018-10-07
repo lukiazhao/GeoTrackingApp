@@ -9,9 +9,12 @@ import com.rmit.geotracking.model.Reachables;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
 import com.rmit.geotracking.notification.NotificationsGenerator;
 
-public class SkipSuggestionReceiver extends BroadcastReceiver {
+/*
+ * Broadcast receiver to receive the "no" notification intent
+ * it will trigger another notification for the same list of reachables
+ */
 
-    private final String LOG_TAG = this.getClass().getName();
+public class SkipSuggestionReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -19,9 +22,11 @@ public class SkipSuggestionReceiver extends BroadcastReceiver {
         // dismiss current notification
         int notificationID = intent.getIntExtra("notificationId", 0);
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.cancel(notificationID);
+        if (manager != null) {
+            manager.cancel(notificationID);
+        }
 
-        // start next notification
+        // start next notification with current list of reachables
         TrackingInfoProcessor.Pair<Integer, Integer> nextClosest = Reachables.getSingletonInstance().suggestClosestTrackable();
         NotificationsGenerator.getSingletonInstance(context).buildSuggestionNotification(nextClosest);
     }

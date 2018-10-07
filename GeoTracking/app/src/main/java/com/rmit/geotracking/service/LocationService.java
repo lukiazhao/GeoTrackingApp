@@ -7,11 +7,8 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.os.Handler;
-import android.os.Looper;
+
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.rmit.geotracking.model.Reachables;
 import com.rmit.geotracking.controller.LocationMonitorListener;
@@ -22,60 +19,55 @@ import com.rmit.geotracking.utilities.AlarmGenerator;
 
 import org.json.JSONException;
 
+/*
+*
+* This class is a backgroud service that will process Http request, location request,
+* json decoding, filter reachable trackings, find the closest trackable, etc
+*
+* */
+
 public class LocationService extends IntentService {
 
-    private final String LOG_TAG = LocationService.class.getName();
-    private Handler handler;
+    private Reachables reachableClass;
+    private final String SUGGEST_INTENT_MESSAGE;
 
     public LocationService() {
         super("Location Service");
+        reachableClass = Reachables.getSingletonInstance();
+        SUGGEST_INTENT_MESSAGE = "suggest_now";
     }
 
-    @Override
-    public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
-        handler = new Handler(Looper.getMainLooper());
-        return super.onStartCommand(intent, flags, startId);
-    }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
 
         // check network connection
         if(!isNetworkConnected()){
-
-            Log.i(LOG_TAG, "INTERNET IS NOT CONNECTED");
-            handler.post(() -> Toast.makeText(getApplicationContext(), "No Internet!", Toast.LENGTH_LONG).show());
             return;
         }
 
-
-
-        //get gps location - LocationManagere
+        //get current location
         Location currLocation = requestLocationUpdate();
 
 
-
-        Reachables reachableClass = Reachables.getSingletonInstance();
-
         try {
-
-            // set all current reachables to Reachables Class
+            // filter reachables from all tracking information and set to a static Reachables class
             reachableClass.setReachables(TrackManager.getSingletonInstance(this).getAllReachables(currLocation));
 
-
+            // suggest the closest reachable out of the filtered reachables
             TrackingInfoProcessor.Pair<Integer,Integer> closest = reachableClass.suggestClosestTrackable();
-
 
             // start the first notification
             NotificationsGenerator.getSingletonInstance(this).buildSuggestionNotification(closest);
 
-            // if only suggest once
-            if(intent != null && intent.getBooleanExtra("suggest_now", false)){
+            // if the incomming intent is sent from suggestnow or networkReceiver, then exit early (skip set alarm)
+            if(intent != null && intent.getBooleanExtra(SUGGEST_INTENT_MESSAGE, false)){
                 return;
             }
 
+            // else if intents are sent from the other situations (yes, no, cancel, network receiver),
+            // set another alarm with preferred polling time
             AlarmGenerator.getSingletonInstance(this).setAlarm();
-
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -83,27 +75,27 @@ public class LocationService extends IntentService {
 
     }
 
-
-
     private Location requestLocationUpdate() {
         Location location = null;
+        Location lastKnownLocation = null;
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Log.i(LOG_TAG, "listner?");
-            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationMonitorListener(this), null);
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (locationManager != null) {
+                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationMonitorListener(), null);
+                lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            }
+
             if(lastKnownLocation!= null) {
                 location = lastKnownLocation;
-                Log.i(LOG_TAG, "CURRENT LOCATION="+ location.getLatitude()+","+location.getLongitude());
             }
         }
+
         return location;
     }
 
     private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
-
-        return cm.getActiveNetworkInfo() != null;
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        return (cm != null ? cm.getActiveNetworkInfo() : null) != null;
     }
 
 }

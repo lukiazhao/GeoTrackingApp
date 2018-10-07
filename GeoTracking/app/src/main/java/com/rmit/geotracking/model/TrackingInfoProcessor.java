@@ -30,7 +30,7 @@ import java.util.Locale;
  *
  */
 public class TrackingInfoProcessor {
-    private final String LOG_TAG = LocationService.class.getName();
+    private final String LOG_TAG = TrackingInfoProcessor.class.getName();
 
     private TrackingService trackingService;
 
@@ -118,35 +118,6 @@ public class TrackingInfoProcessor {
 
     // Find current location according to the system time
     public String findCurrentLocation(int trackableId) {
-//        // current system time:
-//        Date currentTime = Calendar.getInstance().getTime();
-        String currentLocation = null;
-
-//
-//        // extract current location from tracking service according to the current time
-//        List<TrackingService.TrackingInfo> info = getTrackingInfoWithId(trackableId);
-//
-//        if (currentTime.getTime() < info.get(0).date.getTime()){
-//            currentLocation = info.get(0).latitude + "," + info.get(0).longitude;
-//        } else if (currentTime.getTime() > info.get(info.size() - 1).date.getTime()) {
-//            currentLocation = info.get(info.size() - 1).latitude + "," + info.get(info.size() - 1).longitude;
-//        } else {
-//
-//            for (int i = 0; i < info.size() - 1; i++) {
-//
-//                if (currentTime.after(info.get(i).date) && currentTime.before(info.get(i + 1).date)) {
-//                    // check which time point is closer to current time
-//                    long diffToPrev = currentTime.getTime() - info.get(i).date.getTime();
-//                    long diffToNext = info.get(i + 1).date.getTime() - currentTime.getTime();
-//                    if (diffToPrev < diffToNext) {
-//                        currentLocation = info.get(i).latitude + "," + info.get(i).longitude;
-//                    } else {
-//                        currentLocation = info.get(i + 1).latitude + "," + info.get(i + 1).longitude;
-//                    }
-//                }
-//            }
-//        }
-
         TrackingService.TrackingInfo info = findCurrentTrackingInfo(trackableId);
         return info.latitude + "," + info.longitude;
     }
@@ -212,7 +183,6 @@ public class TrackingInfoProcessor {
 
 
     public List<Pair<Integer, Integer>> getReachablesbyId(Location currLocation, Integer trackableId) throws JSONException {
-        Log.i(LOG_TAG, "GET Reachables for id = "+ trackableId);
         List<Pair<Integer, Integer>> reachables = new ArrayList<>();
 
         JsonProcessor jsonProcessor = new JsonProcessor();
@@ -240,15 +210,12 @@ public class TrackingInfoProcessor {
                 // duration + current time <= end time
                 Calendar plannedArriveTime = Calendar.getInstance();
                 Log.i(LOG_TAG, "NOW ?" + plannedArriveTime.getTime());
-
-
                 plannedArriveTime.set(Calendar.MINUTE, plannedArriveTime.get(Calendar.MINUTE) + duration);
                 Log.i(LOG_TAG, "planned arrive time : " + plannedArriveTime.getTime());
 
                 Calendar stationaryEndTime = Calendar.getInstance();
                 stationaryEndTime.setTime(info.date);
                 stationaryEndTime.set(Calendar.MINUTE, stationaryEndTime.get(Calendar.MINUTE) + info.stopTime);
-
                 Log.i(LOG_TAG, "stationary end time = "+ stationaryEndTime.getTime());
 
                 if(plannedArriveTime.getTime().before(stationaryEndTime.getTime())){        // before stationary time finish
