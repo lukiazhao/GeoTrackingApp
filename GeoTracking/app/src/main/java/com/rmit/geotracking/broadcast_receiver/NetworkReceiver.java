@@ -9,6 +9,14 @@ import android.util.Log;
 
 import com.rmit.geotracking.service.LocationService;
 
+import java.util.Objects;
+
+/**
+ * Receiver monitor network state.
+ *
+ * Provide new suggestion if network avaliable
+ */
+
 public class NetworkReceiver extends BroadcastReceiver {
     private final String LOG_TAG = this.getClass().getName();
 
@@ -16,8 +24,9 @@ public class NetworkReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(LOG_TAG, "receive");
 
-        if (intent.getAction().equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
+        if (Objects.requireNonNull(intent.getAction()).equals(ConnectivityManager.CONNECTIVITY_ACTION)) {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert cm != null;
             NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
             if (networkInfo != null && networkInfo.getDetailedState() == NetworkInfo.DetailedState.CONNECTED) {

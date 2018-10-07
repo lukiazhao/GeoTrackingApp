@@ -1,6 +1,6 @@
 package com.rmit.geotracking.view.preference;
 
-// Refactored and additions by Caspar Ryan
+// Refactored and additions by Caspar Ryan and Zhongnian Lu
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -52,9 +52,6 @@ public class PreferencesFragment extends PreferenceFragment implements
    @Override
    public void onSharedPreferenceChanged(
          SharedPreferences sharedPreferences, String key) {
-       // don't actually need this since we have the param but shows how to
-       // get the underlying SharedPreferences elsewhere in an app since we can only
-       // call getPreferenceScreen() in a PreferenceActivity/PreferenceFragment
        SharedPreferences mySharedPreferences = PreferenceManager
                .getDefaultSharedPreferences(this.getActivity());
 
