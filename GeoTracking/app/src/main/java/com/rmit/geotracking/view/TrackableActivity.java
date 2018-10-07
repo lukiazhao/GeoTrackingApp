@@ -1,26 +1,16 @@
 package com.rmit.geotracking.view;
 
-import android.annotation.SuppressLint;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.adapter.RouteListAdapter;
 import com.rmit.geotracking.adapter.TrackableListAdapter;
-import com.rmit.geotracking.controller.DialogDismissListener;
 import com.rmit.geotracking.controller.SortCategoryListener;
-import com.rmit.geotracking.database.SyncTrackableTask;
+import com.rmit.geotracking.database.SyncTrackableListTask;
 import com.rmit.geotracking.model.TrackManager;
 
 
@@ -61,7 +51,7 @@ public class TrackableActivity extends MainActivity {
         super.onStart();
 
         //Sync trackable list from database
-        new Thread(new SyncTrackableTask(this)).start();
+        new Thread(new SyncTrackableListTask(this)).start();
     }
 
 

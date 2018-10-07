@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 
 import com.rmit.geotracking.broadcast_receiver.NetworkReceiver;
 import com.rmit.geotracking.database.SyncTrackingListTask;
-import com.rmit.geotracking.database.SyncTrackingTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.utilities.AlarmGenerator;
 

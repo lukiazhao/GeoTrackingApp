@@ -6,11 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.rmit.geotracking.database.RemoveSingleTrackingTask;
-import com.rmit.geotracking.database.RemoveTrackingTask;
+import com.rmit.geotracking.database.DeleteSingleTrackingTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
-import com.rmit.geotracking.view.TrackingActivity;
 
 public class CancelTrackingReceiver extends BroadcastReceiver {
     private final String LOG_TAG = this.getClass().getName();
@@ -37,7 +35,7 @@ public class CancelTrackingReceiver extends BroadcastReceiver {
             Log.i(LOG_TAG, String.format("remove " + trackingID));
 
             // remove tracking from database
-            new Thread(new RemoveSingleTrackingTask(trackingID, context)).run();
+            new Thread(new DeleteSingleTrackingTask(trackingID, context)).run();
         }
 
     }
