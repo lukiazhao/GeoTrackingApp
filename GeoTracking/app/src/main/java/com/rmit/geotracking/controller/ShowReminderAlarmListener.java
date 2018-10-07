@@ -1,24 +1,14 @@
 package com.rmit.geotracking.controller;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
-import com.rmit.geotracking.R;
-import com.rmit.geotracking.broadcast_receiver.AutoDismissReceiver;
-import com.rmit.geotracking.broadcast_receiver.CancelTrackingReceiver;
-import com.rmit.geotracking.broadcast_receiver.RemindLaterReceiver;
-import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.notification.NotificationsGenerator;
-import com.rmit.geotracking.view.TrackingActivity;
+
+/**
+ * Alarm listener set to alarm manager to register a tracking reminder
+ */
 
 public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
 
@@ -33,7 +23,9 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
 
     @Override
     public void onAlarm() {
-        Log.i(LOG_TAG, String.format("Receive intent "));
+        Log.i(LOG_TAG, "Receive intent ");
+
+        // Use helper class Notification generator to gerernate notification.
         NotificationsGenerator.getSingletonInstance(context).buildReminderNotification(trackingID);
     }
 }

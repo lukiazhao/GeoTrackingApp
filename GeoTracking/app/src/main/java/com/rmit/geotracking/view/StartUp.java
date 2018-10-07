@@ -9,6 +9,11 @@ import com.rmit.geotracking.database.SyncTrackingListTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.utilities.AlarmGenerator;
 
+/**
+ * Start UP of application. Register broadcasts and services only triggered once during
+ * the lifetime of app
+ */
+
 public class StartUp extends Application {
     private NetworkReceiver networkReceiver = new NetworkReceiver();
 
@@ -33,6 +38,5 @@ public class StartUp extends Application {
     public void onTerminate() {
         super.onTerminate();
         unregisterReceiver(networkReceiver);
-
     }
 }
