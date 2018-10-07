@@ -36,6 +36,10 @@ public class ModifyTrackingReminderReceiver extends BroadcastReceiver {
         long timeBefore = Long.parseLong(PreferenceManager.getDefaultSharedPreferences(context)
                 .getString("reminderBeforeMeet", "0")) * timeOneMinutes;
 
+        Calendar alarmTime = Calendar.getInstance();
+        long currenttime = alarmTime.getTimeInMillis();
+
+        // set default value if no preference set
         if (timeBefore == 0) {
             timeBefore = defaultRemindLaterInterval * timeOneMinutes;
         }
@@ -44,12 +48,12 @@ public class ModifyTrackingReminderReceiver extends BroadcastReceiver {
         Log.i(LOG_TAG, String.format("Type info:" + type));
 
         if(type != null) {
-            if(type.equals("ADD")){
+            if(type.equals("ADD") && time > currenttime){
                 registerAlarm(time - timeBefore, trackingID);
                 Log.i(LOG_TAG, String.format("Registered add time: before:" + timeBefore + " Meettime:" + time ));
             } else if (type.equals("REMOVE")) {
                 removeAlarm(trackingID);
-            } else {
+            } else if (type.equals("EDIT")){
                 removeAlarm(trackingID);
                 registerAlarm(time, trackingID);
                 Log.i(LOG_TAG, String.format("Edit:" + type));
