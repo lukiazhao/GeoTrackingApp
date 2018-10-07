@@ -1,6 +1,5 @@
 package com.rmit.geotracking.permission;
 
-
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;

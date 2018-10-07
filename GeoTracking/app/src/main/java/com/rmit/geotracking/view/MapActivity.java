@@ -19,11 +19,14 @@ import com.rmit.geotracking.model.TrackingInfoProcessor;
 import java.util.List;
 import java.util.Map;
 
+/*
+* Display Google map
+* */
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private TrackManager manager = TrackManager.getSingletonInstance(this);
-    private Map<Integer, Trackable> trackableMap = manager.getTrackableMap();
     private int trackableID;
 
     @Override

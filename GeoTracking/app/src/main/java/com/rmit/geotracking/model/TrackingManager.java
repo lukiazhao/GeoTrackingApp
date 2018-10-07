@@ -52,7 +52,7 @@ public class TrackingManager extends Observable {
     public void removeTracking(Tracking tracking) {
         if(tracking != null) {
             trackingMap.remove(tracking.getTrackingId());
-            Log.i(LOG_TAG, String.format("remove " + tracking.getTrackingId()));
+            Log.i(LOG_TAG, "remove " + tracking.getTrackingId());
         }
         setChanged();
         notifyObservers();

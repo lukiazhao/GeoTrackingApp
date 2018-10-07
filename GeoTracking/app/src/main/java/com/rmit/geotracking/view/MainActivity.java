@@ -29,10 +29,6 @@ public class MainActivity extends PermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
 
-
-    // register connectivity receiver
-    private IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +40,7 @@ public class MainActivity extends PermissionActivity {
         trackableBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
         trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
 
-        // check permission if no permission, ask for it.
+        // check permission and handle it if no permission
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             startHandlePermission();
             return;

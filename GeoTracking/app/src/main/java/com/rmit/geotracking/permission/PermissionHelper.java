@@ -10,6 +10,10 @@ import android.view.View;
 
 import java.util.Arrays;
 
+/*
+* Casper's notes
+* */
+
 public class PermissionHelper {
     private Activity activity;
     private View msgView;

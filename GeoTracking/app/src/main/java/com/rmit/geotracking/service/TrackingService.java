@@ -99,7 +99,6 @@ public class TrackingService
             // strip trailing comment
             if((commentPos=next.indexOf("//")) >=0) {
                next = next.substring(0, commentPos);
-               Log.i(LOG_TAG, next);
             }
             trackingInfo.longitude = Double.parseDouble(next);
             trackingList.add(trackingInfo);
