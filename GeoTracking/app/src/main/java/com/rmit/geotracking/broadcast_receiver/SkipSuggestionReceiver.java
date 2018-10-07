@@ -21,7 +21,7 @@ public class SkipSuggestionReceiver extends BroadcastReceiver {
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(notificationID);
 
-        // start next notification
+        // start next notification with current list of reachables
         TrackingInfoProcessor.Pair<Integer, Integer> nextClosest = Reachables.getSingletonInstance().suggestClosestTrackable();
         NotificationsGenerator.getSingletonInstance(context).buildSuggestionNotification(nextClosest);
     }

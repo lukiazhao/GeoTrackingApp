@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.rmit.geotracking.service.LocationService;
 
@@ -14,7 +15,6 @@ import java.util.Calendar;
 public class AlarmGenerator {
 
     private static Context context;
-
     // singleton support
     private static class LazyHolder
     {
@@ -31,7 +31,13 @@ public class AlarmGenerator {
     public void setAlarm(){
 
         Calendar triggerAt = Calendar.getInstance();
+        System.out.println("Alarm Current time=" + triggerAt.getTime());
+
         triggerAt.set(Calendar.SECOND, triggerAt.get(Calendar.SECOND) + readStoredPollingTime());
+        System.out.println("Alarm Trigger at time=" + triggerAt.getTime());
+
+
+
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent myintent = new Intent(context, LocationService.class);
         PendingIntent pendingIntent = PendingIntent.getService

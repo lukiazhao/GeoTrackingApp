@@ -25,6 +25,7 @@ public class NetworkReceiver extends BroadcastReceiver {
 
                // fire the tracking suggestion
                 Intent myintent = new Intent(context, LocationService.class);
+                myintent.putExtra("networkReceived", true);
                 context.startService(myintent);
             }
         }

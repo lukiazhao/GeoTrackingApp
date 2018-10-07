@@ -30,22 +30,9 @@ public class CancelSuggestionReceiver extends BroadcastReceiver {
         int notificationID = intent.getIntExtra("notificationId", 0);
         Log.i(LOG_TAG, String.format("CHECK tracking id:  " + notificationID));
 
-
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.cancel(notificationID);
 
-        // set new alarm after polling time
-//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-//        int pollingtime = Integer.parseInt(preferences.getString("PollingTime", "60"));
-//        Calendar triggerAt = Calendar.getInstance();
-//        triggerAt.set(Calendar.SECOND, triggerAt.get(Calendar.SECOND) + pollingtime);
-//
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-//        Intent locationIntent = new Intent(context, LocationService.class);
-//        PendingIntent pendingIntent = PendingIntent.getService
-//                (context, 0, locationIntent, PendingIntent.FLAG_ONE_SHOT);
-//        if (manager != null) {
-//            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAt.getTimeInMillis(), pendingIntent);
-//        }
+
     }
 }

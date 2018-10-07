@@ -63,12 +63,12 @@ public class PreferencesFragment extends PreferenceFragment implements
        Log.i(LOG_TAG, prefmap.toString());
 
 
-       //set the changed polling time
-       if (key.equals("PollingTime")) {
-           // set a new alarm once the preferred polling time
-          int changedPollingTime = Integer.parseInt(sharedPreferences.getString("PollingTime", "100"));
-          AlarmGenerator.getSingletonInstance(getContext()).setAlarm();
-       }
+//       //set the changed polling time
+//       if (key.equals("PollingTime")) {
+//           // set a new alarm once the preferred polling time
+//          int changedPollingTime = Integer.parseInt(sharedPreferences.getString("PollingTime", "100"));
+//          AlarmGenerator.getSingletonInstance(getContext()).setAlarm();
+//       }
    }
 
 }

@@ -40,7 +40,7 @@ public class NotificationsGenerator {
     private static Context context;
 
     private NotificationsGenerator(){
-//        createNotificationChannel();
+        createNotificationChannel();
         createReminderNotificationChannel();
     }
 
@@ -77,14 +77,14 @@ public class NotificationsGenerator {
 
     public void buildSuggestionNotification(TrackingInfoProcessor.Pair<Integer, Integer> closestIdDurationPair){
 
+        // if no more closest reachable available, early exit.
         if(closestIdDurationPair == null){
-            Toast.makeText(context.getApplicationContext(), "No available trackables to suggest now ", Toast.LENGTH_LONG).show();
             return;
         }
 
         Map<Integer, Trackable> trackableMap = TrackManager.getSingletonInstance(context).getTrackableMap();
-        String contentText = trackableMap.get(closestIdDurationPair.getFirstAttribute()).getName()
-                            + " will take " + closestIdDurationPair.getSecondAttribute();
+        String contentText =
+                             "Spend " + closestIdDurationPair.getSecondAttribute() + " mins to get " + trackableMap.get(closestIdDurationPair.getFirstAttribute()).getName()+ "? ";
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
@@ -102,7 +102,7 @@ public class NotificationsGenerator {
 
         notificationManager.notify(NOTIFY_ID, mBuilder.build());
 
-        // remove current pair from reachable
+        // remove current pair from reachables list
         Reachables.getSingletonInstance().removeSuggestedReachable(closestIdDurationPair);
     }
 

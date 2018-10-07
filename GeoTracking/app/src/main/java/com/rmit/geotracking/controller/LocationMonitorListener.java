@@ -16,29 +16,14 @@ import java.util.Map;
 public class LocationMonitorListener implements LocationListener {
     private final String LOG_TAG = LocationMonitorListener.class.getName();
 
-    private LocationService context;
-    private TrackManager manager;
-    public LocationMonitorListener(LocationService context){
-        this.context = context;
-        manager = TrackManager.getSingletonInstance(context);
-        System.out.println("Location Service listener constructor" );
+
+    public LocationMonitorListener(){
+
     }
 
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i(LOG_TAG, "LAT = " + location.getLatitude() + " Long=" + location.getLongitude());
-
-//        try {
-//
-//            Map<Integer, Integer> allReachables = manager.getAllReachables(location);
-//            Log.i(LOG_TAG, allReachables.size()+"");
-//            for (Integer reac: allReachables.keySet()){
-//                Log.i(LOG_TAG, "trackable id =" +reac + "; time taken to be there=" + allReachables.get(reac));
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
     }
 
