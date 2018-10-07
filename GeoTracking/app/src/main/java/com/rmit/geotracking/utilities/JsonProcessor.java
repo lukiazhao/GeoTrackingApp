@@ -14,6 +14,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * This helper class process sending json request receiving and parsing json
+ */
+
 public class JsonProcessor {
 
     private final String LOG_TAG = LocationService.class.getName();
@@ -67,12 +71,11 @@ public class JsonProcessor {
         return json;
     }
 
-
+    // build the url with current location and destination location
     private StringBuilder buildUrl(Location currLocation, String destination){
         String origins = "origins=" + currLocation.getLatitude() + "," + currLocation.getLongitude();
         StringBuilder sb = new StringBuilder();
 
-        // build the url
         sb.append(BASE_URL);
         sb.append(PUNCTATION);
         sb.append(origins);

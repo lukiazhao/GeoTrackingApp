@@ -1,21 +1,19 @@
 package com.rmit.geotracking.permission;
 
-import android.app.Activity;
-import android.content.pm.PackageManager;
+
 import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.rmit.geotracking.R;
-import com.rmit.geotracking.model.TrackManager;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class GetPermissionActivity extends AppCompatActivity {
+/*
+* Casper's note
+* */
+public abstract class PermissionActivity extends AppCompatActivity {
 
     private Map<Integer, PermissionHelper> helpers = new HashMap<>();
     // store main layout for use by permissions Snackbar

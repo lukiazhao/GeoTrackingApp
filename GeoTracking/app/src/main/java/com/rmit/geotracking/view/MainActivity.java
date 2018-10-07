@@ -18,20 +18,16 @@ import android.widget.Toast;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ActivityEntryListener;
 
-import com.rmit.geotracking.permission.GetPermissionActivity;
+import com.rmit.geotracking.permission.PermissionActivity;
 import com.rmit.geotracking.service.LocationService;
 import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
 
 //Entrypoint of the whole application. including two buttons, trackinglist and trackable list.
 //A menu on actionbar is defined in this activity.
 
-public class MainActivity extends GetPermissionActivity {
+public class MainActivity extends PermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
-
-
-    // register connectivity receiver
-    private IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +40,7 @@ public class MainActivity extends GetPermissionActivity {
         trackableBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
         trackingBut.setOnClickListener(ActivityEntryListener.getSingletonInstance(this));
 
-        // check permission if no permission, ask for it.
+        // check permission and handle it if no permission
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             startHandlePermission();
             return;

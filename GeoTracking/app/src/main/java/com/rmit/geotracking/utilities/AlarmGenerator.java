@@ -1,23 +1,27 @@
 package com.rmit.geotracking.utilities;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import com.rmit.geotracking.service.LocationService;
 
 import java.util.Calendar;
-
+/**
+ * A helper class to set alarms with user defined polling time
+ */
 public class AlarmGenerator {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context context;
     // singleton support
     private static class LazyHolder
     {
+        @SuppressLint("StaticFieldLeak")
         static final AlarmGenerator INSTANCE = new AlarmGenerator();
     }
 
@@ -31,13 +35,7 @@ public class AlarmGenerator {
     public void setAlarm(){
 
         Calendar triggerAt = Calendar.getInstance();
-        System.out.println("Alarm Current time=" + triggerAt.getTime());
-
         triggerAt.set(Calendar.SECOND, triggerAt.get(Calendar.SECOND) + readStoredPollingTime());
-        System.out.println("Alarm Trigger at time=" + triggerAt.getTime());
-
-
-
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent myintent = new Intent(context, LocationService.class);
         PendingIntent pendingIntent = PendingIntent.getService
@@ -47,7 +45,7 @@ public class AlarmGenerator {
         }
     }
 
-    public int readStoredPollingTime(){
+    private int readStoredPollingTime(){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return Integer.parseInt(preferences.getString("PollingTime", "100"));
     }

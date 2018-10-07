@@ -21,16 +21,20 @@ import org.json.JSONException;
 
 /*
 *
-* This class is a backgroud service that will process all
+* This class is a backgroud service that will process Http request, location request,
+* json decoding, filter reachable trackings, find the closest trackable, etc
+*
 * */
+
 public class LocationService extends IntentService {
 
     private Reachables reachableClass;
+    private final String SUGGEST_INTENT_MESSAGE;
 
     public LocationService() {
         super("Location Service");
         reachableClass = Reachables.getSingletonInstance();
-
+        SUGGEST_INTENT_MESSAGE = "suggest_now";
     }
 
 
@@ -57,7 +61,7 @@ public class LocationService extends IntentService {
             NotificationsGenerator.getSingletonInstance(this).buildSuggestionNotification(closest);
 
             // if the incomming intent is sent from suggestnow or networkReceiver, then exit early (skip set alarm)
-            if(intent != null && intent.getBooleanExtra("suggest_now", false)){
+            if(intent != null && intent.getBooleanExtra(SUGGEST_INTENT_MESSAGE, false)){
                 return;
             }
 
@@ -73,13 +77,13 @@ public class LocationService extends IntentService {
 
     private Location requestLocationUpdate() {
         Location location = null;
+        Location lastKnownLocation = null;
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (locationManager != null) {
                 locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, new LocationMonitorListener(), null);
+                lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             }
-
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             if(lastKnownLocation!= null) {
                 location = lastKnownLocation;
@@ -91,7 +95,7 @@ public class LocationService extends IntentService {
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo() != null;
+        return (cm != null ? cm.getActiveNetworkInfo() : null) != null;
     }
 
 }

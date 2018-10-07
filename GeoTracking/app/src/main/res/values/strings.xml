@@ -84,11 +84,36 @@
     <string name="intentkey_trackingid">TrackingID</string>
     <string name="intentkey_meettime">Meettime</string>
     <string name="intentkey_type">type</string>
+    <string name="intentkey_duration">duration</string>
 
 
     <!--Strings for Prefernces keys-->
     <string name="prekey_meetbefore">reminderBeforeMeet</string>
     <string name="prekey_remindinterval">reminderTimeInterval</string>
+
+    <!--Strings for Suggestion Notifications -->
+    <string name="Spend">"Spend " </string>
+    <string name="_mins">" mins to get "</string>
+    <string name="question"> " ?" </string>
+
+    <!--Strings for Preference Layout -->
+    <string name="preference_tracking_remider_title">Tracking Reminder Setting </string>
+    <string name="preference_tracking_dialogue_title">Remind me before Meeting Time </string>
+    <string name="preference_tracking_key">reminderBeforeMeet</string>
+    <string name="preference_tracking_summary">Edit Buffer Time (mins)</string>
+    <string name="preference_tracking_title">Set Buffer Time to Travel</string>
+
+    <string name="preference_tracking_remind_later">Set Remind Me Later</string>
+    <string name="preference_tracking_remind_later_key">reminderTimeInterval</string>
+    <string name="preference_tracking_remind_later_defer">Edit Defer Time (mins)</string>
+    <string name="preference_tracking_remind_later_title">Set Remind Me Later Time</string>
+
+    <string name="preference_suggestion_category_title">Suggestion Polling Time Setting</string>
+    <string name="preference_suggestion_dialog_title">Set the Polling Time for Suggestion</string>
+    <string name="preference_suggestion_key">PollingTime</string>
+    <string name="preference_suggestion_summary">Edit polling time interval for trackable suggestions (sec)</string>
+    <string name="preference_suggestion_title">Set Suggestion Time Interval</string>
+
 
 
 </resources>
