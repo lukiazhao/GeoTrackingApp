@@ -18,14 +18,14 @@ import android.widget.Toast;
 import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ActivityEntryListener;
 
-import com.rmit.geotracking.permission.GetPermissionActivity;
+import com.rmit.geotracking.permission.PermissionActivity;
 import com.rmit.geotracking.service.LocationService;
 import com.rmit.geotracking.view.preference.FragmentPreferencesActivity;
 
 //Entrypoint of the whole application. including two buttons, trackinglist and trackable list.
 //A menu on actionbar is defined in this activity.
 
-public class MainActivity extends GetPermissionActivity {
+public class MainActivity extends PermissionActivity {
 
     private static final int REQUEST_FINE_LOCATION = 1;
 
