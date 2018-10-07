@@ -54,8 +54,6 @@ public class JsonProcessor {
                 }
 
                 String jsonString = sr.toString();
-
-                System.out.println(jsonString);
                 json = new JSONObject(jsonString);
             }
 
