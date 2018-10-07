@@ -64,5 +64,16 @@
     <!--string resources for model-->
     <string name="trackmanager_default_category">Select Category</string>
 
+    <!--Strings for reminder notification-->
+    <string name="reminder_notification_title">Tracking Reminder</string>
+    <string name="reminder_notification_dialog1">"You should go to pick up tracking "</string>
+    <string name="reminder_notification_dialog2">" now!! "</string>
+    <string name="reminder_notification_dismiss">Dismiss</string>
+    <string name="reminder_notification_delete">Delete tracking</string>
+    <string name="reminder_notification_relater">Remind Me Later</string>
+
+
+
+
 
 </resources>
