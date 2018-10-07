@@ -14,8 +14,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 
+/**
+ *  Called when start up the app and every time open tracking list activity.
+ *
+ *  Sync data from the model and in tracking list on the screen and model;
+ *
+ */
+
 public class SyncTrackingListTask extends DatabaseHandleTask {
     private final String LOG_TAG = this.getClass().getName();
+
+    // Info processor for parse date to string.
     private TrackingInfoProcessor processor;
 
     public SyncTrackingListTask(Context context) {
@@ -54,16 +63,18 @@ public class SyncTrackingListTask extends DatabaseHandleTask {
         rs.close();
     }
 
+    // Check if the tracking table already exist in the database.
     private boolean checkTrackingExist(Connection con) throws SQLException {
         DatabaseMetaData metaData = con.getMetaData();
         ResultSet rs = metaData.getTables(null,null,  TRACKING_TABLE, null );
         return rs.next();
     }
 
+    // Save a tracking from data to model
     private void saveSingleTrackingToModel(ResultSet rs) throws SQLException, ParseException {
         Tracking tracking =  TrackManager.getSingletonInstance(context)
                 .getTrackingMap().get(rs.getString(1));
-        Log.i(LOG_TAG, String.format("Get tracking  " + (tracking == null)));
+        Log.i(LOG_TAG, "Get tracking  " + (tracking == null));
 
         if(tracking == null) {
             TrackManager.getSingletonInstance(context).getTrackingManager()
@@ -74,8 +85,8 @@ public class SyncTrackingListTask extends DatabaseHandleTask {
                             processor.parseStringToDateDatabase(rs.getString(6)),
                             rs.getString(7),
                             rs.getString(8));
-            Log.i(LOG_TAG, String.format("Add tracking to model: [title] " +
-                    rs.getString(3) + " [ID] + " + rs.getString(1)));
+            Log.i(LOG_TAG, "Add tracking to model: [title] " +
+                    rs.getString(3) + " [ID] + " + rs.getString(1));
         }
     }
 }

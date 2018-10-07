@@ -4,9 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -23,32 +21,32 @@ public abstract class DatabaseHandleTask implements Runnable {
     private final String LOG_TAG = this.getClass().getName();
     public Context context;
 
-    public final String SQLDROID_NAME = "jdbc:sqldroid";
-    public final String DATABASE_PATHNAME = "GeoTracking.db";
-    public final String SQLDROID_DRIVER = "org.sqldroid.SQLDroidDriver";
+    // Key names in SQL database
+    final String TRACKING_TABLE = "TRACKING";
+    final String TRACKING_ID = "ID";
+    final String TRACKABLE_TABLE = "TRACKING";
 
-    // rows in tracking table
-    public final String TRACKING_TABLE = "TRACKING";
-    public final String TRACKING_ID = "ID";
-
-
-    public final String TRACKABLE_TABLE = "TRACKING";
-
-
-    public DatabaseHandleTask(Context context){
+    DatabaseHandleTask(Context context){
         this.context = context;
     }
 
+    // open the sql database and close it after processing data
     @Override
     public void run() {
+        String SQLDROID_NAME = "jdbc:sqldroid";
+        String DATABASE_PATHNAME = "GeoTracking.db";
         String db = SQLDROID_NAME + context.getDatabasePath(DATABASE_PATHNAME).getAbsolutePath();
+
         try {
+            String SQLDROID_DRIVER = "org.sqldroid.SQLDroidDriver";
             Class.forName(SQLDROID_DRIVER);
             Log.i(LOG_TAG, String.format("opening: %s", db));
 
             Connection con = DriverManager.getConnection(db);
             Statement st = con.createStatement();
+
             processing(con, st);
+
             st.close();
             con.close();
         } catch(Exception e){
@@ -56,5 +54,6 @@ public abstract class DatabaseHandleTask implements Runnable {
         }
     }
 
+    // Process details handle in subclasses
     public abstract void processing(Connection con, Statement st) throws SQLException, ParseException;
 }

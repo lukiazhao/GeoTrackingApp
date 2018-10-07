@@ -13,6 +13,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
 
+/**
+ *  Called when open the trackable activity. All data read from model store in database.
+ *
+ */
+
 public class SyncTrackableListTask extends DatabaseHandleTask {
     private final String LOG_TAG = this.getClass().getName();
 
@@ -32,7 +37,6 @@ public class SyncTrackableListTask extends DatabaseHandleTask {
             st.close();
             con.close();
             Log.i(LOG_TAG, "Tables created");
-            return;
         }
     }
 
@@ -52,6 +56,7 @@ public class SyncTrackableListTask extends DatabaseHandleTask {
         Log.i(LOG_TAG, "Finish save trackables from model");
     }
 
+    // Check whether the table is initiate in the sql database.
     private boolean checkTrackableExist(Connection con) throws SQLException {
         DatabaseMetaData metaData = con.getMetaData();
         ResultSet rs = metaData.getTables(null,null,  TRACKABLE_TABLE, null );
