@@ -160,7 +160,7 @@ public class NotificationsGenerator {
                 .addAction(android.R.drawable.ic_dialog_alert,
                         resource.getString(R.string.reminder_notification_relater),
                         getRemindLaterIntent(trackingID))
-                .setAutoCancel(true);
+                .setAutoCancel(false);
 
         Log.i(LOG_TAG, "Send on Channel TrackingID: " + trackingID);
 

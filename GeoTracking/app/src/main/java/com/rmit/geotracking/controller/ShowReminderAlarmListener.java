@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.rmit.geotracking.notification.NotificationsGenerator;
 
+import java.util.Calendar;
+
 /**
  * Alarm listener set to alarm manager to register a tracking reminder
  */
@@ -24,6 +26,8 @@ public class ShowReminderAlarmListener implements AlarmManager.OnAlarmListener {
     @Override
     public void onAlarm() {
         Log.i(LOG_TAG, "Receive intent ");
+
+        System.out.println("Time record: fire notification: " + Calendar.getInstance().getTime());
 
         // Use helper class Notification generator to gerernate notification.
         NotificationsGenerator.getSingletonInstance(context).buildReminderNotification(trackingID);

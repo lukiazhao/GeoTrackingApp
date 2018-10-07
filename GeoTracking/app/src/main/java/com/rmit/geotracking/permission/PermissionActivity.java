@@ -1,6 +1,5 @@
 package com.rmit.geotracking.permission;
 
-
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,8 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-* Casper's note
-* */
+ * Casper's note
+ * */
 public abstract class PermissionActivity extends AppCompatActivity {
 
     private Map<Integer, PermissionHelper> helpers = new HashMap<>();

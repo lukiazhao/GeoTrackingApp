@@ -23,8 +23,8 @@ public class PermissionHelper {
     private static final String LOG_TAG = PermissionHelper.class.getName();
 
 
-    public PermissionHelper(Activity activity, View msgView, int requestCode,
-                            String rationale, String... permissions)
+    PermissionHelper(Activity activity, View msgView, int requestCode,
+                     String rationale, String... permissions)
     {
         this.activity = activity;
         this.msgView = msgView;
