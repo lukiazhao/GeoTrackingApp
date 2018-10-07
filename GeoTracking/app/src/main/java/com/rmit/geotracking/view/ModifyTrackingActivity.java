@@ -15,7 +15,7 @@ import com.rmit.geotracking.R;
 import com.rmit.geotracking.controller.ModifyTrackingListener;
 import com.rmit.geotracking.controller.HideKeyboardListener;
 import com.rmit.geotracking.controller.TimeSelectionListener;
-import com.rmit.geotracking.database.SaveTrackingTask;
+import com.rmit.geotracking.database.EditTrackingTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 import com.rmit.geotracking.model.TrackingInfoProcessor;
@@ -80,7 +80,7 @@ public class ModifyTrackingActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        new Thread(new SaveTrackingTask(this)).start();
+        new Thread(new EditTrackingTask(this)).start();
     }
 
 

@@ -5,12 +5,17 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.rmit.geotracking.R;
+import com.rmit.geotracking.broadcast_receiver.AutoDismissReceiver;
+import com.rmit.geotracking.broadcast_receiver.CancelTrackingReceiver;
+import com.rmit.geotracking.broadcast_receiver.RemindLaterReceiver;
 import com.rmit.geotracking.model.Reachables;
 import com.rmit.geotracking.broadcast_receiver.CancelSuggestionReceiver;
 import com.rmit.geotracking.broadcast_receiver.SkipSuggestionReceiver;
@@ -26,13 +31,18 @@ public class NotificationsGenerator {
 
     private final String LOG_TAG = this.getClass().getName();
 
-    private static final String CHANNEL_SUGGESTION = "3";
+    private static final String CHANNEL_SUGGESTION = "1";
     public static final int NOTIFY_ID = 1;
+
+    private static final String CHANNEL_REMINDER = "2";
+    private static final int NOTIFY_ID_REMINDER = 2;
+
     private static Context context;
 
-//    private NotificationsGenerator(){
+    private NotificationsGenerator(){
 //        createNotificationChannel();
-//    }
+        createReminderNotificationChannel();
+    }
 
     private static class LazyHolder
     {
@@ -54,6 +64,15 @@ public class NotificationsGenerator {
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    // register channel, register as soon as possible
+    private void createReminderNotificationChannel() {
+        int importance = NotificationManager.IMPORTANCE_HIGH;
+        NotificationChannel channel = new NotificationChannel(CHANNEL_REMINDER, "Tracking", importance);
+        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+        assert notificationManager != null;
+        notificationManager.createNotificationChannel(channel);
     }
 
     public void buildSuggestionNotification(TrackingInfoProcessor.Pair<Integer, Integer> closestIdDurationPair){
@@ -87,6 +106,40 @@ public class NotificationsGenerator {
         Reachables.getSingletonInstance().removeSuggestedReachable(closestIdDurationPair);
     }
 
+    public void buildReminderNotification(String trackingID) {
+        Resources resource = context.getResources();
+        String title = resource.getString(R.string.reminder_notification_title);
+        String message =  String.format(resource.getString(R.string.reminder_notification_dialog1)
+                + TrackManager.getSingletonInstance(context).getTrackingMap().get(trackingID).getTitle()
+                + resource.getString(R.string.reminder_notification_dialog2));
+
+        Log.i(LOG_TAG, "Tracking ID in send on chanel ");
+
+        NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_REMINDER);
+        builder.setSmallIcon(android.R.drawable.ic_popup_reminder)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setContentIntent(getDismissIntent())
+                .addAction(android.R.drawable.ic_dialog_alert,
+                        resource.getString(R.string.reminder_notification_dismiss),
+                        getDismissIntent())
+                .addAction(android.R.drawable.ic_dialog_alert,
+                        resource.getString(R.string.reminder_notification_delete),
+                        getDeleteIntent(trackingID))
+                .addAction(android.R.drawable.ic_dialog_alert,
+                        resource.getString(R.string.reminder_notification_relater),
+                        getRemindLaterIntent(trackingID))
+                .setAutoCancel(true);
+
+        Log.i(LOG_TAG, "Send on Channel TrackingID: " + trackingID);
+
+        manager.notify(NOTIFY_ID_REMINDER, builder.build());
+    }
+
 
     private PendingIntent getAcceptIntent(int trackableId){
         Intent[] intents = new Intent[1];
@@ -113,4 +166,29 @@ public class NotificationsGenerator {
     }
 
 
+    // reminder intent getter
+    private PendingIntent getDismissIntent() {
+        Intent buttonIntent = new Intent(context, AutoDismissReceiver.class);
+        buttonIntent.putExtra("notificationId", NOTIFY_ID_REMINDER);
+        return PendingIntent.getBroadcast(context, NOTIFY_ID_REMINDER, buttonIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent getDeleteIntent(String trackingID) {
+        Intent buttonIntent = new Intent(context, CancelTrackingReceiver.class);
+        buttonIntent.putExtra("notificationId", NOTIFY_ID_REMINDER);
+        buttonIntent.putExtra("TrackingID", trackingID);
+        return PendingIntent.getBroadcast(context, NOTIFY_ID_REMINDER, buttonIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private PendingIntent getRemindLaterIntent(String trackingID) {
+        Log.i(LOG_TAG, "RemindLater intent");
+        Intent buttonIntent = new Intent(context, RemindLaterReceiver.class);
+        buttonIntent.putExtra("notificationId", NOTIFY_ID_REMINDER);
+        buttonIntent.putExtra("TrackingID", trackingID);
+
+        return PendingIntent.getBroadcast(context, NOTIFY_ID_REMINDER, buttonIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
 }

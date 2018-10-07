@@ -1,7 +1,6 @@
 package com.rmit.geotracking.view;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -17,9 +16,8 @@ import com.rmit.geotracking.R;
 import com.rmit.geotracking.adapter.TrackingListAdapter;
 import com.rmit.geotracking.controller.DialogDismissListener;
 import com.rmit.geotracking.controller.RemoveTrackingDialogListener;
-import com.rmit.geotracking.database.RemoveTrackingTask;
-import com.rmit.geotracking.database.SaveTrackingTask;
-import com.rmit.geotracking.database.SyncTrackingTask;
+import com.rmit.geotracking.database.DeleteTrackingsTask;
+import com.rmit.geotracking.database.SyncTrackingListTask;
 import com.rmit.geotracking.model.TrackManager;
 import com.rmit.geotracking.model.Tracking;
 
@@ -47,13 +45,13 @@ public class TrackingActivity extends MainActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new SyncTrackingTask(this)).run();
+        new Thread(new SyncTrackingListTask(this)).start();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        new Thread(new RemoveTrackingTask(this)).run();
+        new Thread(new DeleteTrackingsTask(this)).run();
     }
 
     public void loadListView() {
