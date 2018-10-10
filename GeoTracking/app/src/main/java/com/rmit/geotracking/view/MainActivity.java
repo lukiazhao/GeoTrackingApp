@@ -49,7 +49,7 @@ public class MainActivity extends PermissionActivity {
 
 
     public void startHandlePermission(){
-        addPermissionHelper(REQUEST_FINE_LOCATION,
+        addPermissionHelper(REQUEST_FINE_LOCATION,"we need location permission",
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if(checkPermission(REQUEST_FINE_LOCATION)) {
             Toast.makeText(this, "Location permission added successfully", Toast.LENGTH_LONG).show();

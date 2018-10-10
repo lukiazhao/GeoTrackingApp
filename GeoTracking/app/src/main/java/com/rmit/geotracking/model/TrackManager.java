@@ -31,6 +31,7 @@ public class TrackManager extends Observable {
     private List<Integer> filteredTrackableIds;
     @SuppressLint("StaticFieldLeak")
     private static Context context;
+
     private TrackingManager trackingManager;
     private TrackingInfoProcessor processor;
 

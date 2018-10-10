@@ -3,6 +3,7 @@ package com.rmit.geotracking.view;
 import android.app.Application;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
+import android.net.wifi.WifiManager;
 
 import com.rmit.geotracking.broadcast_receiver.NetworkReceiver;
 import com.rmit.geotracking.database.SyncTrackingListTask;
@@ -23,7 +24,7 @@ public class StartUp extends Application {
 
         //register connectivity broadcast
         networkReceiver = new NetworkReceiver();
-        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        IntentFilter filter = new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         registerReceiver(networkReceiver, filter);
 
         //import existing tracking data from SQLite
